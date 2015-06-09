@@ -78,8 +78,8 @@ namespace CodeInn
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             // TODO: Create an appropriate data model for your problem domain to replace the sample data
-            var sampleDataGroups = await SampleDataSource.GetGroupsAsync();
-            this.DefaultViewModel["Groups"] = sampleDataGroups;
+            var MainMenuGroups = await MainMenuSource.GetGroupsAsync();
+            this.DefaultViewModel["Groups"] = MainMenuGroups;
         }
 
         /// <summary>
@@ -100,11 +100,11 @@ namespace CodeInn
         /// </summary>
         private void GroupSection_ItemClick(object sender, ItemClickEventArgs e)
         {
-            var groupId = ((SampleDataGroup)e.ClickedItem).UniqueId;
-            if (!Frame.Navigate(typeof(SectionPage), groupId))
-            {
-                throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
-            }
+            //var groupId = ((MainMenuGroup)e.ClickedItem).UniqueId;
+            //if (!Frame.Navigate(typeof(SectionPage), groupId))
+            //{
+            //    throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
+            //}
         }
 
         /// <summary>
@@ -114,11 +114,11 @@ namespace CodeInn
         {
             // Navigate to the appropriate destination page, configuring the new page
             // by passing required information as a navigation parameter
-            var itemId = ((SampleDataItem)e.ClickedItem).UniqueId;
-            if (!Frame.Navigate(typeof(ItemPage), itemId))
-            {
-                throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
-            }
+            //var itemId = ((MainMenuItem)e.ClickedItem).UniqueId;
+            //if (!Frame.Navigate(typeof(ItemPage), itemId))
+            //{
+            //    throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
+            //}
         }
 
         #region NavigationHelper registration

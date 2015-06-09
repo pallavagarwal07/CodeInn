@@ -30,7 +30,7 @@
             <HubSection x:Uid="HubSection1" Header="LEARN" 
                          DataContext="{Binding Groups[0]}" HeaderTemplate="{ThemeResource HubSectionHeaderTemplate}">
                 <DataTemplate>
-                    <GridView
+                    <GridView x:ConnectionId='3'
                         Margin="0,9.5,0,0"
                         ItemsSource="{Binding Items}"
                         AutomationProperties.AutomationId="ItemGridView"
@@ -38,7 +38,7 @@
                         ItemTemplate="{StaticResource CustomStackedTemplate}"
                         SelectionMode="None"
                         IsItemClickEnabled="True"
-                        ItemClick="ItemView_ItemClick"
+                                                      
                         ContinuumNavigationTransitionInfo.ExitElementContainer="True">
                         <GridView.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -52,7 +52,7 @@
             <HubSection x:Uid="HubSection2" Header="PRACTICE"
                          DataContext="{Binding Groups[1]}" HeaderTemplate="{ThemeResource HubSectionHeaderTemplate}">
                 <DataTemplate>
-                    <GridView
+                    <GridView x:ConnectionId='2'
                         Margin="0,9.5,0,0"
                         ItemsSource="{Binding Items}"
                         AutomationProperties.AutomationId="ItemGridView"
@@ -60,7 +60,7 @@
                         ItemTemplate="{StaticResource CustomStackedTemplate}"
                         SelectionMode="None"
                         IsItemClickEnabled="True"
-                        ItemClick="ItemView_ItemClick"
+                                                      
                         ContinuumNavigationTransitionInfo.ExitElementContainer="True">
                         <GridView.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -74,7 +74,7 @@
             <HubSection x:Uid="HubSection3" Header="COMPETE"
                          DataContext="{Binding Groups[2]}" HeaderTemplate="{ThemeResource HubSectionHeaderTemplate}">
                 <DataTemplate>
-                    <GridView
+                    <GridView x:ConnectionId='1'
                         Margin="0,9.5,0,0"
                         ItemsSource="{Binding Items}"
                         AutomationProperties.AutomationId="ItemGridView"
@@ -82,7 +82,7 @@
                         ItemTemplate="{StaticResource CustomStackedTemplate}"
                         SelectionMode="None"
                         IsItemClickEnabled="True"
-                        ItemClick="ItemView_ItemClick"
+                                                      
                         ContinuumNavigationTransitionInfo.ExitElementContainer="True">
                         <GridView.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -96,3 +96,4 @@
         </Hub>
     </Grid>
 </Page>
+

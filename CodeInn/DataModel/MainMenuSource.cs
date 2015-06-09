@@ -18,12 +18,9 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace CodeInn.Data
 {
-    /// <summary>
-    /// Generic item data model.
-    /// </summary>
-    public class SampleDataItem
+    public class MainMenuItem
     {
-        public SampleDataItem(String uniqueId, String title, String subtitle, String imagePath, String description, String content)
+        public MainMenuItem(String uniqueId, String title, String subtitle, String imagePath, String description, String content)
         {
             this.UniqueId = uniqueId;
             this.Title = title;
@@ -49,16 +46,16 @@ namespace CodeInn.Data
     /// <summary>
     /// Generic group data model.
     /// </summary>
-    public class SampleDataGroup
+    public class MainMenuGroup
     {
-        public SampleDataGroup(String uniqueId, String title, String subtitle, String imagePath, String description)
+        public MainMenuGroup(String uniqueId, String title, String subtitle, String imagePath, String description)
         {
             this.UniqueId = uniqueId;
             this.Title = title;
             this.Subtitle = subtitle;
             this.Description = description;
             this.ImagePath = imagePath;
-            this.Items = new ObservableCollection<SampleDataItem>();
+            this.Items = new ObservableCollection<MainMenuItem>();
         }
 
         public string UniqueId { get; private set; }
@@ -66,7 +63,7 @@ namespace CodeInn.Data
         public string Subtitle { get; private set; }
         public string Description { get; private set; }
         public string ImagePath { get; private set; }
-        public ObservableCollection<SampleDataItem> Items { get; private set; }
+        public ObservableCollection<MainMenuItem> Items { get; private set; }
 
         public override string ToString()
         {
@@ -77,50 +74,50 @@ namespace CodeInn.Data
     /// <summary>
     /// Creates a collection of groups and items with content read from a static json file.
     /// 
-    /// SampleDataSource initializes with data read from a static json file included in the 
+    /// MainMenuSource initializes with data read from a static json file included in the 
     /// project.  This provides sample data at both design-time and run-time.
     /// </summary>
-    public sealed class SampleDataSource
+    public sealed class MainMenuSource
     {
-        private static SampleDataSource _sampleDataSource = new SampleDataSource();
+        private static MainMenuSource _MainMenuSource = new MainMenuSource();
 
-        private ObservableCollection<SampleDataGroup> _groups = new ObservableCollection<SampleDataGroup>();
-        public ObservableCollection<SampleDataGroup> Groups
+        private ObservableCollection<MainMenuGroup> _groups = new ObservableCollection<MainMenuGroup>();
+        public ObservableCollection<MainMenuGroup> Groups
         {
             get { return this._groups; }
         }
 
-        public static async Task<IEnumerable<SampleDataGroup>> GetGroupsAsync()
+        public static async Task<IEnumerable<MainMenuGroup>> GetGroupsAsync()
         {
-            await _sampleDataSource.GetSampleDataAsync();
+            await _MainMenuSource.GetMainMenuAsync();
 
-            return _sampleDataSource.Groups;
+            return _MainMenuSource.Groups;
         }
 
-        public static async Task<SampleDataGroup> GetGroupAsync(string uniqueId)
+        public static async Task<MainMenuGroup> GetGroupAsync(string uniqueId)
         {
-            await _sampleDataSource.GetSampleDataAsync();
+            await _MainMenuSource.GetMainMenuAsync();
             // Simple linear search is acceptable for small data sets
-            var matches = _sampleDataSource.Groups.Where((group) => group.UniqueId.Equals(uniqueId));
+            var matches = _MainMenuSource.Groups.Where((group) => group.UniqueId.Equals(uniqueId));
             if (matches.Count() == 1) return matches.First();
             return null;
         }
 
-        public static async Task<SampleDataItem> GetItemAsync(string uniqueId)
+        public static async Task<MainMenuItem> GetItemAsync(string uniqueId)
         {
-            await _sampleDataSource.GetSampleDataAsync();
+            await _MainMenuSource.GetMainMenuAsync();
             // Simple linear search is acceptable for small data sets
-            var matches = _sampleDataSource.Groups.SelectMany(group => group.Items).Where((item) => item.UniqueId.Equals(uniqueId));
+            var matches = _MainMenuSource.Groups.SelectMany(group => group.Items).Where((item) => item.UniqueId.Equals(uniqueId));
             if (matches.Count() == 1) return matches.First();
             return null;
         }
 
-        private async Task GetSampleDataAsync()
+        private async Task GetMainMenuAsync()
         {
             if (this._groups.Count != 0)
                 return;
 
-            Uri dataUri = new Uri("ms-appx:///DataModel/SampleData.json");
+            Uri dataUri = new Uri("ms-appx:///DataModel/MainMenu.json");
 
             StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(dataUri);
             string jsonText = await FileIO.ReadTextAsync(file);
@@ -130,7 +127,7 @@ namespace CodeInn.Data
             foreach (JsonValue groupValue in jsonArray)
             {
                 JsonObject groupObject = groupValue.GetObject();
-                SampleDataGroup group = new SampleDataGroup(groupObject["UniqueId"].GetString(),
+                MainMenuGroup group = new MainMenuGroup(groupObject["UniqueId"].GetString(),
                                                             groupObject["Title"].GetString(),
                                                             groupObject["Subtitle"].GetString(),
                                                             groupObject["ImagePath"].GetString(),
@@ -139,7 +136,7 @@ namespace CodeInn.Data
                 foreach (JsonValue itemValue in groupObject["Items"].GetArray())
                 {
                     JsonObject itemObject = itemValue.GetObject();
-                    group.Items.Add(new SampleDataItem(itemObject["UniqueId"].GetString(),
+                    group.Items.Add(new MainMenuItem(itemObject["UniqueId"].GetString(),
                                                        itemObject["Title"].GetString(),
                                                        itemObject["Subtitle"].GetString(),
                                                        itemObject["ImagePath"].GetString(),
