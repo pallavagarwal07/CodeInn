@@ -31,3 +31,11 @@ C:\Users\Saksham\Documents\Visual Studio 2013\Projects\CodeInn\CodeInn\obj\Debug
 C:\Users\Saksham\Documents\Visual Studio 2013\Projects\CodeInn\CodeInn\obj\Debug\MultipleQualifiersPerDimensionFound.txt
 C:\Users\Saksham\Documents\Visual Studio 2013\Projects\CodeInn\CodeInn\obj\Debug\ProjectArchitectures.txt
 C:\Users\Saksham\Documents\Visual Studio 2013\Projects\CodeInn\CodeInn\bin\Debug\DataModel\MainMenu.json
+C:\Users\Saksham\Documents\Visual Studio 2013\Projects\CodeInn\CodeInn\obj\Debug\Examples.g.i.cs
+C:\Users\Saksham\Documents\Visual Studio 2013\Projects\CodeInn\CodeInn\obj\Debug\Examples.g.cs
+C:\Users\Saksham\Documents\Visual Studio 2013\Projects\CodeInn\CodeInn\obj\Debug\Examples.xaml
+C:\Users\Saksham\Documents\Visual Studio 2013\Projects\CodeInn\CodeInn\obj\Debug\Examples.xbf
+C:\Users\Saksham\Documents\Visual Studio 2013\Projects\CodeInn\CodeInn\bin\Debug\Examples.xbf
+C:\Users\Saksham\Documents\Visual Studio 2013\Projects\CodeInn\CodeInn\bin\Debug\DataModel\MainMenuSource.cs
+C:\Users\Saksham\Documents\Visual Studio 2013\Projects\CodeInn\CodeInn\bin\Debug\DataModel\Examples.json
+C:\Users\Saksham\Documents\Visual Studio 2013\Projects\CodeInn\CodeInn\bin\Debug\DataModel\ExamplesSource.cs

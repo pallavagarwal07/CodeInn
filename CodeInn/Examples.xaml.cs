@@ -27,13 +27,13 @@ namespace CodeInn
     /// <summary>
     /// A page that displays a grouped collection of items.
     /// </summary>
-    public sealed partial class HubPage : Page
+    public sealed partial class Examples : Page
     {
         private readonly NavigationHelper navigationHelper;
         private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
         private readonly ResourceLoader resourceLoader = ResourceLoader.GetForCurrentView("Resources");
 
-        public HubPage()
+        public Examples()
         {
             this.InitializeComponent();
 
@@ -78,8 +78,8 @@ namespace CodeInn
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             // TODO: Create an appropriate data model for your problem domain to replace the sample data
-            var MainMenuGroups = await MainMenuSource.GetGroupsAsync();
-            this.DefaultViewModel["Groups"] = MainMenuGroups;
+            var ExamplesGroups = await ExamplesSource.GetGroupsAsync();
+            this.DefaultViewModel["Groups"] = ExamplesGroups;
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace CodeInn
         /// </summary>
         private void GroupSection_ItemClick(object sender, ItemClickEventArgs e)
         {
-            //var groupId = ((MainMenuGroup)e.ClickedItem).UniqueId;
+            //var groupId = ((ExamplesGroup)e.ClickedItem).UniqueId;
             //if (!Frame.Navigate(typeof(SectionPage), groupId))
             //{
             //    throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
@@ -114,7 +114,7 @@ namespace CodeInn
         {
             // Navigate to the appropriate destination page, configuring the new page
             // by passing required information as a navigation parameter
-            var itemId = ((MainMenuItem)e.ClickedItem).UniqueId;
+            var itemId = ((ExamplesItem)e.ClickedItem).UniqueId;
             if (itemId == "Examples" && !Frame.Navigate(typeof(Examples), itemId))
             {
                 throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));

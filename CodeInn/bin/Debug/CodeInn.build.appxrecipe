@@ -97,8 +97,14 @@
     <AppxPackagedFile Include="C:\Users\Saksham\Documents\Visual Studio 2013\Projects\CodeInn\CodeInn\DataModel\MainMenu.json">
       <PackagePath>DataModel\MainMenu.json</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Saksham\Documents\Visual Studio 2013\Projects\CodeInn\CodeInn\DataModel\Examples.json">
+      <PackagePath>DataModel\Examples.json</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Saksham\Documents\Visual Studio 2013\Projects\CodeInn\CodeInn\bin\Debug\App.xbf">
       <PackagePath>App.xbf</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Saksham\Documents\Visual Studio 2013\Projects\CodeInn\CodeInn\bin\Debug\Examples.xbf">
+      <PackagePath>Examples.xbf</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Saksham\Documents\Visual Studio 2013\Projects\CodeInn\CodeInn\bin\Debug\HubPage.xbf">
       <PackagePath>HubPage.xbf</PackagePath>
