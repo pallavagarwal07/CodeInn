@@ -19,7 +19,7 @@
 
         <DataTemplate x:Key="ExamplesTemplate">
             <Grid>
-                <StackPanel Margin="14.5,0,0,0">
+                <StackPanel Margin="14.5,0,0,0" Width="Auto">
                     <TextBlock Text="{Binding Title}" Style="{ThemeResource ListViewItemTextBlockStyle}"/>
                     <TextBlock Text="{Binding Subtitle}" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}" Width="Auto"/>
                 </StackPanel>

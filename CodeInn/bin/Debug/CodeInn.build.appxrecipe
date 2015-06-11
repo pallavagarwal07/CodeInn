@@ -19,6 +19,9 @@
     <AppxPackagedFile Include="C:\Users\Saksham\Documents\Visual Studio 2013\Projects\CodeInn\CodeInn\bin\Debug\CodeInn.exe">
       <PackagePath>CodeInn.exe</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Saksham\Documents\Visual Studio 2013\Projects\CodeInn\packages\Newtonsoft.Json.6.0.8\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll">
+      <PackagePath>Newtonsoft.Json.dll</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Saksham\Documents\Visual Studio 2013\Projects\CodeInn\CodeInn\Assets\DarkGray.png">
       <PackagePath>Assets\DarkGray.png</PackagePath>
     </AppxPackagedFile>
@@ -108,6 +111,9 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Saksham\Documents\Visual Studio 2013\Projects\CodeInn\CodeInn\bin\Debug\HubPage.xbf">
       <PackagePath>HubPage.xbf</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Saksham\Documents\Visual Studio 2013\Projects\CodeInn\CodeInn\bin\Debug\TestPage.xbf">
+      <PackagePath>TestPage.xbf</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Saksham\Documents\Visual Studio 2013\Projects\CodeInn\CodeInn\bin\Debug\CodeInn.xr.xml">
       <PackagePath>CodeInn.xr.xml</PackagePath>

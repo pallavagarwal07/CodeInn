@@ -37,9 +37,13 @@
       <RootProperty Name="Children" />
       <RootProperty Name="Margin" />
       <RootProperty Name="Background" />
+      <RootProperty Name="RowDefinitions" />
+      <RootMethod Name="GetRow" />
+      <RootMethod Name="SetRow" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.StackPanel">
       <RootProperty Name="Margin" />
+      <RootProperty Name="Width" />
       <RootProperty Name="Children" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.TextBlock">
@@ -51,6 +55,10 @@
       <RootProperty Name="IsHoldingEnabled" />
       <RootProperty Name="IsDoubleTapEnabled" />
       <RootProperty Name="IsRightTapEnabled" />
+      <RootProperty Name="Name" />
+      <RootProperty Name="FontSize" />
+      <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="TextWrapping" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Hub">
       <RootProperty Name="Header" />
@@ -96,5 +104,9 @@
       <RootProperty Name="Margin" />
     </RootType>
     <RootType FullName="CodeInn.HubPage" />
+    <RootType FullName="Windows.UI.Xaml.Controls.RowDefinition">
+      <RootProperty Name="Height" />
+    </RootType>
+    <RootType FullName="CodeInn.TestPage" />
   </Roots.RootTypes>
 </Roots>

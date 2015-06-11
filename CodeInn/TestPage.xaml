@@ -1,0 +1,23 @@
+﻿<Page
+    x:Class="CodeInn.TestPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CodeInn"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <TextBlock Name="test" Text="Abc" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="WrapWholeWords"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1">
+            <TextBlock Name="box" Text="please" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="WrapWholeWords"/>
+        </StackPanel>
+    </Grid>
+</Page>

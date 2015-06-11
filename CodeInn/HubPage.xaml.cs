@@ -119,6 +119,10 @@ namespace CodeInn
             {
                 throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
             }
+            else if (itemId == "Lessons" && !Frame.Navigate(typeof(TestPage), itemId))
+            {
+                throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
+            }
         }
 
         #region NavigationHelper registration
