@@ -29,8 +29,7 @@
 
         <!--TODO: Content should be placed within the following grid-->
         <Grid Grid.Row="1" x:Name="ContentRoot" Margin="19,9.5,19,0">
-            <WebView x:Name="webView1" HorizontalAlignment="Left" Height="491" VerticalAlignment="Top" Width="362"/>
-
+            <WebView x:Name="webView1" HorizontalAlignment="Left" Height="491" VerticalAlignment="Top" Width="362" NavigationCompleted="webView1_NavigationCompleted"/>
         </Grid>
     </Grid>
 </Page>

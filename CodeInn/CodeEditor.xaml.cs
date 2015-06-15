@@ -30,7 +30,7 @@ namespace CodeInn
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
-
+        private string navC;
         public CodeEditor()
         {
             this.InitializeComponent();
@@ -43,8 +43,9 @@ namespace CodeInn
         // Copies the file "html\html_example2.html" from this package's installed location to 
         // a new file "NavigateToState\test.html" in the local state folder.  When this is 
         // done, enables the 'Load HTML' button. 
-        async void createHtmlFileInLocalState()
+        async void createHtmlFileInLocalState(string navContext)
         {
+            navC = navContext;
             StorageFolder stateFolder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("NavigateToState", CreationCollisionOption.OpenIfExists);
             StorageFile htmlFile = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync("html\\test.html");
             StorageFolder htmlFolder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync("html\\ace");
@@ -130,7 +131,7 @@ namespace CodeInn
         /// handlers that cannot cancel the navigation request.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            createHtmlFileInLocalState(); 
+            createHtmlFileInLocalState(e.Parameter as string); 
         //  this.navigationHelper.OnNavigatedTo(e);
         }
 
@@ -140,5 +141,11 @@ namespace CodeInn
         }
 
         #endregion
+
+        async void webView1_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
+        {
+            string[] _params = new string[] {navC};
+            await sender.InvokeScriptAsync("hello", _params);
+        }
     }
 }
