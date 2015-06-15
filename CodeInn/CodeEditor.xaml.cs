@@ -47,11 +47,9 @@ namespace CodeInn
         {
             StorageFolder stateFolder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("NavigateToState", CreationCollisionOption.OpenIfExists);
             StorageFile htmlFile = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync("html\\test.html");
-            StorageFile htmlFile2 = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync("html\\hello.js");
             StorageFolder htmlFolder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync("html\\ace");
 
             await htmlFile.CopyAsync(stateFolder, "test.html", NameCollisionOption.ReplaceExisting);
-            await htmlFile2.CopyAsync(stateFolder, "hello.js", NameCollisionOption.ReplaceExisting);
             await CopyFolderAsync(htmlFolder, stateFolder, "ace");
             string url = "ms-appx-web:///html/test.html";
             webView1.Navigate(new Uri(url));
