@@ -95,12 +95,28 @@
     <Compile Include="DataModel\MainMenuSource.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Helpers\DatabaseHelperClass.cs" />
+    <Compile Include="Helpers\ReadAllContactsList.cs" />
+    <Compile Include="Helpers\ReadLessons.cs" />
     <Compile Include="HubPage.xaml.cs">
       <DependentUpon>HubPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\Contacts.cs" />
+    <Compile Include="Model\Lessons.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SQLite.cs" />
+    <Compile Include="SQLiteAsync.cs" />
     <Compile Include="Views\Examples.xaml.cs">
       <DependentUpon>Examples.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LessonViewer.xaml.cs">
+      <DependentUpon>LessonViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReadContactList.xaml.cs">
+      <DependentUpon>ReadContactList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TestPage.xaml.cs">
       <DependentUpon>TestPage.xaml</DependentUpon>
@@ -135,10 +151,12 @@
     <Content Include="Assets\StoreLogo.scale-240.png" />
     <Content Include="Assets\WideLogo.scale-240.png" />
     <Content Include="Common\ReadMe.txt" />
+    <Content Include="hello.js" />
     <Content Include="html\ace\src-min-noconflict\ace.js" />
     <Content Include="html\ace\src-min-noconflict\mode-c_cpp.js" />
     <Content Include="html\ace\src-min-noconflict\theme-tomorrow_night.js" />
     <Content Include="html\test.html" />
+    <Content Include="test.html" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -161,6 +179,18 @@
     <Page Include="Views\Examples.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\LessonViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ReadContactList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Settings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TestPage.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -186,8 +216,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Helpers\" />
-    <Folder Include="Model\" />
+    <SDKReference Include="Microsoft.VCLibs, version=12.0">
+      <Name>Microsoft Visual C++ 2013 Runtime Package for Windows Phone</Name>
+    </SDKReference>
+    <SDKReference Include="SQLite.WP81, Version=3.8.10.2">
+      <Name>SQLite for Windows Phone 8.1</Name>
+    </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>

@@ -1,5 +1,6 @@
 ﻿using CodeInn.Common;
 using CodeInn.Data;
+using CodeInn.Views;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -127,6 +128,14 @@ namespace CodeInn
             {
                 throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
             }
+            else if (itemId == "Completion" && !Frame.Navigate(typeof(ReadContactList), itemId))
+            {
+                throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
+            }
+            else if (itemId == "Optimization" && !Frame.Navigate(typeof(LessonViewer), itemId))
+            {
+                throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
+            }
         }
 
         #region NavigationHelper registration
@@ -154,5 +163,23 @@ namespace CodeInn
         }
 
         #endregion
+
+        private void GoTo_Settings(object sender, RoutedEventArgs e)
+        {
+            if (!Frame.Navigate(typeof(Settings), "Main"))
+            {
+                throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
+            }
+        }
+
+        private void GoTo_Help(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void GoTo_Credits(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
