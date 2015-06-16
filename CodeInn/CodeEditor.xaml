@@ -8,28 +8,61 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <DataTemplate x:Key="HubSectionHeaderTemplate">
+            <TextBlock Margin="0,0,0,-29.5" Text="{Binding}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="CustomStackedTemplate">
+            <Grid Margin="0,0,35,15" Background="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}">
+                <Image Source="{Binding ImagePath}" Stretch="None" AutomationProperties.Name="{Binding Title}" Height="138.5" HorizontalAlignment="Right" Margin="0,0,0,-1"/>
+                <TextBlock Text="{Binding Title}" VerticalAlignment="Bottom" Margin="9.5,0,0,6.5" Style="{ThemeResource BaseTextBlockStyle}" IsHoldingEnabled="False" IsDoubleTapEnabled="False" IsRightTapEnabled="False"/>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
     <Grid x:Name="LayoutRoot">
+        <Hub x:Name="Hub" x:Uid="Hub" Header="CodeInn" Background="{ThemeResource HubBackgroundImageBrush}">
 
-        <Grid.ChildrenTransitions>
-            <TransitionCollection>
-                <EntranceThemeTransition/>
-            </TransitionCollection>
-        </Grid.ChildrenTransitions>
+            <HubSection x:Uid="HubEditor" Header="CODE" 
+                         HeaderTemplate="{ThemeResource HubSectionHeaderTemplate}">
+                <DataTemplate>
+                    <Grid Grid.Row="1" x:Name="ContentRoot" Margin="1,9.5,1,0">
+                        <WebView x:Name="webView1" HorizontalAlignment="Left" Height="491" VerticalAlignment="Top" Width="362" NavigationCompleted="webView1_NavigationCompleted"/>
+                    </Grid>
+                </DataTemplate>
+            </HubSection>
+            
+            <HubSection x:Uid="HubQuestion" Header="TASK"
+                        HeaderTemplate="{ThemeResource HubSectionHeaderTemplate}">
+                <DataTemplate>
+                    <TextBlock VerticalAlignment="Top" Margin="5,30,0,0" Text="Hurray, nothing to do !" FontFamily="Calibri" FontSize="35" TextWrapping="WrapWholeWords"/>
+                </DataTemplate>
+            </HubSection>
+            
+            <HubSection x:Uid="CompileOut" Header="Run"
+                        HeaderTemplate="{ThemeResource HubSectionHeaderTemplate}">
+                <DataTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="5*"/>
+                            <RowDefinition Height="5*"/>
+                        </Grid.RowDefinitions>
+                        <TextBox Grid.Row="0" VerticalAlignment="Top" Margin="5,30,0,0" PlaceholderText="No input" FontFamily="Calibri" FontSize="25"/>
+                        <TextBlock Grid.Row="1" VerticalAlignment="Top" Margin="5,30,0,0" Text="No output" FontFamily="Calibri" FontSize="25"/>
+                    </Grid>
+                </DataTemplate>
+            </HubSection>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <!-- Title Panel -->
-        <StackPanel Grid.Row="0" Margin="19,0,0,0">
-            <TextBlock Text="CodeInn" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0"/>
-            <TextBlock Text="SCRATCHPAD" Margin="0,-6.5,0,26.5" Style="{ThemeResource HeaderTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
-        </StackPanel>
-
-        <!--TODO: Content should be placed within the following grid-->
-        <Grid Grid.Row="1" x:Name="ContentRoot" Margin="19,9.5,19,0">
-            <WebView x:Name="webView1" HorizontalAlignment="Left" Height="491" VerticalAlignment="Top" Width="362" NavigationCompleted="webView1_NavigationCompleted"/>
-        </Grid>
+        </Hub>
     </Grid>
+
+    <Page.BottomAppBar>
+        <CommandBar ClosedDisplayMode="Compact">
+            <AppBarButton Label="Compile" Icon="Setting" Click="Compile"/>
+            <AppBarButton Label="Run" Icon="Play" Click="Run"/>
+            <AppBarButton Label="Input" Icon="Import"/>
+        </CommandBar>
+    </Page.BottomAppBar>
+
 </Page>

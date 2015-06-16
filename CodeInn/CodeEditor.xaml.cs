@@ -31,6 +31,33 @@ namespace CodeInn
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         private string navC;
+
+        private DependencyObject FindChildControl<T>(DependencyObject control, string ctrlName)
+        {
+            int childNumber = VisualTreeHelper.GetChildrenCount(control);
+            for (int i = 0; i < childNumber; i++)
+            {
+                DependencyObject child = VisualTreeHelper.GetChild(control, i);
+                FrameworkElement fe = child as FrameworkElement;
+                // Not a framework element or is null
+                if (fe == null) return null;
+
+                if (child is T && fe.Name == ctrlName)
+                {
+                    // Found the control so return
+                    return child;
+                }
+                else
+                {
+                    // Not found it - search children
+                    DependencyObject nextLevel = FindChildControl<T>(child, ctrlName);
+                    if (nextLevel != null)
+                        return nextLevel;
+                }
+            }
+            return null;
+        }
+
         public CodeEditor()
         {
             this.InitializeComponent();
@@ -53,7 +80,9 @@ namespace CodeInn
             await htmlFile.CopyAsync(stateFolder, "test.html", NameCollisionOption.ReplaceExisting);
             await CopyFolderAsync(htmlFolder, stateFolder, "ace");
             string url = "ms-appx-web:///html/test.html";
-            webView1.Navigate(new Uri(url));
+            var codesection = Hub.Sections[0];
+            WebView webv = FindChildControl<WebView>(codesection, "webView1") as WebView;
+            webv.Navigate(new Uri(url));
         }
         async Task CopyFolderAsync(StorageFolder source, StorageFolder destinationContainer, string desiredName = null)
         {
@@ -146,6 +175,16 @@ namespace CodeInn
         {
             string[] _params = new string[] {navC};
             await sender.InvokeScriptAsync("hello", _params);
+        }
+
+        private void Run(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Compile(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
