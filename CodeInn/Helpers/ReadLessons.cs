@@ -10,7 +10,7 @@ namespace CodeInn.Helpers
 {
     public class ReadLessons
     {
-        DatabaseHelperClass Db_Helper = new DatabaseHelperClass();
+        DatabaseLesson Db_Helper = new DatabaseLesson();
         public ObservableCollection<Lessons> GetAllLessons()
         {
             return Db_Helper.ReadLessons();

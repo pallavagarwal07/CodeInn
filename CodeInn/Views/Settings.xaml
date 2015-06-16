@@ -43,7 +43,6 @@
                     <ComboBoxItem Content="C++" IsSelected="True"/>
                     <ComboBoxItem Content="More languages soon."/>
                 </ComboBox>
-                <Button HorizontalAlignment="Stretch" Content="Add Contact" Click="AddContact_Click"/>
                 <Button HorizontalAlignment="Stretch" Content="Add Lesson" Click="AddLesson_Click"/>
             </StackPanel>
         </Grid>

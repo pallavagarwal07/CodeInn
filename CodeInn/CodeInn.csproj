@@ -95,13 +95,14 @@
     <Compile Include="DataModel\MainMenuSource.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Helpers\DatabaseHelperClass.cs" />
-    <Compile Include="Helpers\ReadAllContactsList.cs" />
+    <Compile Include="Helpers\DatabaseExample.cs" />
+    <Compile Include="Helpers\DatabaseLesson.cs" />
+    <Compile Include="Helpers\ReadExamples.cs" />
     <Compile Include="Helpers\ReadLessons.cs" />
     <Compile Include="HubPage.xaml.cs">
       <DependentUpon>HubPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\Contacts.cs" />
+    <Compile Include="Model\Examples.cs" />
     <Compile Include="Model\Lessons.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLite.cs" />
@@ -111,9 +112,6 @@
     </Compile>
     <Compile Include="Views\LessonViewer.xaml.cs">
       <DependentUpon>LessonViewer.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ReadContactList.xaml.cs">
-      <DependentUpon>ReadContactList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
@@ -183,10 +181,6 @@
     <Page Include="Views\LessonViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ReadContactList.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Settings.xaml">
       <SubType>Designer</SubType>

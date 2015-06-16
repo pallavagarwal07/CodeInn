@@ -111,27 +111,12 @@ namespace CodeInn.Views
 
         #endregion
 
-        private async void AddContact_Click(object sender, RoutedEventArgs e)
-        {
-            DatabaseHelperClass Db_Helper = new DatabaseHelperClass();//Creating object for DatabaseHelperClass.cs from ViewModel/DatabaseHelperClass.cs 
-            if (username.Text != "" & email.Text != "")
-            {
-                Db_Helper.Insert<Contacts>(new Contacts(username.Text, email.Text));
-                Frame.Navigate(typeof(HubPage));//after add contact redirect to contact listbox page 
-            }
-            else
-            {
-                MessageDialog messageDialog = new MessageDialog("Please fill two fields");//Text should not be empty 
-                await messageDialog.ShowAsync();
-            }
-        }
-
         private async void AddLesson_Click(object sender, RoutedEventArgs e)
         {
-            DatabaseHelperClass Db_Helper = new DatabaseHelperClass();//Creating object for DatabaseHelperClass.cs from ViewModel/DatabaseHelperClass.cs 
+            DatabaseLesson Db_Helper = new DatabaseLesson();//Creating object for DatabaseHelperClass.cs from ViewModel/DatabaseHelperClass.cs 
             if (username.Text != "" & email.Text != "")
             {
-                Db_Helper.Insert<Lessons>(new Lessons(username.Text, email.Text, "Lorem Ipsum"));
+                Db_Helper.InsertLesson(new Lessons(username.Text, email.Text, "Lorem Ipsum"));
                 Frame.Navigate(typeof(LessonViewer));//after add contact redirect to contact listbox page 
             }
             else

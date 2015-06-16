@@ -6,22 +6,24 @@ using System.Threading.Tasks;
 
 namespace CodeInn.Model
 {
-    public class Contacts
+    public class Examples
     {
         //The Id property is marked as the Primary Key
         [SQLite.PrimaryKey, SQLite.AutoIncrement]
         public int Id { get; set; }
         public string Name { get; set; }
-        public string PhoneNumber { get; set; }
+        public string Description { get; set; }
+        public string Content { get; set; }
         public string CreationDate { get; set; }
-        public Contacts()
+        public Examples()
         {
             //empty constructor
         }
-        public Contacts(string name, string phone_no)
+        public Examples(string name, string description, string content)
         {
             Name = name;
-            PhoneNumber = phone_no;
+            Description = description;
+            Content = content;
             CreationDate = DateTime.Now.ToString();
         }
     }

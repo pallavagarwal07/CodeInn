@@ -116,11 +116,11 @@ namespace CodeInn
             // Navigate to the appropriate destination page, configuring the new page
             // by passing required information as a navigation parameter
             var itemId = ((MainMenuItem)e.ClickedItem).UniqueId;
-            if (itemId == "Examples" && !Frame.Navigate(typeof(Examples), itemId))
+            if (itemId == "Lessons" && !Frame.Navigate(typeof(LessonViewer), itemId))
             {
                 throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
             }
-            else if (itemId == "Lessons" && !Frame.Navigate(typeof(TestPage), itemId))
+            else if (itemId == "Examples" && !Frame.Navigate(typeof(Examples), itemId))
             {
                 throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
             }
@@ -128,11 +128,7 @@ namespace CodeInn
             {
                 throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
             }
-            else if (itemId == "Completion" && !Frame.Navigate(typeof(ReadContactList), itemId))
-            {
-                throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
-            }
-            else if (itemId == "Optimization" && !Frame.Navigate(typeof(LessonViewer), itemId))
+            else if (itemId == "Problems" && !Frame.Navigate(typeof(TestPage), itemId))
             {
                 throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
             }

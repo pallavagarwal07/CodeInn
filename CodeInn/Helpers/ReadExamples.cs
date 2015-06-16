@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace CodeInn.Helpers
 {
-    public class ReadAllContactsList
+    public class ReadExamples
     {
-        DatabaseHelperClass Db_Helper = new DatabaseHelperClass();
-        public ObservableCollection<Contacts> GetAllContacts()
+        DatabaseExample Db_Helper = new DatabaseExample();
+        public ObservableCollection<Examples> GetAllLessons()
         {
-            return Db_Helper.ReadContacts();
+            return Db_Helper.ReadExamples();
         }
     }
 }
