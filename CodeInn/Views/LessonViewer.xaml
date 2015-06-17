@@ -21,12 +21,10 @@
         <ListBox Background="Transparent" Height="auto" Grid.Row="1" x:Name="listBox" SelectionChanged="listBox_SelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid Width="350" >
+                    <Grid>
                         <StackPanel Margin="14,0,0,0">
                             <TextBlock Grid.Row="0" x:Name="NameTxt" TextWrapping="Wrap" Text="{Binding Name}" Foreground="White" Style="{ThemeResource ListViewItemTextBlockStyle}"/>
-                            <!--<TextBlock Grid.Row="0" Text=">" FontSize="28"  HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="White"/>-->
                             <TextBlock Grid.Row="1" x:Name="DescTxt"  TextWrapping="Wrap" Text="{Binding Description}" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}"/>
-                            <!--<TextBlock HorizontalAlignment="Right" Margin="0,0,35,0" Grid.Row="3" x:Name="CreateddateTxt" Foreground="White" FontSize="18" TextWrapping="Wrap" Text="{Binding CreationDate}"/>-->
                         </StackPanel>
                     </Grid>
                 </DataTemplate>

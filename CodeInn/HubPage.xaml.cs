@@ -177,5 +177,13 @@ namespace CodeInn
         {
 
         }
+
+        private void Contribute(object sender, RoutedEventArgs e)
+        {
+            if (!Frame.Navigate(typeof(Contribute), "Main"))
+            {
+                throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
+            }
+        }
     }
 }
