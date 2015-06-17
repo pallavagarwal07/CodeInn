@@ -34,8 +34,10 @@
                 <TextBox Name="username" Margin="10,5,10,10"></TextBox>
                 <TextBlock Text="Email" HorizontalAlignment="Center" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}"/>
                 <TextBox Name="email" Margin="10,5,10,20"></TextBox>
+                <TextBlock Text="Password" HorizontalAlignment="Center" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}"/>
+                <PasswordBox Name="passwordbox"  Margin="10,5,10,20"></PasswordBox>
                 <TextBlock Text="Preferred language" HorizontalAlignment="Center" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}"/>
-                <ComboBox  
+                <ComboBox
                     HorizontalContentAlignment="Center"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Bottom"
@@ -43,6 +45,14 @@
                     <ComboBoxItem Content="C++" IsSelected="True"/>
                     <ComboBoxItem Content="More languages soon."/>
                 </ComboBox>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Content="Log In" Click="Login" Grid.Column="0" HorizontalAlignment="Center"/>
+                    <Button Content="Sign Up" Click="Signup" Grid.Column="1" HorizontalAlignment="Center"/>
+                </Grid>
                 <Button HorizontalAlignment="Stretch" Content="Add Lesson" Click="AddLesson_Click"/>
             </StackPanel>
         </Grid>

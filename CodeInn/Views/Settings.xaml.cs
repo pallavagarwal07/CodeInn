@@ -24,12 +24,14 @@ using Windows.UI.Popups;
 namespace CodeInn.Views
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// Settings page accessed from HubPage
     /// </summary>
     public sealed partial class Settings : Page
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
+        private Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+        private Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
 
         public Settings()
         {
@@ -38,48 +40,34 @@ namespace CodeInn.Views
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+
+            PopulateIfLoggedIn();
         }
 
-        /// <summary>
-        /// Gets the <see cref="NavigationHelper"/> associated with this <see cref="Page"/>.
-        /// </summary>
+        public void PopulateIfLoggedIn()
+        {
+            if (localSettings.Containers.ContainsKey("userInfo"))
+            {
+                username.Text = localSettings.Containers["userInfo"].Values["userName"].ToString();
+                email.Text = localSettings.Containers["userInfo"].Values["userEmail"].ToString();
+                passwordbox.Password = localSettings.Containers["userInfo"].Values["userPass"].ToString();
+            }
+        }
+
         public NavigationHelper NavigationHelper
         {
             get { return this.navigationHelper; }
         }
 
-        /// <summary>
-        /// Gets the view model for this <see cref="Page"/>.
-        /// This can be changed to a strongly typed view model.
-        /// </summary>
         public ObservableDictionary DefaultViewModel
         {
             get { return this.defaultViewModel; }
         }
 
-        /// <summary>
-        /// Populates the page with content passed during navigation.  Any saved state is also
-        /// provided when recreating a page from a prior session.
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event; typically <see cref="NavigationHelper"/>
-        /// </param>
-        /// <param name="e">Event data that provides both the navigation parameter passed to
-        /// <see cref="Frame.Navigate(Type, Object)"/> when this page was initially requested and
-        /// a dictionary of state preserved by this page during an earlier
-        /// session.  The state will be null the first time a page is visited.</param>
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
         }
 
-        /// <summary>
-        /// Preserves state associated with this page in case the application is suspended or the
-        /// page is discarded from the navigation cache.  Values must conform to the serialization
-        /// requirements of <see cref="SuspensionManager.SessionState"/>.
-        /// </summary>
-        /// <param name="sender">The source of the event; typically <see cref="NavigationHelper"/></param>
-        /// <param name="e">Event data that provides an empty dictionary to be populated with
-        /// serializable state.</param>
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
         }
@@ -113,17 +101,43 @@ namespace CodeInn.Views
 
         private async void AddLesson_Click(object sender, RoutedEventArgs e)
         {
-            DatabaseLesson Db_Helper = new DatabaseLesson();//Creating object for DatabaseHelperClass.cs from ViewModel/DatabaseHelperClass.cs 
+            DatabaseLesson Db_Helper = new DatabaseLesson(); 
             if (username.Text != "" & email.Text != "")
             {
                 Db_Helper.InsertLesson(new Lessons(username.Text, email.Text, "Lorem Ipsum"));
-                Frame.Navigate(typeof(LessonViewer));//after add contact redirect to contact listbox page 
+                Frame.Navigate(typeof(LessonViewer));
             }
             else
             {
-                MessageDialog messageDialog = new MessageDialog("Please fill two fields");//Text should not be empty 
+                MessageDialog messageDialog = new MessageDialog("Please fill two fields");
                 await messageDialog.ShowAsync();
             }
+        }
+
+        private void Login(object sender, RoutedEventArgs e)
+        {
+            // Query online database first to check if the user is valid.
+            if (localSettings.Containers.ContainsKey("userInfo"))
+            {
+                localSettings.Containers["userInfo"].Values["userName"] = username.Text;
+                localSettings.Containers["userInfo"].Values["userEmail"] = email.Text;
+                localSettings.Containers["userInfo"].Values["userPass"] = passwordbox.Password;
+            }
+        }
+
+        private void Signup(object sender, RoutedEventArgs e)
+        {
+            Windows.Storage.ApplicationDataContainer container =
+               localSettings.CreateContainer("userInfo", Windows.Storage.ApplicationDataCreateDisposition.Always);
+
+            // Check online database to check if info is valid.
+            // Then write info online.
+            if (localSettings.Containers.ContainsKey("userInfo"))
+            {
+                localSettings.Containers["userInfo"].Values["userName"] = username.Text;
+                localSettings.Containers["userInfo"].Values["userEmail"] = email.Text;
+                localSettings.Containers["userInfo"].Values["userPass"] = passwordbox.Password;
+            }            
         }
     }
 }
