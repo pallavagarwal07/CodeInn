@@ -29,27 +29,27 @@ namespace CodeInn.Views
     /// <summary>
     /// The menu page to retrieve and display Lessons
     /// </summary>
-    public sealed partial class LessonViewer : Page
+    public sealed partial class ProblemViewer : Page
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
-
-        ObservableCollection<Lessons> DB_LessonList = new ObservableCollection<Lessons>();
-        public LessonViewer()
+        
+        ObservableCollection<Problems> DB_ProblemList = new ObservableCollection<Problems>();
+        public ProblemViewer()
         {
             this.InitializeComponent();
 
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
-            this.Loaded += ReadLessons_Loaded;
+            this.Loaded += ReadProblems_Loaded;
         }
 
-        private void ReadLessons_Loaded(object sender, RoutedEventArgs e)
+        private void ReadProblems_Loaded(object sender, RoutedEventArgs e)
         {
-            ReadLessons dblessons = new ReadLessons();
-            DB_LessonList = dblessons.GetAllLessons();//Get all DB contacts 
-            listBox.ItemsSource = DB_LessonList.OrderByDescending(i => i.Id).ToList();//Binding DB data to LISTBOX and Latest contact ID can Display first. 
+            ReadProblems dbproblems = new ReadProblems();
+            DB_ProblemList = dbproblems.GetAllProblems();
+            listBox.ItemsSource = DB_ProblemList.OrderByDescending(i => i.Id).ToList();
         }
         private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -103,29 +103,27 @@ namespace CodeInn.Views
 
         async private void ReadDataFromWeb()
         {
-            var client = new HttpClient(); // Add: using System.Net.Http;
-            var response = await client.GetAsync(new Uri("http://117.197.50.43:8888/time.php%5c?Timestamp%5C=2015-06-13%2020%3A39%3A46%5C&Table%5C=Questions%5C&Category%5C=easy"));
-
-            //http://117.197.50.43:8888/time.php?Timestamp=2015-06-13+20%3A39%3A46&Table=Questions&Category=easy
-
+            var client = new HttpClient();
+            var response = await client.GetAsync(new Uri("http://ws.varstack.com/time.php?Timestamp=2015-06-13%2020%3A39%3A46&Table=Problems&Category=easy"));
+            
             while (response.StatusCode == HttpStatusCode.TemporaryRedirect)
             {
                 response = await client.GetAsync(response.Headers.Location);
             }
             var result = await response.Content.ReadAsStringAsync();
             result = result.Replace("\"", string.Empty);
-
-            // Doesn't work right now because the output cannot be parsed as Lessons
-            List<Lessons> newlessons = JsonConvert.DeserializeObject<List<Lessons>>(result);
-            Debug.WriteLine(newlessons[0].Content);
+            Debug.WriteLine(result);
+            
+            //List<Problems> newprobs = JsonConvert.DeserializeObject<List<Problems>>(result);
+            //Debug.WriteLine(newprobs[0].Content);
         }
 
         private void Refresh_Lessons(object sender, RoutedEventArgs e)
         {
-            //ReadDataFromWeb();
-            ReadLessons dblessons = new ReadLessons();
-            DB_LessonList = dblessons.GetAllLessons();
-            listBox.ItemsSource = DB_LessonList.OrderByDescending(i => i.Id).ToList();//Binding DB data to LISTBOX and Latest lessons can Display first.             
+            ReadDataFromWeb();
+            ReadProblems dbproblems = new ReadProblems();
+            DB_ProblemList = dbproblems.GetAllProblems();
+            listBox.ItemsSource = DB_ProblemList.OrderByDescending(i => i.Id).ToList();
         }
 
     }

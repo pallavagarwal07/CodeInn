@@ -128,7 +128,7 @@ namespace CodeInn
             {
                 throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
             }
-            else if (itemId == "Problems" && !Frame.Navigate(typeof(TestPage), itemId))
+            else if (itemId == "Problems" && !Frame.Navigate(typeof(ProblemViewer), itemId))
             {
                 throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
             }

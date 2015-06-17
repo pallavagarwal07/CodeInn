@@ -96,19 +96,32 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Helpers\DatabaseExample.cs" />
+    <Compile Include="Helpers\DatabaseProblem.cs" />
     <Compile Include="Helpers\DatabaseLesson.cs" />
     <Compile Include="Helpers\ReadExamples.cs" />
+    <Compile Include="Helpers\ReadProblems.cs" />
     <Compile Include="Helpers\ReadLessons.cs" />
     <Compile Include="HubPage.xaml.cs">
       <DependentUpon>HubPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\Examples.cs" />
+    <Compile Include="Model\Problems.cs" />
+    <Compile Include="Model\Tips.cs" />
     <Compile Include="Model\Lessons.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />
+    <Compile Include="Views\Contribute.xaml.cs">
+      <DependentUpon>Contribute.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Credits.xaml.cs">
+      <DependentUpon>Credits.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Examples.xaml.cs">
       <DependentUpon>Examples.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProblemViewer.xaml.cs">
+      <DependentUpon>ProblemViewer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LessonViewer.xaml.cs">
       <DependentUpon>LessonViewer.xaml</DependentUpon>
@@ -174,7 +187,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Contribute.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Credits.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Examples.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ProblemViewer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
