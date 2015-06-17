@@ -101,11 +101,22 @@ namespace CodeInn.Views
         #endregion
 
 
-        async private void ReadDataFromWeb()
+        async private void GetDataFromWeb()
         {
             var client = new HttpClient();
-            var response = await client.GetAsync(new Uri("http://ws.varstack.com/time.php?Timestamp=2015-06-13%2020%3A39%3A46&Table=Problems&Category=easy"));
-            
+            Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+
+            if (!localSettings.Containers.ContainsKey("userInfo"))
+            {
+                MessageDialog msgbox = new MessageDialog("Please log-in first. Go to settings from the main menu.");
+                await msgbox.ShowAsync();
+                return;
+            }
+
+            var lastcheck = localSettings.Containers["userInfo"].Values["lastcheck"].ToString();
+            Debug.WriteLine(System.Uri.EscapeUriString(lastcheck));
+            var response = await client.GetAsync(new Uri("http://ws.varstack.com/time.php?Timestamp=" + System.Uri.EscapeUriString(lastcheck) + "&Table=Problems&Category=easy"));
+
             while (response.StatusCode == HttpStatusCode.TemporaryRedirect)
             {
                 response = await client.GetAsync(response.Headers.Location);
@@ -113,14 +124,20 @@ namespace CodeInn.Views
             var result = await response.Content.ReadAsStringAsync();
             result = result.Replace("\"", string.Empty);
             Debug.WriteLine(result);
-            
-            //List<Problems> newprobs = JsonConvert.DeserializeObject<List<Problems>>(result);
-            //Debug.WriteLine(newprobs[0].Content);
+
+            List<Problems> newprobs = JsonConvert.DeserializeObject<List<Problems>>(result);
+            foreach(Problems prob in newprobs)
+            {
+                DatabaseProblem Db_Helper = new DatabaseProblem();
+                Db_Helper.InsertProblem(prob);
+            }
+
+            localSettings.Containers["userInfo"].Values["lastcheck"] = DateTime.Now.ToString("yyyy-mm-dd hh:mm:ss");
         }
 
         private void Refresh_Lessons(object sender, RoutedEventArgs e)
         {
-            ReadDataFromWeb();
+            GetDataFromWeb();
             ReadProblems dbproblems = new ReadProblems();
             DB_ProblemList = dbproblems.GetAllProblems();
             listBox.ItemsSource = DB_ProblemList.OrderByDescending(i => i.Id).ToList();

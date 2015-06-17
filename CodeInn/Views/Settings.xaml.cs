@@ -122,6 +122,7 @@ namespace CodeInn.Views
                 localSettings.Containers["userInfo"].Values["userName"] = username.Text;
                 localSettings.Containers["userInfo"].Values["userEmail"] = email.Text;
                 localSettings.Containers["userInfo"].Values["userPass"] = passwordbox.Password;
+                localSettings.Containers["userInfo"].Values["lastcheck"] = "2014-01-01 01:01:01";
             }
         }
 
@@ -137,6 +138,7 @@ namespace CodeInn.Views
                 localSettings.Containers["userInfo"].Values["userName"] = username.Text;
                 localSettings.Containers["userInfo"].Values["userEmail"] = email.Text;
                 localSettings.Containers["userInfo"].Values["userPass"] = passwordbox.Password;
+                localSettings.Containers["userInfo"].Values["lastcheck"] = "2014-01-01 01:01:01";
             }            
         }
     }
