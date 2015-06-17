@@ -33,7 +33,7 @@
                 <TextBlock Text="Pallav Agarwal" Margin="1,10,1,10" FontSize="30" HorizontalAlignment="Center" Style="{ThemeResource HeaderTextBlockStyle}"/>
                 <TextBlock Text="Saksham Sharma" FontSize="30" HorizontalAlignment="Center" Style="{ThemeResource HeaderTextBlockStyle}"/>
                 <TextBlock Text="Vinayak Tantia" Margin="1,10,1,10" FontSize="30" HorizontalAlignment="Center" Style="{ThemeResource HeaderTextBlockStyle}"/>
-                
+
             </StackPanel>
         </Grid>
     </Grid>
