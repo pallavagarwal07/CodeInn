@@ -23,6 +23,8 @@ namespace CodeInn.Helpers
                     using (dbConn = new SQLiteConnection(DB_PATH))
                     {
                         dbConn.CreateTable<Examples>();
+                        dbConn.CreateTable<Tips>();
+                        dbConn.CreateTable<Problems>();
                         dbConn.CreateTable<Lessons>();
                     }
                 }

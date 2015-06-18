@@ -75,19 +75,6 @@ namespace CodeInn.Views
 
         #region NavigationHelper registration
 
-        /// <summary>
-        /// The methods provided in this section are simply used to allow
-        /// NavigationHelper to respond to the page's navigation methods.
-        /// <para>
-        /// Page specific logic should be placed in event handlers for the  
-        /// <see cref="NavigationHelper.LoadState"/>
-        /// and <see cref="NavigationHelper.SaveState"/>.
-        /// The navigation parameter is available in the LoadState method 
-        /// in addition to page state preserved during an earlier session.
-        /// </para>
-        /// </summary>
-        /// <param name="e">Provides data for navigation methods and event
-        /// handlers that cannot cancel the navigation request.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             this.navigationHelper.OnNavigatedTo(e);
@@ -113,7 +100,7 @@ namespace CodeInn.Views
                 return;
             }
 
-            var lastcheck = localSettings.Containers["userInfo"].Values["lastcheck"].ToString();
+            var lastcheck = localSettings.Containers["userInfo"].Values["lastcheckproblems"].ToString();
             Debug.WriteLine(System.Uri.EscapeUriString(lastcheck));
             var response = await client.GetAsync(new Uri("http://ws.varstack.com/time.php?Timestamp=" + System.Uri.EscapeUriString(lastcheck) + "&Table=Problems&Category=easy"));
 
@@ -132,7 +119,7 @@ namespace CodeInn.Views
                 Db_Helper.InsertProblem(prob);
             }
 
-            localSettings.Containers["userInfo"].Values["lastcheck"] = DateTime.Now.ToString("yyyy-mm-dd hh:mm:ss");
+            localSettings.Containers["userInfo"].Values["lastcheckproblems"] = DateTime.Now.ToString("yyyy-mm-dd hh:mm:ss");
         }
 
         private void Refresh_Lessons(object sender, RoutedEventArgs e)

@@ -47,6 +47,8 @@ namespace CodeInn
                 using (var db = new SQLiteConnection(DB_PATH))
                 {
                     db.CreateTable<Examples>();
+                    db.CreateTable<Tips>();
+                    db.CreateTable<Problems>();
                     db.CreateTable<Lessons>();
                 }
             }

@@ -23,6 +23,8 @@ namespace CodeInn.Helpers
                     using (dbConn = new SQLiteConnection(DB_PATH))
                     {
                         dbConn.CreateTable<Examples>();
+                        dbConn.CreateTable<Tips>();
+                        dbConn.CreateTable<Problems>();
                         dbConn.CreateTable<Lessons>();
                     }
                 }
@@ -69,7 +71,7 @@ namespace CodeInn.Helpers
 
 
         //--------------------CREATE--------------------//
-        public void InsertExamples(Examples newobj)
+        public void InsertExample(Examples newobj)
         {
             using (var dbConn = new SQLiteConnection(App.DB_PATH))
             {

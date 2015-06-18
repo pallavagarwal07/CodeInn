@@ -75,19 +75,6 @@ namespace CodeInn.Views
 
         #region NavigationHelper registration
 
-        /// <summary>
-        /// The methods provided in this section are simply used to allow
-        /// NavigationHelper to respond to the page's navigation methods.
-        /// <para>
-        /// Page specific logic should be placed in event handlers for the  
-        /// <see cref="NavigationHelper.LoadState"/>
-        /// and <see cref="NavigationHelper.SaveState"/>.
-        /// The navigation parameter is available in the LoadState method 
-        /// in addition to page state preserved during an earlier session.
-        /// </para>
-        /// </summary>
-        /// <param name="e">Provides data for navigation methods and event
-        /// handlers that cannot cancel the navigation request.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             this.navigationHelper.OnNavigatedTo(e);
@@ -103,10 +90,19 @@ namespace CodeInn.Views
 
         async private void ReadDataFromWeb()
         {
-            var client = new HttpClient(); // Add: using System.Net.Http;
-            var response = await client.GetAsync(new Uri("http://117.197.50.43:8888/time.php%5c?Timestamp%5C=2015-06-13%2020%3A39%3A46%5C&Table%5C=Questions%5C&Category%5C=easy"));
+            var client = new HttpClient();
+            Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
 
-            //http://117.197.50.43:8888/time.php?Timestamp=2015-06-13+20%3A39%3A46&Table=Questions&Category=easy
+            if (!localSettings.Containers.ContainsKey("userInfo"))
+            {
+                MessageDialog msgbox = new MessageDialog("Please log-in first. Go to settings from the main menu.");
+                await msgbox.ShowAsync();
+                return;
+            }
+
+            var lastcheck = localSettings.Containers["userInfo"].Values["lastchecklessons"].ToString();
+            Debug.WriteLine(System.Uri.EscapeUriString(lastcheck));
+            var response = await client.GetAsync(new Uri("http://ws.varstack.com/time.php?Timestamp=" + System.Uri.EscapeUriString(lastcheck) + "&Table=Lessons&Category=easy"));
 
             while (response.StatusCode == HttpStatusCode.TemporaryRedirect)
             {
@@ -114,15 +110,21 @@ namespace CodeInn.Views
             }
             var result = await response.Content.ReadAsStringAsync();
             result = result.Replace("\"", string.Empty);
+            Debug.WriteLine(result);
 
-            // Doesn't work right now because the output cannot be parsed as Lessons
-            List<Lessons> newlessons = JsonConvert.DeserializeObject<List<Lessons>>(result);
-            Debug.WriteLine(newlessons[0].Content);
+            List<Lessons> newless = JsonConvert.DeserializeObject<List<Lessons>>(result);
+            foreach (Lessons less in newless)
+            {
+                DatabaseLesson Db_Helper = new DatabaseLesson();
+                Db_Helper.InsertLesson(less);
+            }
+
+            localSettings.Containers["userInfo"].Values["lastchecklessons"] = DateTime.Now.ToString("yyyy-mm-dd hh:mm:ss");
         }
 
         private void Refresh_Lessons(object sender, RoutedEventArgs e)
         {
-            //ReadDataFromWeb();
+            ReadDataFromWeb();
             ReadLessons dblessons = new ReadLessons();
             DB_LessonList = dblessons.GetAllLessons();
             listBox.ItemsSource = DB_LessonList.OrderByDescending(i => i.Id).ToList();//Binding DB data to LISTBOX and Latest lessons can Display first.             

@@ -96,9 +96,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Helpers\DatabaseExample.cs" />
+    <Compile Include="Helpers\DatabaseTips.cs" />
     <Compile Include="Helpers\DatabaseProblem.cs" />
     <Compile Include="Helpers\DatabaseLesson.cs" />
     <Compile Include="Helpers\ReadExamples.cs" />
+    <Compile Include="Helpers\ReadTips.cs" />
     <Compile Include="Helpers\ReadProblems.cs" />
     <Compile Include="Helpers\ReadLessons.cs" />
     <Compile Include="HubPage.xaml.cs">
@@ -117,8 +119,8 @@
     <Compile Include="Views\Credits.xaml.cs">
       <DependentUpon>Credits.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Examples.xaml.cs">
-      <DependentUpon>Examples.xaml</DependentUpon>
+    <Compile Include="Views\ExampleViewer.xaml.cs">
+      <DependentUpon>ExampleViewer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProblemViewer.xaml.cs">
       <DependentUpon>ProblemViewer.xaml</DependentUpon>
@@ -195,7 +197,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Examples.xaml">
+    <Page Include="Views\ExampleViewer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
