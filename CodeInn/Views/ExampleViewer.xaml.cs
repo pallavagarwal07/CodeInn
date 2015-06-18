@@ -112,22 +112,33 @@ namespace CodeInn.Views
             result = result.Replace("\"", string.Empty);
             Debug.WriteLine(result);
 
-            List<Examples> newex = JsonConvert.DeserializeObject<List<Examples>>(result);
-            foreach(Examples ex in newex)
+            try
             {
-                DatabaseExample Db_Helper = new DatabaseExample();
-                Db_Helper.InsertExample(ex);
-            }
+                List<Examples> newex = JsonConvert.DeserializeObject<List<Examples>>(result);
 
-            localSettings.Containers["userInfo"].Values["lastcheckexamples"] = DateTime.Now.ToString("yyyy-mm-dd hh:mm:ss");
+                foreach (Examples ex in newex)
+                {
+                    DatabaseExample Db_Helper = new DatabaseExample();
+                    Db_Helper.InsertExample(ex);
+                }
+
+                localSettings.Containers["userInfo"].Values["lastcheckexamples"] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            }
+            catch
+            {
+                Debug.WriteLine("No new items");
+            }
+            finally
+            {
+                ReadExamples dbproblems = new ReadExamples();
+                DB_ExampleList = dbproblems.GetAllExamples();
+                listBox.ItemsSource = DB_ExampleList.OrderByDescending(i => i.Id).ToList();
+            }
         }
 
-        private void Refresh_Lessons(object sender, RoutedEventArgs e)
+        private void Refresh_Examples(object sender, RoutedEventArgs e)
         {
             GetDataFromWeb();
-            ReadExamples dbproblems = new ReadExamples();
-            DB_ExampleList = dbproblems.GetAllExamples();
-            listBox.ItemsSource = DB_ExampleList.OrderByDescending(i => i.Id).ToList();
         }
 
     }

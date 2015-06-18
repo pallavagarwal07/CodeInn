@@ -35,7 +35,7 @@
     
     <Page.BottomAppBar>
         <CommandBar ClosedDisplayMode="Minimal">
-            <AppBarButton Label="Refresh" Icon="Refresh" Click="Refresh_Lessons"/>
+            <AppBarButton Label="Refresh" Icon="Refresh" Click="Refresh_Problems"/>
         </CommandBar>
     </Page.BottomAppBar>
 

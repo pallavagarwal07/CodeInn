@@ -112,22 +112,33 @@ namespace CodeInn.Views
             result = result.Replace("\"", string.Empty);
             Debug.WriteLine(result);
 
-            List<Lessons> newless = JsonConvert.DeserializeObject<List<Lessons>>(result);
-            foreach (Lessons less in newless)
+            try
             {
-                DatabaseLesson Db_Helper = new DatabaseLesson();
-                Db_Helper.InsertLesson(less);
-            }
+                List<Lessons> newless = JsonConvert.DeserializeObject<List<Lessons>>(result);
 
-            localSettings.Containers["userInfo"].Values["lastchecklessons"] = DateTime.Now.ToString("yyyy-mm-dd hh:mm:ss");
+                foreach (Lessons less in newless)
+                {
+                    DatabaseLesson Db_Helper = new DatabaseLesson();
+                    Db_Helper.InsertLesson(less);
+                }
+
+                localSettings.Containers["userInfo"].Values["lastchecklessons"] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            }
+            catch
+            {
+                Debug.WriteLine("No new items");
+            }
+            finally
+            {
+                ReadLessons dblessons = new ReadLessons();
+                DB_LessonList = dblessons.GetAllLessons();
+                listBox.ItemsSource = DB_LessonList.OrderByDescending(i => i.Id).ToList();
+            }
         }
 
         private void Refresh_Lessons(object sender, RoutedEventArgs e)
         {
             ReadDataFromWeb();
-            ReadLessons dblessons = new ReadLessons();
-            DB_LessonList = dblessons.GetAllLessons();
-            listBox.ItemsSource = DB_LessonList.OrderByDescending(i => i.Id).ToList();//Binding DB data to LISTBOX and Latest lessons can Display first.             
         }
 
     }

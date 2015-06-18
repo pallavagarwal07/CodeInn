@@ -2,10 +2,12 @@
 using CodeInn.Helpers;
 using CodeInn.Model;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -112,22 +114,33 @@ namespace CodeInn.Views
             result = result.Replace("\"", string.Empty);
             Debug.WriteLine(result);
 
-            List<Problems> newprobs = JsonConvert.DeserializeObject<List<Problems>>(result);
-            foreach(Problems prob in newprobs)
+            try
             {
-                DatabaseProblem Db_Helper = new DatabaseProblem();
-                Db_Helper.InsertProblem(prob);
-            }
+                List<Problems> newprobs = JsonConvert.DeserializeObject<List<Problems>>(result);
 
-            localSettings.Containers["userInfo"].Values["lastcheckproblems"] = DateTime.Now.ToString("yyyy-mm-dd hh:mm:ss");
+                foreach (Problems prob in newprobs)
+                {
+                    DatabaseProblem Db_Helper = new DatabaseProblem();
+                    Db_Helper.InsertProblem(prob);
+                }
+
+                localSettings.Containers["userInfo"].Values["lastcheckproblems"] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            }
+            catch
+            {
+                Debug.WriteLine("No new items");
+            }
+            finally
+            {
+                ReadProblems dbproblems = new ReadProblems();
+                DB_ProblemList = dbproblems.GetAllProblems();
+                listBox.ItemsSource = DB_ProblemList.OrderByDescending(i => i.Id).ToList();
+            }
         }
 
-        private void Refresh_Lessons(object sender, RoutedEventArgs e)
+        private void Refresh_Problems(object sender, RoutedEventArgs e)
         {
             GetDataFromWeb();
-            ReadProblems dbproblems = new ReadProblems();
-            DB_ProblemList = dbproblems.GetAllProblems();
-            listBox.ItemsSource = DB_ProblemList.OrderByDescending(i => i.Id).ToList();
         }
 
     }
