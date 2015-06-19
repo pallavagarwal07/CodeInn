@@ -112,14 +112,20 @@ namespace CodeInn.Views
             result = result.Replace("\"", string.Empty);
             Debug.WriteLine(result);
 
+            DatabaseExample Db_Helper = new DatabaseExample();
             try
             {
                 List<Examples> newex = JsonConvert.DeserializeObject<List<Examples>>(result);
-
                 foreach (Examples ex in newex)
                 {
-                    DatabaseExample Db_Helper = new DatabaseExample();
-                    Db_Helper.InsertExample(ex);
+                    try
+                    {
+                        Db_Helper.InsertExample(ex);
+                    }
+                    catch
+                    {
+                        Debug.WriteLine("DB error for item of id: " + ex.Id);
+                    }
                 }
 
                 localSettings.Containers["userInfo"].Values["lastcheckexamples"] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");

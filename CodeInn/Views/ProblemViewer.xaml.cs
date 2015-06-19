@@ -55,6 +55,8 @@ namespace CodeInn.Views
         }
         private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            Problems clickedProblem = (Problems)(sender as ListBox).SelectedItem;
+            //Frame.Navigate(typeof(CodeEditor), clickedProblem.Id);
         }
 
         public NavigationHelper NavigationHelper
@@ -114,16 +116,21 @@ namespace CodeInn.Views
             result = result.Replace("\"", string.Empty);
             Debug.WriteLine(result);
 
+            DatabaseProblem Db_Helper = new DatabaseProblem();
             try
             {
                 List<Problems> newprobs = JsonConvert.DeserializeObject<List<Problems>>(result);
-
                 foreach (Problems prob in newprobs)
                 {
-                    DatabaseProblem Db_Helper = new DatabaseProblem();
-                    Db_Helper.InsertProblem(prob);
+                    try
+                    {
+                        Db_Helper.InsertProblem(prob);
+                    }
+                    catch
+                    {
+                        Debug.WriteLine("DB error for item of id: " + prob.Id);
+                    }
                 }
-
                 localSettings.Containers["userInfo"].Values["lastcheckproblems"] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             }
             catch

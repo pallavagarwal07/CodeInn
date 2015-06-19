@@ -111,17 +111,22 @@ namespace CodeInn.Views
             var result = await response.Content.ReadAsStringAsync();
             result = result.Replace("\"", string.Empty);
             Debug.WriteLine(result);
-
+            
+            DatabaseLesson Db_Helper = new DatabaseLesson();     
             try
             {
                 List<Lessons> newless = JsonConvert.DeserializeObject<List<Lessons>>(result);
-
                 foreach (Lessons less in newless)
                 {
-                    DatabaseLesson Db_Helper = new DatabaseLesson();
-                    Db_Helper.InsertLesson(less);
+                    try
+                    {
+                        Db_Helper.InsertLesson(less);
+                    }
+                    catch
+                    {
+                        Debug.WriteLine("DB error for item of id: " + less.Id);
+                    }
                 }
-
                 localSettings.Containers["userInfo"].Values["lastchecklessons"] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             }
             catch

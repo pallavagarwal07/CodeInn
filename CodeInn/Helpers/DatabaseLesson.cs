@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace CodeInn.Helpers
 {
@@ -74,6 +75,12 @@ namespace CodeInn.Helpers
         {
             using (var dbConn = new SQLiteConnection(App.DB_PATH))
             {
+                var existingLesson = dbConn.Query<Lessons>("select * from Lessons where Id =" + newobj.Id).FirstOrDefault();
+                if (existingLesson != null)
+                {
+                    Debug.WriteLine("Already exists, item: " + existingLesson.Id);
+                    return;
+                }
                 dbConn.RunInTransaction(() =>
                 {
                     dbConn.Insert(newobj);

@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace CodeInn.Helpers
 {
@@ -74,6 +75,12 @@ namespace CodeInn.Helpers
         {
             using (var dbConn = new SQLiteConnection(App.DB_PATH))
             {
+                var existingTip = dbConn.Query<Tips>("select * from Tips where Id =" + newobj.Id).FirstOrDefault();
+                if (existingTip != null)
+                {
+                    Debug.WriteLine("Already exists, item: " + existingTip.Id);
+                    return;
+                }
                 dbConn.RunInTransaction(() =>
                 {
                     dbConn.Insert(newobj);

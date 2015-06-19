@@ -9,7 +9,7 @@ namespace CodeInn.Model
     public class Problems
     {
         //The Id property is marked as the Primary Key
-        [SQLite.PrimaryKey, SQLite.AutoIncrement]
+        [SQLite.PrimaryKey]
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

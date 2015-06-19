@@ -124,7 +124,7 @@ namespace CodeInn
             {
                 throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
             }
-            else if (itemId == "Tips" && !Frame.Navigate(typeof(CodeEditor), itemId))
+            else if (itemId == "Scratchpad" && !Frame.Navigate(typeof(CodeEditor), itemId))
             {
                 throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
             }
