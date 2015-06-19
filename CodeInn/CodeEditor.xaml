@@ -36,7 +36,10 @@
             <HubSection x:Uid="HubQuestion" Header="TASK"
                         HeaderTemplate="{ThemeResource HubSectionHeaderTemplate}">
                 <DataTemplate>
-                    <TextBlock VerticalAlignment="Top" Margin="5,30,0,0" Text="Hurray, nothing to do !" FontFamily="Calibri" FontSize="35" TextWrapping="WrapWholeWords"/>
+                    <StackPanel>
+                        <TextBlock VerticalAlignment="Top" x:Name="probname" Margin="5,30,0,0" Text="Scratchpad" FontFamily="Calibri" FontSize="35" TextWrapping="WrapWholeWords"/>
+                        <TextBlock VerticalAlignment="Top" x:Name="probdesc" Margin="5,30,0,0" Text="Hurray, nothing to do !" FontFamily="Calibri" FontSize="25" TextWrapping="WrapWholeWords"/>
+                    </StackPanel>
                 </DataTemplate>
             </HubSection>
             

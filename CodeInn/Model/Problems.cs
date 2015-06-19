@@ -20,8 +20,9 @@ namespace CodeInn.Model
         {
             //empty constructor
         }
-        public Problems(string name, string description, string content, string author)
+        public Problems(int id, string name, string description, string content, string author)
         {
+            Id = id;
             Name = name;
             Description = description;
             Content = content;

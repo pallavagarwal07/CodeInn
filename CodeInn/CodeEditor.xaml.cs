@@ -17,6 +17,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using System.Threading.Tasks;
+using CodeInn.Model;
+using System.Diagnostics;
 
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
@@ -70,8 +72,9 @@ namespace CodeInn
         // Copies the file "html\html_example2.html" from this package's installed location to 
         // a new file "NavigateToState\test.html" in the local state folder.  When this is 
         // done, enables the 'Load HTML' button. 
-        async void createHtmlFileInLocalState(string navContext)
+        async void populateContent(Problems problem)
         {
+            string navContext = Base64Decode(problem.Content);
             navC = navContext;
             StorageFolder stateFolder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("NavigateToState", CreationCollisionOption.OpenIfExists);
             StorageFile htmlFile = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync("html\\test.html");
@@ -83,7 +86,12 @@ namespace CodeInn
             var codesection = Hub.Sections[0];
             WebView webv = FindChildControl<WebView>(codesection, "webView1") as WebView;
             webv.Navigate(new Uri(url));
-        }
+
+			var pname = FindChildControl<TextBlock>(Hub.Sections[1], "probname") as TextBlock;
+			var pdesc = FindChildControl<TextBlock>(Hub.Sections[1], "probdesc") as TextBlock;
+			pname.Text = problem.Name;
+			pdesc.Text = problem.Description;
+		}
         async Task CopyFolderAsync(StorageFolder source, StorageFolder destinationContainer, string desiredName = null)
         {
             StorageFolder destinationFolder = null;
@@ -160,8 +168,14 @@ namespace CodeInn
         /// handlers that cannot cancel the navigation request.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            createHtmlFileInLocalState(e.Parameter as string);
+            populateContent(e.Parameter as Problems);
             this.navigationHelper.OnNavigatedTo(e);
+        }
+
+        public static string Base64Decode(string base64EncodedData)
+        {
+            var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
+            return System.Text.Encoding.UTF8.GetString(base64EncodedBytes, 0, base64EncodedBytes.Length);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)

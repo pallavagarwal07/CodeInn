@@ -1,5 +1,6 @@
 ﻿using CodeInn.Common;
 using CodeInn.Data;
+using CodeInn.Model;
 using CodeInn.Views;
 using System;
 using System.Collections.Generic;
@@ -124,7 +125,7 @@ namespace CodeInn
             {
                 throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
             }
-            else if (itemId == "Scratchpad" && !Frame.Navigate(typeof(CodeEditor), itemId))
+            else if (itemId == "Scratchpad" && !Frame.Navigate(typeof(CodeEditor), new Problems(0, "Scratchpad", "Code and run anything you want. Go ahead, try new things.", "I2luY2x1ZGUgPGlvc3RyZWFtPg0KDQppbnQgbWFpbigpIHsNCg0KfQ==", "Admin")))
             {
                 throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
             }
