@@ -24,7 +24,7 @@ using System.Threading.Tasks;
 namespace CodeInn
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// CodeEditor page.
     /// </summary>
     public sealed partial class CodeEditor : Page
     {
@@ -160,8 +160,8 @@ namespace CodeInn
         /// handlers that cannot cancel the navigation request.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            createHtmlFileInLocalState(e.Parameter as string); 
-        //  this.navigationHelper.OnNavigatedTo(e);
+            createHtmlFileInLocalState(e.Parameter as string);
+            this.navigationHelper.OnNavigatedTo(e);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
