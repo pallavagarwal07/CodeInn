@@ -176,7 +176,10 @@ namespace CodeInn
 
         private void GoTo_Credits(object sender, RoutedEventArgs e)
         {
-
+            if (!Frame.Navigate(typeof(Credits)))
+            {
+                throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
+            }
         }
 
         private void Contribute(object sender, RoutedEventArgs e)
