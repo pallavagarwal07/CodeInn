@@ -114,8 +114,21 @@ namespace CodeInn.Views
             }
         }
 
-        private void Login(object sender, RoutedEventArgs e)
+        private async void Login(object sender, RoutedEventArgs e)
         {
+            if (username.Text == "" & email.Text == "")
+            {
+                MessageDialog messageDialog = new MessageDialog("Please fill atleast one of email/username fields");
+                await messageDialog.ShowAsync();
+                return;
+            }
+            if (passwordbox.Password == "")
+            {
+                MessageDialog messageDialog = new MessageDialog("Please enter your password");
+                await messageDialog.ShowAsync();
+                return;
+            }
+
             // Query online database first to check if the user is valid.
             if (localSettings.Containers.ContainsKey("userInfo"))
             {
@@ -129,8 +142,33 @@ namespace CodeInn.Views
             }
         }
 
-        private void Signup(object sender, RoutedEventArgs e)
+        private async void Signup(object sender, RoutedEventArgs e)
         {
+            if (username.Text == "" || email.Text == "")
+            {
+                MessageDialog messageDialog = new MessageDialog("Please fill email and username.");
+                await messageDialog.ShowAsync();
+                return;
+            }
+            if (passwordbox.Password == "")
+            {
+                MessageDialog messageDialog = new MessageDialog("Please enter your password");
+                await messageDialog.ShowAsync();
+                return;
+            }
+
+            // Query online database first to check if the user is valid.
+            if (localSettings.Containers.ContainsKey("userInfo"))
+            {
+                localSettings.Containers["userInfo"].Values["userName"] = username.Text;
+                localSettings.Containers["userInfo"].Values["userEmail"] = email.Text;
+                localSettings.Containers["userInfo"].Values["userPass"] = passwordbox.Password;
+                localSettings.Containers["userInfo"].Values["lastcheckexamples"] = "2014-01-01 01:01:01";
+                localSettings.Containers["userInfo"].Values["lastcheckproblems"] = "2014-01-01 01:01:01";
+                localSettings.Containers["userInfo"].Values["lastchecklessons"] = "2014-01-01 01:01:01";
+                localSettings.Containers["userInfo"].Values["lastchecktips"] = "2014-01-01 01:01:01";
+            }
+
             Windows.Storage.ApplicationDataContainer container =
                localSettings.CreateContainer("userInfo", Windows.Storage.ApplicationDataCreateDisposition.Always);
 
