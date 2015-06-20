@@ -6,14 +6,8 @@ using System.Threading.Tasks;
 
 namespace CodeInn.Model
 {
-    public class Problems
+    public class Problems : ParentClass
     {
-        //The Id property is marked as the Primary Key
-        [SQLite.PrimaryKey]
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string Content { get; set; }
         public string CreationDate { get; set; }
         public string Author { get; set; }
         public Problems()

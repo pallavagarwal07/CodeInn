@@ -33,6 +33,7 @@ namespace CodeInn
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         private string navC;
+        private ParentClass displayedObject;
 
         private DependencyObject FindChildControl<T>(DependencyObject control, string ctrlName)
         {
@@ -72,9 +73,9 @@ namespace CodeInn
         // Copies the file "html\html_example2.html" from this package's installed location to 
         // a new file "NavigateToState\test.html" in the local state folder.  When this is 
         // done, enables the 'Load HTML' button. 
-        async void populateContent(Problems problem)
+        async void populateContent()
         {
-            string navContext = Base64Decode(problem.Content);
+            string navContext = Base64Decode(displayedObject.Content);
             navC = navContext;
             StorageFolder stateFolder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("NavigateToState", CreationCollisionOption.OpenIfExists);
             StorageFile htmlFile = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync("html\\test.html");
@@ -89,9 +90,10 @@ namespace CodeInn
 
 			var pname = FindChildControl<TextBlock>(Hub.Sections[1], "probname") as TextBlock;
 			var pdesc = FindChildControl<TextBlock>(Hub.Sections[1], "probdesc") as TextBlock;
-			pname.Text = problem.Name;
-			pdesc.Text = problem.Description;
+			pname.Text = displayedObject.Name;
+            pdesc.Text = displayedObject.Description;
 		}
+
         async Task CopyFolderAsync(StorageFolder source, StorageFolder destinationContainer, string desiredName = null)
         {
             StorageFolder destinationFolder = null;
@@ -168,7 +170,8 @@ namespace CodeInn
         /// handlers that cannot cancel the navigation request.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            populateContent(e.Parameter as Problems);
+            displayedObject = e.Parameter as ParentClass;
+            populateContent();
             this.navigationHelper.OnNavigatedTo(e);
         }
 
