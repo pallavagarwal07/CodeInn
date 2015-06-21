@@ -139,6 +139,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Acecoders.jpg" />
     <Content Include="Assets\DarkGray.png" />
     <Content Include="Assets\LightGray.png" />
     <Content Include="Assets\MainMenu\1min.png" />

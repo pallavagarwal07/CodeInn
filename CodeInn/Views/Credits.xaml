@@ -26,15 +26,29 @@
             <TextBlock Text="CodeInn" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0"/>
             <TextBlock Text="Credits" Margin="0,-6.5,0,26.5" Style="{ThemeResource HeaderTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
         </StackPanel>
-
+        <TextBlock Text="Developers" FontSize="30" Margin="20,120,20,0" HorizontalAlignment="Center" Style="{ThemeResource HeaderTextBlockStyle}" Grid.RowSpan="2" SelectionChanged="TextBlock_SelectionChanged"/>
+        <Image Source="/Assets/Acecoders.jpg" Height="100" Width="125" Margin="68,170,68,0" VerticalAlignment="Top" Stretch="Fill"/>
+        
         <Grid Grid.Row="1" x:Name="ContentRoot" Margin="19,9.5,19,0">
             <StackPanel>
-                <TextBlock Text="Kunal Kapila" FontSize="30" HorizontalAlignment="Center" Style="{ThemeResource HeaderTextBlockStyle}"/>
-                <TextBlock Text="Pallav Agarwal" Margin="1,10,1,10" FontSize="30" HorizontalAlignment="Center" Style="{ThemeResource HeaderTextBlockStyle}"/>
-                <TextBlock Text="Saksham Sharma" FontSize="30" HorizontalAlignment="Center" Style="{ThemeResource HeaderTextBlockStyle}"/>
-                <TextBlock Text="Vinayak Tantia" Margin="1,10,1,10" FontSize="30" HorizontalAlignment="Center" Style="{ThemeResource HeaderTextBlockStyle}"/>
+                <TextBlock Text="Kunal Kapila" FontSize="18" HorizontalAlignment="Center" Style="{ThemeResource HeaderTextBlockStyle}"/>
+                <TextBlock Text="Pallav Agarwal" Margin="1,0,1,0" FontSize="18" HorizontalAlignment="Center" Style="{ThemeResource HeaderTextBlockStyle}"/>
+                <TextBlock Text="Saksham Sharma" FontSize="18" HorizontalAlignment="Center" Style="{ThemeResource HeaderTextBlockStyle}"/>
+                <TextBlock Text="Vinayak Tantia" Margin="1,0,1,10" FontSize="18" HorizontalAlignment="Center" Style="{ThemeResource HeaderTextBlockStyle}"/>
 
             </StackPanel>
+
+        </Grid>
+        <Grid Grid.Row="1" x:Name="ContentRoot2" Margin="19,159.5,19,0">
+            <StackPanel>
+                <TextBlock Text="Tools Used" FontSize="30" HorizontalAlignment="Center" Style="{ThemeResource HeaderTextBlockStyle}"/>
+                <TextBlock Text="Kunal Kapila" FontSize="18" HorizontalAlignment="Center" Style="{ThemeResource HeaderTextBlockStyle}"/>
+                <TextBlock Text="Pallav Agarwal" Margin="1,0,1,0" FontSize="18" HorizontalAlignment="Center" Style="{ThemeResource HeaderTextBlockStyle}"/>
+                <TextBlock Text="Saksham Sharma" FontSize="18" HorizontalAlignment="Center" Style="{ThemeResource HeaderTextBlockStyle}"/>
+                <TextBlock Text="Vinayak Tantia" Margin="1,0,1,10" FontSize="18" HorizontalAlignment="Center" Style="{ThemeResource HeaderTextBlockStyle}"/>
+
+            </StackPanel>
+
         </Grid>
     </Grid>
 </Page>
