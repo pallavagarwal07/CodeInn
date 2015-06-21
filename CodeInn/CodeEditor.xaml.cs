@@ -22,6 +22,7 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Net;
 using System.Text;
+using System.Threading;
 
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
@@ -212,13 +213,20 @@ namespace CodeInn
             var base64 = System.Uri.EscapeUriString(Convert.ToBase64String(bytes)).Replace("+", "%2B").Replace("=", "%3D");
             Debug.WriteLine(base64);
 
+            var cts = new CancellationTokenSource();
             var client = new HttpClient();
 
-            var response = await client.GetAsync(new Uri("http://codeinn-acecoders.rhcloud.com:8000/api/run?Content=" + base64 + "&Input=" + inpbox.Text));
-
-            var result = await response.Content.ReadAsStringAsync();
-            //Debug.WriteLine(result);
-            outbox.Text = result;
+            try
+            {
+                cts.CancelAfter(7500);
+                var response = await client.GetAsync(new Uri("http://codeinn-acecoders.rhcloud.com:8000/api/run?Content=" + base64 + "&Input=" + inpbox.Text));
+                var result = await response.Content.ReadAsStringAsync();
+                outbox.Text = result;
+            }
+            catch
+            {
+                outbox.Text = "Timeout";
+            }
             CodeHub.ScrollToSection(HubInOut);
         }
 
@@ -229,13 +237,20 @@ namespace CodeInn
             var base64 = System.Uri.EscapeUriString(Convert.ToBase64String(bytes)).Replace("+","%2B").Replace("=","%3D");
             Debug.WriteLine(base64);
 
+            var cts = new CancellationTokenSource();
             var client = new HttpClient();
-
-            var response = await client.GetAsync(new Uri("http://codeinn-acecoders.rhcloud.com:8000/api/compile?Content=" + base64));
-
-            var result = await response.Content.ReadAsStringAsync();
-            //Debug.WriteLine(result);
-            outbox.Text = result;
+            
+            try
+            {
+                cts.CancelAfter(7500);
+                var response = await client.GetAsync(new Uri("http://codeinn-acecoders.rhcloud.com:8000/api/compile?Content=" + base64));
+                var result = await response.Content.ReadAsStringAsync();
+                outbox.Text = result;
+            }
+            catch
+            {
+                outbox.Text = "Timeout";
+            }
             CodeHub.ScrollToSection(HubInOut);
         }
     }
