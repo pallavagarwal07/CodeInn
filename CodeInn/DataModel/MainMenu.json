@@ -25,9 +25,9 @@
                 },
                 {
                     "UniqueId": "Tips",
-                    "Title": "One-minute Tips",
+                    "Title": "Tips",
                     "Subtitle": "Item Subtitle: 3",
-                    "ImagePath": "Assets/MainMenu/OneMin.jpg",
+                    "ImagePath": "Assets/MainMenu/Tips.jpg",
                     "Description": "Item Description: Pellentesque porta",
                     "Content": "Curabitur class"
                 }
@@ -44,7 +44,7 @@
                     "UniqueId": "Scratchpad",
                     "Title": "Scratchpad",
                     "Subtitle": "Item Subtitle: 1",
-                    "ImagePath": "Assets/MainMenu/Completion.jpg",
+                    "ImagePath": "Assets/MainMenu/Writing.jpg",
                     "Description": "Item Description: Pellentesque porta",
                     "Content": "Curabitur class"
                 },
@@ -52,7 +52,7 @@
                     "UniqueId": "Problems",
                     "Title": "Practice Problems",
                     "Subtitle": "Item Subtitle: 2",
-                    "ImagePath": "Assets/MainMenu/Optimize.jpg",
+                    "ImagePath": "Assets/MainMenu/Practice.jpg",
                     "Description": "Item Description: Pellentesque porta",
                     "Content": "Curabitur class"
                 },
