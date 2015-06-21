@@ -24,7 +24,7 @@
     </Page.Resources>
 
     <Grid x:Name="LayoutRoot">
-        <Hub x:Name="Hub" x:Uid="Hub" Header="CodeInn" Background="{ThemeResource HubBackgroundImageBrush}">
+        <Hub Name="CodeHub" x:Uid="CodeHub" Header="CodeInn" Background="{ThemeResource HubBackgroundImageBrush}">
 
             <HubSection x:Uid="HubSection1" Header="LEARN" 
                          DataContext="{Binding Groups[0]}" HeaderTemplate="{ThemeResource HubSectionHeaderTemplate}">
