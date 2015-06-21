@@ -2,10 +2,12 @@
 using CodeInn.Helpers;
 using CodeInn.Model;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -29,30 +31,32 @@ namespace CodeInn.Views
     /// <summary>
     /// The menu page to retrieve and display Lessons
     /// </summary>
-    public sealed partial class LessonViewer : Page
+    public sealed partial class TipViewer : Page
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
-
-        ObservableCollection<Lessons> DB_LessonList = new ObservableCollection<Lessons>();
-        public LessonViewer()
+        
+        ObservableCollection<Tips> DB_TipList = new ObservableCollection<Tips>();
+        public TipViewer()
         {
             this.InitializeComponent();
 
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
-            this.Loaded += ReadLessons_Loaded;
+            this.Loaded += ReadTips_Loaded;
         }
 
-        private void ReadLessons_Loaded(object sender, RoutedEventArgs e)
+        private void ReadTips_Loaded(object sender, RoutedEventArgs e)
         {
-            ReadLessons dblessons = new ReadLessons();
-            DB_LessonList = dblessons.GetAllLessons();//Get all DB contacts 
-            listBox.ItemsSource = DB_LessonList.OrderByDescending(i => i.Id).ToList();//Binding DB data to LISTBOX and Latest contact ID can Display first. 
+            ReadTips dbtips = new ReadTips();
+            DB_TipList = dbtips.GetAllTips();
+            listBox.ItemsSource = DB_TipList.OrderByDescending(i => i.Id).ToList();
         }
         private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            Tips clickedTip = (Tips)(sender as ListBox).SelectedItem;
+            Frame.Navigate(typeof(CodeEditor), clickedTip);
         }
 
         public NavigationHelper NavigationHelper
@@ -88,7 +92,7 @@ namespace CodeInn.Views
         #endregion
 
 
-        async private void ReadDataFromWeb()
+        async private void GetDataFromWeb()
         {
             var client = new HttpClient();
             Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
@@ -100,31 +104,31 @@ namespace CodeInn.Views
                 return;
             }
 
-            var lastcheck = localSettings.Containers["userInfo"].Values["lastchecklessons"].ToString();
+            var lastcheck = localSettings.Containers["userInfo"].Values["lastchecktips"].ToString();
             Debug.WriteLine(System.Uri.EscapeUriString(lastcheck));
-            var response = await client.GetAsync(new Uri("http://codeinn-acecoders.rhcloud.com:8000/api/query?Timestamp=" + System.Uri.EscapeUriString(lastcheck) + "&Table=Lessons"));
+            var response = await client.GetAsync(new Uri("http://codeinn-acecoders.rhcloud.com:8000/api/query?Timestamp=" + System.Uri.EscapeUriString(lastcheck) + "&Table=Tips"));
 
             var result = await response.Content.ReadAsStringAsync();
 
             result = result.Trim(new Char[] { '"' });
             Debug.WriteLine(result);
-            
-            DatabaseLesson Db_Helper = new DatabaseLesson();     
+
+            DatabaseTip Db_Helper = new DatabaseTip();
             try
             {
-                List<Lessons> newless = JsonConvert.DeserializeObject<List<Lessons>>(result);
-                foreach (Lessons less in newless)
+                List<Tips> newprobs = JsonConvert.DeserializeObject<List<Tips>>(result);
+                foreach (Tips prob in newprobs)
                 {
                     try
                     {
-                        Db_Helper.InsertLesson(less);
+                        Db_Helper.InsertTip(prob);
                     }
                     catch
                     {
-                        Debug.WriteLine("DB error for item of id: " + less.Id);
+                        Debug.WriteLine("DB error for item of id: " + prob.Id);
                     }
                 }
-                localSettings.Containers["userInfo"].Values["lastchecklessons"] = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ");
+                localSettings.Containers["userInfo"].Values["lastchecktips"] = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ");
             }
             catch
             {
@@ -132,15 +136,15 @@ namespace CodeInn.Views
             }
             finally
             {
-                ReadLessons dblessons = new ReadLessons();
-                DB_LessonList = dblessons.GetAllLessons();
-                listBox.ItemsSource = DB_LessonList.OrderByDescending(i => i.Id).ToList();
+                ReadTips dbtips = new ReadTips();
+                DB_TipList = dbtips.GetAllTips();
+                listBox.ItemsSource = DB_TipList.OrderByDescending(i => i.Id).ToList();
             }
         }
 
-        private void Refresh_Lessons(object sender, RoutedEventArgs e)
+        private void Refresh_Tips(object sender, RoutedEventArgs e)
         {
-            ReadDataFromWeb();
+            GetDataFromWeb();
         }
 
     }

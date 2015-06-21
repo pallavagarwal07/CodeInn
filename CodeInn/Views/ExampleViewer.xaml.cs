@@ -102,14 +102,11 @@ namespace CodeInn.Views
 
             var lastcheck = localSettings.Containers["userInfo"].Values["lastcheckexamples"].ToString();
             Debug.WriteLine(System.Uri.EscapeUriString(lastcheck));
-            var response = await client.GetAsync(new Uri("http://ws.varstack.com/time.php?Timestamp=" + System.Uri.EscapeUriString(lastcheck) + "&Table=Examples&Category=easy"));
+            var response = await client.GetAsync(new Uri("http://codeinn-acecoders.rhcloud.com:8000/api/query?Timestamp=" + System.Uri.EscapeUriString(lastcheck) + "&Table=Examples"));
 
-            while (response.StatusCode == HttpStatusCode.TemporaryRedirect)
-            {
-                response = await client.GetAsync(response.Headers.Location);
-            }
             var result = await response.Content.ReadAsStringAsync();
-            result = result.Replace("\"", string.Empty);
+
+            result = result.Trim(new Char[] { '"' });
             Debug.WriteLine(result);
 
             DatabaseExample Db_Helper = new DatabaseExample();

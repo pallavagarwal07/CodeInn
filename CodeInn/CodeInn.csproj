@@ -140,19 +140,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Acecoders.jpg" />
+    <Content Include="Assets\CodeInn.jpg" />
     <Content Include="Assets\DarkGray.png" />
     <Content Include="Assets\LightGray.png" />
-    <Content Include="Assets\MainMenu\1min.png" />
-    <Content Include="Assets\MainMenu\Completion.jpg" />
     <Content Include="Assets\MainMenu\Daily.jpg" />
+    <Content Include="Assets\MainMenu\Practice.jpg" />
     <Content Include="Assets\MainMenu\Standings.jpg" />
-    <Content Include="Assets\MainMenu\OneMin.jpg" />
     <Content Include="Assets\MainMenu\Examples.jpg" />
-    <Content Include="Assets\MainMenu\Study1.jpg" />
     <Content Include="Assets\MainMenu\Lessons.jpg" />
-    <Content Include="Assets\MainMenu\Optimize.jpg" />
+    <Content Include="Assets\MainMenu\Tips.jpg" />
     <Content Include="Assets\MainMenu\Track.jpg" />
     <Content Include="Assets\MainMenu\Versus.jpg" />
+    <Content Include="Assets\MainMenu\Writing.jpg" />
     <Content Include="Assets\MediumGray.png" />
     <Content Include="Assets\HubBackground.theme-dark.png" />
     <Content Include="Assets\HubBackground.theme-light.png" />
@@ -169,6 +168,8 @@
     <Content Include="html\ace\src-min-noconflict\theme-tomorrow_night.js" />
     <Content Include="html\test.html" />
     <Content Include="test.html" />
+    <Content Include="Views\Acecoders.jpg" />
+    <Content Include="Views\CodeInn.jpg" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
