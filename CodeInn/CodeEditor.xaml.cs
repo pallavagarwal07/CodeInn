@@ -19,6 +19,9 @@ using Windows.UI.Xaml.Navigation;
 using System.Threading.Tasks;
 using CodeInn.Model;
 using System.Diagnostics;
+using System.Net.Http;
+using System.Net;
+using System.Text;
 
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
@@ -34,6 +37,11 @@ namespace CodeInn
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         private string navC;
         private ParentClass displayedObject;
+        private TextBlock pname;
+        private TextBlock pdesc;
+        private WebView webv;
+        private TextBox inpbox;
+        private TextBlock outbox;
 
         private DependencyObject FindChildControl<T>(DependencyObject control, string ctrlName)
         {
@@ -85,13 +93,16 @@ namespace CodeInn
             await CopyFolderAsync(htmlFolder, stateFolder, "ace");
             string url = "ms-appx-web:///html/test.html";
             var codesection = Hub.Sections[0];
-            WebView webv = FindChildControl<WebView>(codesection, "webView1") as WebView;
+            webv = FindChildControl<WebView>(codesection, "webView1") as WebView;
             webv.Navigate(new Uri(url));
 
-			var pname = FindChildControl<TextBlock>(Hub.Sections[1], "probname") as TextBlock;
-			var pdesc = FindChildControl<TextBlock>(Hub.Sections[1], "probdesc") as TextBlock;
+			pname = FindChildControl<TextBlock>(Hub.Sections[1], "probname") as TextBlock;
+			pdesc = FindChildControl<TextBlock>(Hub.Sections[1], "probdesc") as TextBlock;
 			pname.Text = displayedObject.Name;
             pdesc.Text = displayedObject.Description;
+
+            inpbox = FindChildControl<TextBox>(Hub.Sections[2], "inpbox") as TextBox;
+            outbox = FindChildControl<TextBlock>(Hub.Sections[2], "outbox") as TextBlock;
 		}
 
         async Task CopyFolderAsync(StorageFolder source, StorageFolder destinationContainer, string desiredName = null)
@@ -194,14 +205,34 @@ namespace CodeInn
             await sender.InvokeScriptAsync("hello", _params);
         }
 
-        private void Run(object sender, RoutedEventArgs e)
+        private async void Run(object sender, RoutedEventArgs e)
         {
+            var edContent = await webv.InvokeScriptAsync("getContent", new List<string>());
+            var bytes = Encoding.UTF8.GetBytes(edContent);
+            var base64 = Convert.ToBase64String(bytes);
 
+            var client = new HttpClient();
+
+            var response = await client.GetAsync(new Uri("http://codeinn-acecoders.rhcloud.com:8000/api/run?Content=" + base64 + "&Input=" + inpbox.Text));
+
+            var result = await response.Content.ReadAsStringAsync();
+            Debug.WriteLine(result);
+            outbox.Text = result;
         }
 
-        private void Compile(object sender, RoutedEventArgs e)
+        private async void Compile(object sender, RoutedEventArgs e)
         {
+            var edContent = await webv.InvokeScriptAsync("getContent", new List<string>());
+            var bytes = Encoding.UTF8.GetBytes(edContent);
+            var base64 = Convert.ToBase64String(bytes);
 
+            var client = new HttpClient();
+
+            var response = await client.GetAsync(new Uri("http://codeinn-acecoders.rhcloud.com:8000/api/compile?Content=" + base64));
+
+            var result = await response.Content.ReadAsStringAsync();
+            Debug.WriteLine(result);
+            outbox.Text = result;
         }
     }
 }

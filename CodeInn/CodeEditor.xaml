@@ -51,8 +51,8 @@
                             <RowDefinition Height="5*"/>
                             <RowDefinition Height="5*"/>
                         </Grid.RowDefinitions>
-                        <TextBox Grid.Row="0" VerticalAlignment="Top" Margin="5,30,0,0" PlaceholderText="No input" FontFamily="Calibri" FontSize="25"/>
-                        <TextBlock Grid.Row="1" VerticalAlignment="Top" Margin="5,30,0,0" Text="No output" FontFamily="Calibri" FontSize="25"/>
+                        <TextBox Grid.Row="0" x:Name="inpbox" VerticalAlignment="Top" Margin="5,30,0,0" PlaceholderText="No input" FontFamily="Calibri" FontSize="25"/>
+                        <TextBlock Grid.Row="1" x:Name="outbox" VerticalAlignment="Top" Margin="5,30,0,0" Text="No output" FontFamily="Calibri" FontSize="25"/>
                     </Grid>
                 </DataTemplate>
             </HubSection>
