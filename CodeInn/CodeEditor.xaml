@@ -38,7 +38,9 @@
                 <DataTemplate>
                     <StackPanel>
                         <TextBlock VerticalAlignment="Top" x:Name="probname" Margin="5,30,0,0" Text="Scratchpad" FontFamily="Calibri" FontSize="35" TextWrapping="WrapWholeWords"/>
-                        <TextBlock VerticalAlignment="Top" x:Name="probdesc" Margin="5,30,0,0" Text="Hurray, nothing to do !" FontFamily="Calibri" FontSize="25" TextWrapping="WrapWholeWords"/>
+                        <ScrollViewer>
+                            <TextBlock VerticalAlignment="Top" x:Name="probdesc" Margin="5,30,0,0" Text="Hurray, nothing to do !" FontFamily="Calibri" FontSize="25" TextWrapping="WrapWholeWords" ScrollViewer.VerticalScrollMode="Auto"/>
+                        </ScrollViewer>
                     </StackPanel>
                 </DataTemplate>
             </HubSection>
@@ -48,11 +50,13 @@
                 <DataTemplate>
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="4*"/>
-                            <RowDefinition Height="6*"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <TextBox Grid.Row="0" x:Name="inpbox" VerticalAlignment="Top" Margin="5,30,0,0" PlaceholderText="No input" FontFamily="Calibri" FontSize="25"/>
-                        <TextBlock Grid.Row="1" x:Name="outbox" VerticalAlignment="Top" Margin="5,30,0,0" Text="No output" FontFamily="Calibri" FontSize="25" TextWrapping="WrapWholeWords"/>
+                        <ScrollViewer Grid.Row="1">
+                            <TextBlock x:Name="outbox" VerticalAlignment="Top" Margin="5,30,0,0" Text="No output" FontFamily="Calibri" FontSize="25" TextWrapping="WrapWholeWords" ScrollViewer.VerticalScrollMode="Auto"/>
+                        </ScrollViewer>
                     </Grid>
                 </DataTemplate>
             </HubSection>

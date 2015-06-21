@@ -120,6 +120,9 @@
     <Compile Include="Views\ExampleViewer.xaml.cs">
       <DependentUpon>ExampleViewer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TipsViewer.xaml.cs">
+      <DependentUpon>TipsViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ProblemViewer.xaml.cs">
       <DependentUpon>ProblemViewer.xaml</DependentUpon>
     </Compile>
@@ -168,8 +171,6 @@
     <Content Include="html\ace\src-min-noconflict\theme-tomorrow_night.js" />
     <Content Include="html\test.html" />
     <Content Include="test.html" />
-    <Content Include="Views\Acecoders.jpg" />
-    <Content Include="Views\CodeInn.jpg" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -198,6 +199,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ExampleViewer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TipsViewer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

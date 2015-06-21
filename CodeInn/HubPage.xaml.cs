@@ -129,7 +129,7 @@ namespace CodeInn
             {
                 throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
             }
-            else if (itemId == "Scratchpad" && !Frame.Navigate(typeof(CodeEditor), new Problems(0, "Scratchpad", "Code and run anything you want. Go ahead, try new things.", "I2luY2x1ZGUgPGlvc3RyZWFtPg0KDQppbnQgbWFpbigpIHsNCg0KfQ==", "Admin")))
+            else if (itemId == "Scratchpad" && !Frame.Navigate(typeof(CodeEditor), new Problems(0, "Scratchpad", "Code and run anything you want. Go ahead, try new things.", "I2luY2x1ZGUgPGlvc3RyZWFtPg0KDQp1c2luZyBuYW1lc3BhY2Ugc3RkOw0KDQppbnQgbWFpbigpIHsNCg0KCS8vIFR5cGUgeW91ciBjb2RlIGhlcmUNCg0KCXJldHVybiAwOw0KfQ0K", "Admin")))
             {
                 throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
             }
