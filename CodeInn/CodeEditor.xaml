@@ -22,9 +22,9 @@
     </Page.Resources>
 
     <Grid x:Name="LayoutRoot">
-        <Hub x:Name="Hub" x:Uid="Hub" Header="CodeInn" Background="{ThemeResource HubBackgroundImageBrush}">
+        <Hub Name="CodeHub" x:Uid="CodeHub" Header="CodeInn" Background="{ThemeResource HubBackgroundImageBrush}">
 
-            <HubSection x:Uid="HubEditor" Header="CODE" 
+            <HubSection Name="HubEditor" x:Uid="HubEditor" Header="CODE" 
                          HeaderTemplate="{ThemeResource HubSectionHeaderTemplate}">
                 <DataTemplate>
                     <Grid Grid.Row="1" x:Name="ContentRoot" Margin="1,9.5,1,0">
@@ -33,7 +33,7 @@
                 </DataTemplate>
             </HubSection>
             
-            <HubSection x:Uid="HubQuestion" Header="TASK"
+            <HubSection Name="HubQuestion" x:Uid="HubQuestion" Header="TASK"
                         HeaderTemplate="{ThemeResource HubSectionHeaderTemplate}">
                 <DataTemplate>
                     <StackPanel>
@@ -43,16 +43,16 @@
                 </DataTemplate>
             </HubSection>
             
-            <HubSection x:Uid="CompileOut" Header="Run"
+            <HubSection Name="HubInOut" x:Uid="InOut" Header="Run"
                         HeaderTemplate="{ThemeResource HubSectionHeaderTemplate}">
                 <DataTemplate>
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="5*"/>
-                            <RowDefinition Height="5*"/>
+                            <RowDefinition Height="4*"/>
+                            <RowDefinition Height="6*"/>
                         </Grid.RowDefinitions>
                         <TextBox Grid.Row="0" x:Name="inpbox" VerticalAlignment="Top" Margin="5,30,0,0" PlaceholderText="No input" FontFamily="Calibri" FontSize="25"/>
-                        <TextBlock Grid.Row="1" x:Name="outbox" VerticalAlignment="Top" Margin="5,30,0,0" Text="No output" FontFamily="Calibri" FontSize="25"/>
+                        <TextBlock Grid.Row="1" x:Name="outbox" VerticalAlignment="Top" Margin="5,30,0,0" Text="No output" FontFamily="Calibri" FontSize="25" TextWrapping="WrapWholeWords"/>
                     </Grid>
                 </DataTemplate>
             </HubSection>

@@ -92,17 +92,17 @@ namespace CodeInn
             await htmlFile.CopyAsync(stateFolder, "test.html", NameCollisionOption.ReplaceExisting);
             await CopyFolderAsync(htmlFolder, stateFolder, "ace");
             string url = "ms-appx-web:///html/test.html";
-            var codesection = Hub.Sections[0];
+            var codesection = HubEditor;
             webv = FindChildControl<WebView>(codesection, "webView1") as WebView;
             webv.Navigate(new Uri(url));
 
-			pname = FindChildControl<TextBlock>(Hub.Sections[1], "probname") as TextBlock;
-			pdesc = FindChildControl<TextBlock>(Hub.Sections[1], "probdesc") as TextBlock;
+			pname = FindChildControl<TextBlock>(HubQuestion, "probname") as TextBlock;
+			pdesc = FindChildControl<TextBlock>(HubQuestion, "probdesc") as TextBlock;
 			pname.Text = displayedObject.Name;
             pdesc.Text = displayedObject.Description;
 
-            inpbox = FindChildControl<TextBox>(Hub.Sections[2], "inpbox") as TextBox;
-            outbox = FindChildControl<TextBlock>(Hub.Sections[2], "outbox") as TextBlock;
+            inpbox = FindChildControl<TextBox>(HubInOut, "inpbox") as TextBox;
+            outbox = FindChildControl<TextBlock>(HubInOut, "outbox") as TextBlock;
 		}
 
         async Task CopyFolderAsync(StorageFolder source, StorageFolder destinationContainer, string desiredName = null)
@@ -233,6 +233,7 @@ namespace CodeInn
             var result = await response.Content.ReadAsStringAsync();
             Debug.WriteLine(result);
             outbox.Text = result;
+            CodeHub.ScrollToSection(HubInOut);
         }
     }
 }
