@@ -209,29 +209,32 @@ namespace CodeInn
         {
             var edContent = await webv.InvokeScriptAsync("getContent", new List<string>());
             var bytes = Encoding.UTF8.GetBytes(edContent);
-            var base64 = Convert.ToBase64String(bytes);
+            var base64 = System.Uri.EscapeUriString(Convert.ToBase64String(bytes)).Replace("+", "%2B").Replace("=", "%3D");
+            Debug.WriteLine(base64);
 
             var client = new HttpClient();
 
             var response = await client.GetAsync(new Uri("http://codeinn-acecoders.rhcloud.com:8000/api/run?Content=" + base64 + "&Input=" + inpbox.Text));
 
             var result = await response.Content.ReadAsStringAsync();
-            Debug.WriteLine(result);
+            //Debug.WriteLine(result);
             outbox.Text = result;
+            CodeHub.ScrollToSection(HubInOut);
         }
 
         private async void Compile(object sender, RoutedEventArgs e)
         {
             var edContent = await webv.InvokeScriptAsync("getContent", new List<string>());
             var bytes = Encoding.UTF8.GetBytes(edContent);
-            var base64 = Convert.ToBase64String(bytes);
+            var base64 = System.Uri.EscapeUriString(Convert.ToBase64String(bytes)).Replace("+","%2B").Replace("=","%3D");
+            Debug.WriteLine(base64);
 
             var client = new HttpClient();
 
             var response = await client.GetAsync(new Uri("http://codeinn-acecoders.rhcloud.com:8000/api/compile?Content=" + base64));
 
             var result = await response.Content.ReadAsStringAsync();
-            Debug.WriteLine(result);
+            //Debug.WriteLine(result);
             outbox.Text = result;
             CodeHub.ScrollToSection(HubInOut);
         }
