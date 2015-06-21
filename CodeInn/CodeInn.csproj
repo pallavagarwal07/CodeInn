@@ -120,6 +120,9 @@
     <Compile Include="Views\ExampleViewer.xaml.cs">
       <DependentUpon>ExampleViewer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\LessonViewer2.xaml.cs">
+      <DependentUpon>LessonViewer2.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TipsViewer.xaml.cs">
       <DependentUpon>TipsViewer.xaml</DependentUpon>
     </Compile>
@@ -169,6 +172,10 @@
     <Content Include="html\ace\src-min-noconflict\ace.js" />
     <Content Include="html\ace\src-min-noconflict\mode-c_cpp.js" />
     <Content Include="html\ace\src-min-noconflict\theme-tomorrow_night.js" />
+    <Content Include="html\arta.css" />
+    <Content Include="html\highlight.pack.js" />
+    <Content Include="html\lesson.html" />
+    <Content Include="html\marked.min.js" />
     <Content Include="html\test.html" />
     <Content Include="test.html" />
   </ItemGroup>
@@ -199,6 +206,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ExampleViewer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\LessonViewer2.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
