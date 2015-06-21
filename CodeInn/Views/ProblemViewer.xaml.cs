@@ -106,14 +106,11 @@ namespace CodeInn.Views
 
             var lastcheck = localSettings.Containers["userInfo"].Values["lastcheckproblems"].ToString();
             Debug.WriteLine(System.Uri.EscapeUriString(lastcheck));
-            var response = await client.GetAsync(new Uri("http://ws.varstack.com/time.php?Timestamp=" + System.Uri.EscapeUriString(lastcheck) + "&Table=Problems&Category=easy"));
+            var response = await client.GetAsync(new Uri("http://codeinn-acecoders.rhcloud.com:8000/api/query?Timestamp=" + System.Uri.EscapeUriString(lastcheck) + "&Table=Problems"));
 
-            while (response.StatusCode == HttpStatusCode.TemporaryRedirect)
-            {
-                response = await client.GetAsync(response.Headers.Location);
-            }
             var result = await response.Content.ReadAsStringAsync();
-            result = result.Replace("\"", string.Empty);
+
+            result = result.Trim(new Char[] { '"' });
             Debug.WriteLine(result);
 
             DatabaseProblem Db_Helper = new DatabaseProblem();
@@ -131,7 +128,7 @@ namespace CodeInn.Views
                         Debug.WriteLine("DB error for item of id: " + prob.Id);
                     }
                 }
-                localSettings.Containers["userInfo"].Values["lastcheckproblems"] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                localSettings.Containers["userInfo"].Values["lastcheckproblems"] = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ");
             }
             catch
             {

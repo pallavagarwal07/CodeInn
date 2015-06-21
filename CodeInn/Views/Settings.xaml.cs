@@ -130,15 +130,16 @@ namespace CodeInn.Views
             }
 
             // Query online database first to check if the user is valid.
+            // Also drop and create all tables from scratch.
             if (localSettings.Containers.ContainsKey("userInfo"))
             {
                 localSettings.Containers["userInfo"].Values["userName"] = username.Text;
                 localSettings.Containers["userInfo"].Values["userEmail"] = email.Text;
                 localSettings.Containers["userInfo"].Values["userPass"] = passwordbox.Password;
-                localSettings.Containers["userInfo"].Values["lastcheckexamples"] = "2014-01-01 01:01:01";
-                localSettings.Containers["userInfo"].Values["lastcheckproblems"] = "2014-01-01 01:01:01";
-                localSettings.Containers["userInfo"].Values["lastchecklessons"] = "2014-01-01 01:01:01";
-                localSettings.Containers["userInfo"].Values["lastchecktips"] = "2014-01-01 01:01:01";
+                localSettings.Containers["userInfo"].Values["lastcheckexamples"] = "2014-01-01T01:01:01Z";
+                localSettings.Containers["userInfo"].Values["lastcheckproblems"] = "2014-01-01T01:01:01Z";
+                localSettings.Containers["userInfo"].Values["lastchecklessons"] = "2014-01-01T01:01:01Z";
+                localSettings.Containers["userInfo"].Values["lastchecktips"] = "2014-01-01Z01:01:01T";
             }
         }
 
@@ -157,33 +158,22 @@ namespace CodeInn.Views
                 return;
             }
 
-            // Query online database first to check if the user is valid.
-            if (localSettings.Containers.ContainsKey("userInfo"))
-            {
-                localSettings.Containers["userInfo"].Values["userName"] = username.Text;
-                localSettings.Containers["userInfo"].Values["userEmail"] = email.Text;
-                localSettings.Containers["userInfo"].Values["userPass"] = passwordbox.Password;
-                localSettings.Containers["userInfo"].Values["lastcheckexamples"] = "2014-01-01 01:01:01";
-                localSettings.Containers["userInfo"].Values["lastcheckproblems"] = "2014-01-01 01:01:01";
-                localSettings.Containers["userInfo"].Values["lastchecklessons"] = "2014-01-01 01:01:01";
-                localSettings.Containers["userInfo"].Values["lastchecktips"] = "2014-01-01 01:01:01";
-            }
-
             Windows.Storage.ApplicationDataContainer container =
                localSettings.CreateContainer("userInfo", Windows.Storage.ApplicationDataCreateDisposition.Always);
 
             // Check online database to check if info is valid.
             // Then write info online.
+            // Also drop and create all tables from scratch.
             if (localSettings.Containers.ContainsKey("userInfo"))
             {
                 localSettings.Containers["userInfo"].Values["userName"] = username.Text;
                 localSettings.Containers["userInfo"].Values["userEmail"] = email.Text;
                 localSettings.Containers["userInfo"].Values["userPass"] = passwordbox.Password;
-                localSettings.Containers["userInfo"].Values["lastcheckexamples"] = "2014-01-01 01:01:01";
-                localSettings.Containers["userInfo"].Values["lastcheckproblems"] = "2014-01-01 01:01:01";
-                localSettings.Containers["userInfo"].Values["lastchecklessons"] = "2014-01-01 01:01:01";
-                localSettings.Containers["userInfo"].Values["lastchecktips"] = "2014-01-01 01:01:01";
-            }            
+                localSettings.Containers["userInfo"].Values["lastcheckexamples"] = "2014-01-01T01:01:01Z";
+                localSettings.Containers["userInfo"].Values["lastcheckproblems"] = "2014-01-01T01:01:01Z";
+                localSettings.Containers["userInfo"].Values["lastchecklessons"] = "2014-01-01T01:01:01Z";
+                localSettings.Containers["userInfo"].Values["lastchecktips"] = "2014-01-01Z01:01:01T";
+            }
         }
     }
 }
