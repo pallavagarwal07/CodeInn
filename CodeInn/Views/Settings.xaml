@@ -31,9 +31,9 @@
         <Grid Grid.Row="1" x:Name="ContentRoot" Margin="19,9.5,19,0">
             <StackPanel>
                 <TextBlock Text="User Name" HorizontalAlignment="Center" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}"/>
-                <TextBox Name="username" Margin="10,5,10,10"></TextBox>
-                <TextBlock Text="Email" HorizontalAlignment="Center" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}"/>
-                <TextBox Name="email" Margin="10,5,10,20"></TextBox>
+                <TextBox Name="username" Margin="10,5,10,10" IsTextPredictionEnabled="False"></TextBox>
+                <TextBlock Text="Email" HorizontalAlignment="Center" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}" />
+                <TextBox Name="email" Margin="10,5,10,20" InputScope="EmailSmtpAddress"></TextBox>
                 <TextBlock Text="Password" HorizontalAlignment="Center" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}"/>
                 <PasswordBox Name="passwordbox"  Margin="10,5,10,20"></PasswordBox>
                 <TextBlock Text="Preferred language" HorizontalAlignment="Center" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}"/>

@@ -18,6 +18,11 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Popups;
+using SQLite;
+using Windows.Storage;
+using System.Diagnostics;
+using Windows.Web.Http;
+using Windows.Storage.Streams;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -114,6 +119,27 @@ namespace CodeInn.Views
             }
         }
 
+        private static string DB_PATH = Path.Combine(Path.Combine(ApplicationData.Current.LocalFolder.Path, "CodeInnDatabase.sqlite"));
+        private SQLiteConnection dbConn;
+
+        private void recreateTables<T>()
+        {
+			using (dbConn = new SQLiteConnection(DB_PATH))
+			{
+				try
+				{
+					dbConn.DropTable<T>();
+                    Debug.WriteLine("Deleted " + typeof(T).Name);
+				}
+				finally
+				{
+					dbConn.CreateTable<T>();
+				}
+			}
+			Debug.WriteLine("Created " + typeof(T).Name);
+        }
+
+
         private async void Login(object sender, RoutedEventArgs e)
         {
             if (username.Text == "" & email.Text == "")
@@ -129,8 +155,40 @@ namespace CodeInn.Views
                 return;
             }
 
+            var client = new Windows.Web.Http.HttpClient();
+            HttpStringContent content = new HttpStringContent(
+                    "{ \"Username\": \"" + username.Text + "\", \"Password\": \"" + passwordbox.Password + "\" }",
+                    UnicodeEncoding.Utf8,
+                    "application/json");
+
+            Debug.WriteLine(content);
+
+            var uri = new Uri("http://codeinn-acecoders.rhcloud.com:8000/users/login");
+
+            var response = await client.PostAsync(uri, content);
+
+            var result = await response.Content.ReadAsStringAsync();
+
+            if (response.StatusCode == HttpStatusCode.Ok)
+            {
+                Debug.WriteLine("Accepted");
+                MessageDialog messageDialog = new MessageDialog(result);
+                messageDialog.ShowAsync();
+            }
+            else
+            {
+                Debug.WriteLine("Rejected " + response.StatusCode);
+                MessageDialog messageDialog = new MessageDialog(result);
+                await messageDialog.ShowAsync();
+                return;
+            }
+
             // Query online database first to check if the user is valid.
-            // Also drop and create all tables from scratch.
+            recreateTables<Problems>();
+            recreateTables<Examples>();
+            recreateTables<Tips>();
+            recreateTables<Lessons>();
+
             if (localSettings.Containers.ContainsKey("userInfo"))
             {
                 localSettings.Containers["userInfo"].Values["userName"] = username.Text;
@@ -161,9 +219,40 @@ namespace CodeInn.Views
             Windows.Storage.ApplicationDataContainer container =
                localSettings.CreateContainer("userInfo", Windows.Storage.ApplicationDataCreateDisposition.Always);
 
-            // Check online database to check if info is valid.
-            // Then write info online.
-            // Also drop and create all tables from scratch.
+            // Adding user to online database
+			var client = new Windows.Web.Http.HttpClient();
+			HttpStringContent content = new HttpStringContent(
+					"{ \"Username\": \"" + username.Text + "\", \"Email\": \"" + email.Text + "\", \"Password\": \"" + passwordbox.Password + "\" }",
+					UnicodeEncoding.Utf8,
+					"application/json");
+
+            Debug.WriteLine(content);
+
+			var uri = new Uri("http://codeinn-acecoders.rhcloud.com:8000/users/signup");
+
+			var response = await client.PostAsync(uri, content);
+
+			var result = await response.Content.ReadAsStringAsync();
+
+			if (response.StatusCode == HttpStatusCode.Ok)
+			{
+				Debug.WriteLine("Accepted");
+                MessageDialog messageDialog = new MessageDialog(result);
+                messageDialog.ShowAsync();
+			}
+			else
+			{
+				Debug.WriteLine("Rejected " + response.StatusCode);
+                MessageDialog messageDialog = new MessageDialog(result);
+                await messageDialog.ShowAsync();
+                return;
+			}
+
+            recreateTables<Problems>();
+            recreateTables<Examples>();
+            recreateTables<Tips>();
+            recreateTables<Lessons>();
+
             if (localSettings.Containers.ContainsKey("userInfo"))
             {
                 localSettings.Containers["userInfo"].Values["userName"] = username.Text;
