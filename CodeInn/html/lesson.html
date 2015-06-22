@@ -17,8 +17,8 @@ pre {
 <body>
 
     <script>
-        function setText(input) {
-            document.write(marked(atob(input)));
+        function setText(str) {
+            document.write(marked(window.atob(str)));
             return "Done";
         }
     </script>

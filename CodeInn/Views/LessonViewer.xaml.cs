@@ -51,9 +51,6 @@ namespace CodeInn.Views
             DB_LessonList = dblessons.GetAllLessons();//Get all DB contacts 
             listBox.ItemsSource = DB_LessonList.OrderByDescending(i => i.Id).ToList();//Binding DB data to LISTBOX and Latest contact ID can Display first. 
         }
-        private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-        }
 
         public NavigationHelper NavigationHelper
         {
@@ -67,6 +64,12 @@ namespace CodeInn.Views
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
+        }
+
+        private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Lessons clickedProblem = (Lessons)(sender as ListBox).SelectedItem;
+            Frame.Navigate(typeof(LessonViewer2), clickedProblem);
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)

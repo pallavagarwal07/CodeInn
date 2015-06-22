@@ -32,6 +32,7 @@ namespace CodeInn.Views
     /// </summary>
     public sealed partial class LessonViewer2 : Page
     {
+        Lessons navParam;
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
 
@@ -51,16 +52,7 @@ namespace CodeInn.Views
             await marked.CopyAsync(stateFolder, "marked.min.js", NameCollisionOption.ReplaceExisting);
             string url = "ms-appdata:///local/NavigateToState/lesson.html"; 
             webView1.Navigate(new Uri(url));
-         //   loadFromLocalState.IsEnabled = true;
         } 
-
-        private async void populateContent(string str)
-        {
-            var lis = new List<string>();
-            lis.Add(str);
-            var edContent = await webView1.InvokeScriptAsync("setText", lis);
-            Debug.WriteLine(edContent);
-        }
 
         public LessonViewer2()
         {
@@ -97,8 +89,8 @@ namespace CodeInn.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            navParam = e.Content as Lessons;
             createHtmlFileInLocalState();
-            populateContent("hellaaaa");
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -107,6 +99,14 @@ namespace CodeInn.Views
         }
 
         #endregion
+
+        private async void webView1_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
+        {
+            var lis = new List<string>();
+            lis.Add(navParam.Content);
+            var edContent = await webView1.InvokeScriptAsync("setText", lis);
+//          Debug.WriteLine(edContent);
+        }
 
 
 
