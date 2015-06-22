@@ -54,6 +54,14 @@ namespace CodeInn.Views
          //   loadFromLocalState.IsEnabled = true;
         } 
 
+        private async void populateContent(string str)
+        {
+            var lis = new List<string>();
+            lis.Add(str);
+            var edContent = await webView1.InvokeScriptAsync("setText", lis);
+            Debug.WriteLine(edContent);
+        }
+
         public LessonViewer2()
         {
             this.InitializeComponent();
@@ -90,6 +98,7 @@ namespace CodeInn.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             createHtmlFileInLocalState();
+            populateContent("hellaaaa");
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
