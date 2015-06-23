@@ -51,7 +51,7 @@ namespace CodeInn.Views
         {
             ReadProblems dbproblems = new ReadProblems();
             DB_ProblemList = dbproblems.GetAllProblems();
-            listBox.ItemsSource = DB_ProblemList.OrderByDescending(i => i.Id).ToList();
+            listBox.ItemsSource = DB_ProblemList.OrderBy(i => i.Id).ToList();
         }
         private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

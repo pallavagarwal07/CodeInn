@@ -49,7 +49,7 @@ namespace CodeInn.Views
         {
             ReadLessons dblessons = new ReadLessons();
             DB_LessonList = dblessons.GetAllLessons();//Get all DB contacts 
-            listBox.ItemsSource = DB_LessonList.OrderByDescending(i => i.Id).ToList();//Binding DB data to LISTBOX and Latest contact ID can Display first. 
+            listBox.ItemsSource = DB_LessonList.OrderBy(i => i.Id).ToList();//Binding DB data to LISTBOX and Latest contact ID can Display first. 
         }
 
         public NavigationHelper NavigationHelper
