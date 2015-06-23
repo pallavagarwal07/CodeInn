@@ -68,6 +68,7 @@
         <CommandBar ClosedDisplayMode="Compact">
             <AppBarButton Label="Compile" Icon="Setting" Click="Compile"/>
             <AppBarButton Label="Run" Icon="Play" Click="Run"/>
+            <AppBarButton Name="verifybtn" Label="Verify" Icon="Accept" Click="Verify"/>
             <AppBarButton Label="Input" Icon="Import"/>
         </CommandBar>
     </Page.BottomAppBar>

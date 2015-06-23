@@ -23,6 +23,7 @@ using System.Net.Http;
 using System.Net;
 using System.Text;
 using System.Threading;
+using Windows.UI.Popups;
 
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
@@ -253,5 +254,31 @@ namespace CodeInn
             }
             CodeHub.ScrollToSection(HubInOut);
         }
+
+        private async void Verify(object sender, RoutedEventArgs e)
+        {
+            var edContent = await webv.InvokeScriptAsync("getContent", new List<string>());
+            var bytes = Encoding.UTF8.GetBytes(edContent);
+            var base64 = System.Uri.EscapeUriString(Convert.ToBase64String(bytes)).Replace("+", "%2B").Replace("=", "%3D");
+            Debug.WriteLine(base64);
+
+            var cts = new CancellationTokenSource();
+            var client = new HttpClient();
+
+            try
+            {
+                cts.CancelAfter(5000);
+                var uri = new Uri("http://codeinn-acecoders.rhcloud.com:8000/api/verify?Content=" + base64 + "&Id=" + displayedObject.Id + "&Table=Problems");
+                var response = await client.GetAsync(uri);
+                var result = await response.Content.ReadAsStringAsync();
+                outbox.Text = result;
+            }
+            catch
+            {
+                outbox.Text = "Timeout. Try again later.";
+            }
+            CodeHub.ScrollToSection(HubInOut);
+        }
+
     }
 }
