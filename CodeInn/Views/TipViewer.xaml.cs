@@ -51,12 +51,10 @@ namespace CodeInn.Views
         {
             ReadTips dbtips = new ReadTips();
             DB_TipList = dbtips.GetAllTips();
-            listBox.ItemsSource = DB_TipList.OrderByDescending(i => i.Id).ToList();
+            listBox.ItemsSource = DB_TipList.OrderBy(i => i.Id).ToList();
         }
         private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Tips clickedTip = (Tips)(sender as ListBox).SelectedItem;
-            Frame.Navigate(typeof(CodeEditor), clickedTip);
         }
 
         public NavigationHelper NavigationHelper

@@ -123,8 +123,8 @@
     <Compile Include="Views\LessonViewer2.xaml.cs">
       <DependentUpon>LessonViewer2.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TipsViewer.xaml.cs">
-      <DependentUpon>TipsViewer.xaml</DependentUpon>
+    <Compile Include="Views\TipViewer.xaml.cs">
+      <DependentUpon>TipViewer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProblemViewer.xaml.cs">
       <DependentUpon>ProblemViewer.xaml</DependentUpon>
@@ -220,7 +220,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\TipsViewer.xaml">
+    <Page Include="Views\TipViewer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

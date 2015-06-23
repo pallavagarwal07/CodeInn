@@ -197,7 +197,7 @@ namespace CodeInn.Views
                 localSettings.Containers["userInfo"].Values["lastcheckexamples"] = "2014-01-01T01:01:01Z";
                 localSettings.Containers["userInfo"].Values["lastcheckproblems"] = "2014-01-01T01:01:01Z";
                 localSettings.Containers["userInfo"].Values["lastchecklessons"] = "2014-01-01T01:01:01Z";
-                localSettings.Containers["userInfo"].Values["lastchecktips"] = "2014-01-01Z01:01:01T";
+                localSettings.Containers["userInfo"].Values["lastchecktips"] = "2014-01-01T01:01:01Z";
             }
         }
 
@@ -261,7 +261,7 @@ namespace CodeInn.Views
                 localSettings.Containers["userInfo"].Values["lastcheckexamples"] = "2014-01-01T01:01:01Z";
                 localSettings.Containers["userInfo"].Values["lastcheckproblems"] = "2014-01-01T01:01:01Z";
                 localSettings.Containers["userInfo"].Values["lastchecklessons"] = "2014-01-01T01:01:01Z";
-                localSettings.Containers["userInfo"].Values["lastchecktips"] = "2014-01-01Z01:01:01T";
+                localSettings.Containers["userInfo"].Values["lastchecktips"] = "2014-01-01T01:01:01Z";
             }
         }
     }
