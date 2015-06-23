@@ -14,7 +14,7 @@
 
     <script>
         function setText(str) {
-            document.write(marked(window.atob(str)));
+            document.getElementsByTagName('body').innerHTML = window.atob(str);
             return "Done";
         }
     </script>
