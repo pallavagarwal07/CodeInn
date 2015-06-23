@@ -85,7 +85,7 @@ namespace CodeInn
         // done, enables the 'Load HTML' button. 
         async void populateContent()
         {
-            string navContext = Base64Decode(displayedObject.Content);
+            string navContext = Base64Decode(displayedObject.Content) + '\n' + '\n' + '\n' + '\n' + '\n' + '\n';
             navC = navContext;
             StorageFolder stateFolder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("NavigateToState", CreationCollisionOption.OpenIfExists);
             StorageFile htmlFile = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync("html\\test.html");

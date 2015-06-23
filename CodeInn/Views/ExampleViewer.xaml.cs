@@ -49,7 +49,7 @@ namespace CodeInn.Views
         {
             ReadExamples dbproblems = new ReadExamples();
             DB_ExampleList = dbproblems.GetAllExamples();
-            listBox.ItemsSource = DB_ExampleList.OrderByDescending(i => i.Id).ToList();
+            listBox.ItemsSource = DB_ExampleList.OrderBy(i => i.Id).ToList();
         }
         private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
