@@ -89,8 +89,9 @@ namespace CodeInn.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            navParam = e.Content as Lessons;
+            navParam = e.Parameter as Lessons;
             createHtmlFileInLocalState();
+            this.navigationHelper.OnNavigatedTo(e);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -102,13 +103,11 @@ namespace CodeInn.Views
 
         private async void webView1_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
         {
-//          var lis = new List<string>();
-//          lis.Add(navParam.Content);
-//          var edContent = await webView1.InvokeScriptAsync("setText", lis);
-//          Debug.WriteLine(edContent);
+            var lis = new List<string>();
+            lis.Add(navParam.Content);
+            var returnstatus = await webView1.InvokeScriptAsync("setText", lis);
+            Debug.WriteLine(returnstatus);
         }
-
-
 
     }
 }
