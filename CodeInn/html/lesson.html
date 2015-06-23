@@ -13,15 +13,20 @@
 <body>
 
     <script>
+        function yo() {
+            document.getElementsByTagName('body')[0].innerHTML += "HELLO";
+            window.external.Notify(' + __msg + ');
+        }
         function setText(str) {
-            document.getElementsByTagName('body')[0].innerHTML = marked(window.atob(str));
+            var md = window.atob(str);
+            document.getElementsByTagName('body')[0].innerHTML = marked(md) + "<br /><br /><button onclick='yo();' style='width:7rem;'></button>";
             return "Done";
         }
     </script>
 
 <script>
 
-    //str = '# C++\nC++ is a statically typed, compiled, general-purpose, case-sensitive programming language that supports procedural, object-oriented, and generic programming. C++ fully supports the four pillars of object-oriented development:\n  - Encapsulation\n  - Data hiding\n  - Inheritance\n  - Polymorphism\n\n#### C++ Program Structure\nHere is a code which will help you understand the elements of a C++ code\n```cpp\n#include <iostream>\nusing namespace std;\n\nint main() //program execution begins here\n{\n    cout << "Hello World!"; //prints "Hello World!"\n    return 0;\n}\n```\n<br />\nThe above code has the following components:\n  - `#include` statements: to include necessary libraries required by the program; in this case, "iostream". Other commonly used libraries include "math.h", "algorithms.h", etc.\n  - `using namespace std`: specifies the compiler to use the standard namespace. You will learn about namespaces later in detail.\n  - `int main()`: it is a function, from which the execution of a C++ program starts. int is the return type, and main is the function\'s name. Adding \'()\' specifies that that some name is to be treated like a function. You will learn about functions in the next few lessons\n  - `cout << "Hello World!"`: cout stands for console output. This statement prints the value(in this case, "Hello World!") to the console.\n  - `return 0`: specifies the return vaue of the function. Since the return type of the function was \'int\', an integer value had to be returned\n\nRemarks:\n  - All C++ statements must be terminated using a semicolon (;)\n  - Comments are those statements which are ignored by the compiler. They are used to increase the readability of the program. Single line comments start with "//"\n\n##### Execuitng the program\nTo run the above code\n  - Copy it in a text editor\n  - Save the program as "my_first_code.cpp"\n  - Open the command prompt / terminal, go to the directory where you have saved the file type the following command "g++ my_first_code.cpp". This will compile your code, and give out compilation errors, if any. An executable file named "a.out" has not been created.\n  - Run the file "a.out" using the following command "./a.out"\n\nYou will see the output "Hello World!" on the screen.\n'
+    str = '# C++\nC++ is a statically typed, compiled, general-purpose, case-sensitive programming language that supports procedural, object-oriented, and generic programming. C++ fully supports the four pillars of object-oriented development:\n  - Encapsulation\n  - Data hiding\n  - Inheritance\n  - Polymorphism\n\n#### C++ Program Structure\nHere is a code which will help you understand the elements of a C++ code\n```cpp\n#include <iostream>\nusing namespace std;\n\nint main() //program execution begins here\n{\n    cout << "Hello World!"; //prints "Hello World!"\n    return 0;\n}\n```\n<br />\nThe above code has the following components:\n  - `#include` statements: to include necessary libraries required by the program; in this case, "iostream". Other commonly used libraries include "math.h", "algorithms.h", etc.\n  - `using namespace std`: specifies the compiler to use the standard namespace. You will learn about namespaces later in detail.\n  - `int main()`: it is a function, from which the execution of a C++ program starts. int is the return type, and main is the function\'s name. Adding \'()\' specifies that that some name is to be treated like a function. You will learn about functions in the next few lessons\n  - `cout << "Hello World!"`: cout stands for console output. This statement prints the value(in this case, "Hello World!") to the console.\n  - `return 0`: specifies the return vaue of the function. Since the return type of the function was \'int\', an integer value had to be returned\n\nRemarks:\n  - All C++ statements must be terminated using a semicolon (;)\n  - Comments are those statements which are ignored by the compiler. They are used to increase the readability of the program. Single line comments start with "//"\n\n##### Execuitng the program\nTo run the above code\n  - Copy it in a text editor\n  - Save the program as "my_first_code.cpp"\n  - Open the command prompt / terminal, go to the directory where you have saved the file type the following command "g++ my_first_code.cpp". This will compile your code, and give out compilation errors, if any. An executable file named "a.out" has not been created.\n  - Run the file "a.out" using the following command "./a.out"\n\nYou will see the output "Hello World!" on the screen.\n'
 
 marked.setOptions({
     highlight: function(code) {
@@ -29,7 +34,7 @@ marked.setOptions({
         return hg;
     }
 });
-//document.write(marked(str));
+document.write(marked(str));
 </script>
 </body>
 </html>

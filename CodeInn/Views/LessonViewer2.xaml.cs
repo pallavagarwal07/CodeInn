@@ -109,5 +109,13 @@ namespace CodeInn.Views
             Debug.WriteLine(returnstatus);
         }
 
+        private void webView1_ScriptNotify(object sender, NotifyEventArgs e)
+        {
+            throw new System.ArgumentException("NO");
+            Debug.WriteLine("HERE\n");
+            string str = e.Value;
+            Debug.WriteLine(str);
+        }
+
     }
 }
