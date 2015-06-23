@@ -23,8 +23,8 @@
                 <DataTemplate>
                     <Grid>
                         <StackPanel Margin="14,0,0,0">
-                            <!--<TextBlock Grid.Row="0" x:Name="NameTxt" TextWrapping="Wrap" Text="{Binding Name}" Foreground="White" Style="{ThemeResource ListViewItemTextBlockStyle}"/>-->
-                            <TextBlock Grid.Row="1" x:Name="DescTxt"  TextWrapping="Wrap" Text="{Binding Content}" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}"/>
+                            <TextBlock Grid.Row="0" x:Name="DescTxt"  TextWrapping="Wrap" Text="{Binding Content}" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}" FontSize="22" Foreground="White"/>
+                            <TextBlock Grid.Row="1" x:Name="NameTxt" TextWrapping="Wrap" Text="-" Foreground="White" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}"/>
                         </StackPanel>
                     </Grid>
                 </DataTemplate>
