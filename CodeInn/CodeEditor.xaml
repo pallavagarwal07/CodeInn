@@ -8,6 +8,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+
     <Page.Resources>
         <DataTemplate x:Key="HubSectionHeaderTemplate">
             <TextBlock Margin="0,0,0,-29.5" Text="{Binding}"/>
@@ -23,7 +24,6 @@
 
     <Grid x:Name="LayoutRoot">
         <Hub Name="CodeHub" x:Uid="CodeHub" Header="CodeInn" Background="{ThemeResource HubBackgroundImageBrush}">
-
             <HubSection Name="HubEditor" x:Uid="HubEditor" Header="CODE" 
                          HeaderTemplate="{ThemeResource HubSectionHeaderTemplate}">
                 <DataTemplate>
@@ -32,19 +32,17 @@
                     </Grid>
                 </DataTemplate>
             </HubSection>
-            
+
             <HubSection Name="HubQuestion" x:Uid="HubQuestion" Header="TASK"
                         HeaderTemplate="{ThemeResource HubSectionHeaderTemplate}">
                 <DataTemplate>
                     <StackPanel>
                         <TextBlock VerticalAlignment="Top" x:Name="probname" Margin="5,30,0,0" Text="Scratchpad" FontFamily="Calibri" FontSize="35" TextWrapping="WrapWholeWords"/>
-                        <ScrollViewer>
-                            <TextBlock VerticalAlignment="Top" x:Name="probdesc" Margin="5,30,0,0" Text="Hurray, nothing to do !" FontFamily="Calibri" FontSize="25" TextWrapping="WrapWholeWords" ScrollViewer.VerticalScrollMode="Auto"/>
-                        </ScrollViewer>
+                        <TextBlock VerticalAlignment="Top" x:Name="probdesc" Margin="0,30,-0.167,0" Text="Hurray, nothing to do !" FontFamily="Calibri" FontSize="25" TextWrapping="WrapWholeWords" ScrollViewer.VerticalScrollMode="Enabled" Height="353"/>
                     </StackPanel>
                 </DataTemplate>
             </HubSection>
-            
+
             <HubSection Name="HubInOut" x:Uid="InOut" Header="Run"
                         HeaderTemplate="{ThemeResource HubSectionHeaderTemplate}">
                 <DataTemplate>

@@ -42,7 +42,9 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Bottom"
                     Margin="5,0,5,0">
-                    <ComboBoxItem Content="C++" IsSelected="True"/>
+                    <ComboBoxItem Content="C++"/>
+                    <ComboBoxItem Content="Python" IsSelected="True"/>
+                    <ComboBoxItem Content="Java"/>
                     <ComboBoxItem Content="More languages soon."/>
                 </ComboBox>
                 <Grid>
