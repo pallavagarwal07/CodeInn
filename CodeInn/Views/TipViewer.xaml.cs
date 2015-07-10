@@ -110,7 +110,7 @@ namespace CodeInn.Views
 
             var lastcheck = localSettings.Containers["userInfo"].Values["lastchecktips"].ToString();
             Debug.WriteLine(System.Uri.EscapeUriString(lastcheck));
-            var response = await client.GetAsync(new Uri("http://codeinn-acecoders.rhcloud.com:8000/api/query?Timestamp=" + System.Uri.EscapeUriString(lastcheck) + "&Table=Tips"));
+            var response = await client.GetAsync(new Uri("http://codeinn-acecoders.rhcloud.com:8000/query/data?Timestamp=" + System.Uri.EscapeUriString(lastcheck) + "&Table=Tips"));
 
             var result = await response.Content.ReadAsStringAsync();
 
