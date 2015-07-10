@@ -28,7 +28,7 @@ using Windows.Storage;
 namespace CodeInn.Views
 {
     /// <summary>
-    /// The menu page to retrieve and display Lessons
+    /// The menu page to display Lesson data
     /// </summary>
     public sealed partial class LessonViewer2 : Page
     {
@@ -50,14 +50,13 @@ namespace CodeInn.Views
             await highlight.CopyAsync(stateFolder, "highlight.pack.js", NameCollisionOption.ReplaceExisting);
             await style.CopyAsync(stateFolder, "arta.css", NameCollisionOption.ReplaceExisting);
             await marked.CopyAsync(stateFolder, "marked.min.js", NameCollisionOption.ReplaceExisting);
-            string url = "ms-appdata:///local/NavigateToState/lesson.html"; 
-            webView1.Navigate(new Uri(url));
-        } 
+            string url = "ms-appx-web:///html/lesson.html";
+            webView3.Navigate(new Uri(url));
+        }
 
         public LessonViewer2()
         {
             this.InitializeComponent();
-
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
@@ -101,19 +100,19 @@ namespace CodeInn.Views
 
         #endregion
 
-        private async void webView1_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
+        private async void webView3_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
         {
             var lis = new List<string>();
             lis.Add(navParam.Content);
-            var returnstatus = await webView1.InvokeScriptAsync("setText", lis);
+            var returnstatus = await webView3.InvokeScriptAsync("setText", lis);
             Debug.WriteLine(returnstatus);
         }
 
-        private void webView1_ScriptNotify(object sender, NotifyEventArgs e)
+        void webView3_ScriptNotify(object sender, NotifyEventArgs e)
         {
-            throw new System.ArgumentException("NO");
-            Debug.WriteLine("HERE\n");
             string str = e.Value;
+            Lessons obj = new Lessons("Example from lesson", "This is an example from the lesson you were viewing. Feel free to tinker around.", str);
+            Frame.Navigate(typeof(CodeEditor), new CodeEditorContext(obj, "LessonExample"));
             Debug.WriteLine(str);
         }
 

@@ -39,6 +39,7 @@ namespace CodeInn
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         private string navC;
         private ParentClass displayedObject;
+        private string tableName;
         private TextBlock pname;
         private TextBlock pdesc;
         private WebView webv;
@@ -182,8 +183,9 @@ namespace CodeInn
         /// <param name="e">Provides data for navigation methods and event
         /// handlers that cannot cancel the navigation request.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            displayedObject = e.Parameter as ParentClass;
+        {          
+            displayedObject = (e.Parameter as CodeEditorContext).displayedObject;
+            tableName = (e.Parameter as CodeEditorContext).tableName;
             populateContent();
             this.navigationHelper.OnNavigatedTo(e);
         }

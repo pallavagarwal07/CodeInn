@@ -56,7 +56,8 @@ namespace CodeInn.Views
         private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Problems clickedProblem = (Problems)(sender as ListBox).SelectedItem;
-            Frame.Navigate(typeof(CodeEditor), clickedProblem);
+            var navCont = new CodeEditorContext(clickedProblem, "Problems");
+            Frame.Navigate(typeof(CodeEditor), navCont);
         }
 
         public NavigationHelper NavigationHelper
