@@ -45,6 +45,7 @@ namespace CodeInn
         private WebView webv;
         private TextBox inpbox;
         private TextBlock outbox;
+        private StatusBarProgressIndicator progressbar;
 
         private DependencyObject FindChildControl<T>(DependencyObject control, string ctrlName)
         {
@@ -131,62 +132,37 @@ namespace CodeInn
             get { return this.navigationHelper; }
         }
 
-        /// <summary>
-        /// Gets the view model for this <see cref="Page"/>.
-        /// This can be changed to a strongly typed view model.
-        /// </summary>
         public ObservableDictionary DefaultViewModel
         {
             get { return this.defaultViewModel; }
         }
 
-        /// <summary>
-        /// Populates the page with content passed during navigation.  Any saved state is also
-        /// provided when recreating a page from a prior session.
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event; typically <see cref="NavigationHelper"/>
-        /// </param>
-        /// <param name="e">Event data that provides both the navigation parameter passed to
-        /// <see cref="Frame.Navigate(Type, Object)"/> when this page was initially requested and
-        /// a dictionary of state preserved by this page during an earlier
-        /// session.  The state will be null the first time a page is visited.</param>
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
         }
 
-        /// <summary>
-        /// Preserves state associated with this page in case the application is suspended or the
-        /// page is discarded from the navigation cache.  Values must conform to the serialization
-        /// requirements of <see cref="SuspensionManager.SessionState"/>.
-        /// </summary>
-        /// <param name="sender">The source of the event; typically <see cref="NavigationHelper"/></param>
-        /// <param name="e">Event data that provides an empty dictionary to be populated with
-        /// serializable state.</param>
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
         }
 
         #region NavigationHelper registration
 
-        /// <summary>
-        /// The methods provided in this section are simply used to allow
-        /// NavigationHelper to respond to the page's navigation methods.
-        /// <para>
-        /// Page specific logic should be placed in event handlers for the  
-        /// <see cref="NavigationHelper.LoadState"/>
-        /// and <see cref="NavigationHelper.SaveState"/>.
-        /// The navigation parameter is available in the LoadState method 
-        /// in addition to page state preserved during an earlier session.
-        /// </para>
-        /// </summary>
-        /// <param name="e">Provides data for navigation methods and event
-        /// handlers that cannot cancel the navigation request.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {          
             displayedObject = (e.Parameter as CodeEditorContext).displayedObject;
             tableName = (e.Parameter as CodeEditorContext).tableName;
             populateContent();
+
+            if (tableName == "Scratchpad" || tableName == "Examples" || tableName == "LessonExample")
+            {
+                CommandBar bottomCommandBar = this.BottomAppBar as CommandBar;
+                AppBarButton b = bottomCommandBar.PrimaryCommands[2] as AppBarButton;
+                b.Click -= Verify;
+                bottomCommandBar.PrimaryCommands.RemoveAt(2);
+            }
+
+            progressbar = StatusBar.GetForCurrentView().ProgressIndicator;
+
             this.navigationHelper.OnNavigatedTo(e);
         }
 
@@ -209,8 +185,39 @@ namespace CodeInn
             await sender.InvokeScriptAsync("hello", _params);
         }
 
+        private async void Compile(object sender, RoutedEventArgs e)
+        {
+            progressbar.Text = "Compiling code";
+            progressbar.ShowAsync();
+
+            var edContent = await webv.InvokeScriptAsync("getContent", new List<string>());
+            var bytes = Encoding.UTF8.GetBytes(edContent);
+            var base64 = System.Uri.EscapeUriString(Convert.ToBase64String(bytes)).Replace("+", "%2B").Replace("=", "%3D");
+            Debug.WriteLine(base64);
+
+            var cts = new CancellationTokenSource();
+            var client = new HttpClient();
+
+            try
+            {
+                cts.CancelAfter(7500);
+                var response = await client.GetAsync(new Uri("http://codeinn-acecoders.rhcloud.com:8000/api/compile?Content=" + base64));
+                var result = await response.Content.ReadAsStringAsync();
+                outbox.Text = result;
+            }
+            catch
+            {
+                outbox.Text = "Timeout";
+            }
+            progressbar.HideAsync();
+            CodeHub.ScrollToSection(HubInOut);
+        }
+
         private async void Run(object sender, RoutedEventArgs e)
         {
+            progressbar.Text = "Running code";
+            progressbar.ShowAsync();
+
             var edContent = await webv.InvokeScriptAsync("getContent", new List<string>());
             var bytes = Encoding.UTF8.GetBytes(edContent);
             var base64 = System.Uri.EscapeUriString(Convert.ToBase64String(bytes)).Replace("+", "%2B").Replace("=", "%3D");
@@ -230,35 +237,15 @@ namespace CodeInn
             {
                 outbox.Text = "Timeout";
             }
-            CodeHub.ScrollToSection(HubInOut);
-        }
-
-        private async void Compile(object sender, RoutedEventArgs e)
-        {
-            var edContent = await webv.InvokeScriptAsync("getContent", new List<string>());
-            var bytes = Encoding.UTF8.GetBytes(edContent);
-            var base64 = System.Uri.EscapeUriString(Convert.ToBase64String(bytes)).Replace("+","%2B").Replace("=","%3D");
-            Debug.WriteLine(base64);
-
-            var cts = new CancellationTokenSource();
-            var client = new HttpClient();
-            
-            try
-            {
-                cts.CancelAfter(7500);
-                var response = await client.GetAsync(new Uri("http://codeinn-acecoders.rhcloud.com:8000/api/compile?Content=" + base64));
-                var result = await response.Content.ReadAsStringAsync();
-                outbox.Text = result;
-            }
-            catch
-            {
-                outbox.Text = "Timeout";
-            }
+            progressbar.HideAsync();
             CodeHub.ScrollToSection(HubInOut);
         }
 
         private async void Verify(object sender, RoutedEventArgs e)
         {
+            progressbar.Text = "Verifying code";
+            progressbar.ShowAsync();
+
             var edContent = await webv.InvokeScriptAsync("getContent", new List<string>());
             var bytes = Encoding.UTF8.GetBytes(edContent);
             var base64 = System.Uri.EscapeUriString(Convert.ToBase64String(bytes)).Replace("+", "%2B").Replace("=", "%3D");
@@ -269,8 +256,8 @@ namespace CodeInn
 
             try
             {
-                cts.CancelAfter(5000);
-                var uri = new Uri("http://codeinn-acecoders.rhcloud.com:8000/api/verify?Content=" + base64 + "&Id=" + displayedObject.Id + "&Table=Problems");
+                cts.CancelAfter(7500);
+                var uri = new Uri("http://codeinn-acecoders.rhcloud.com:8000/api/verify?Content=" + base64 + "&Id=" + displayedObject.Id + "&Table=" + tableName);
                 var response = await client.GetAsync(uri);
                 var result = await response.Content.ReadAsStringAsync();
                 outbox.Text = result;
@@ -279,6 +266,7 @@ namespace CodeInn
             {
                 outbox.Text = "Timeout. Try again later.";
             }
+            progressbar.HideAsync();
             CodeHub.ScrollToSection(HubInOut);
         }
 

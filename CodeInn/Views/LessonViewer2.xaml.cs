@@ -112,8 +112,7 @@ namespace CodeInn.Views
         {
             string str = e.Value;
             Lessons obj = new Lessons("Example from lesson", "This is an example from the lesson you were viewing. Feel free to tinker around.", str);
-            Frame.Navigate(typeof(CodeEditor), new CodeEditorContext(obj, "LessonExample"));
-            Debug.WriteLine(str);
+            this.Frame.Navigate(typeof(CodeEditor), new CodeEditorContext(obj, "LessonExample"));
         }
 
     }

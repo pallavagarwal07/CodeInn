@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Popups;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -33,6 +34,7 @@ namespace CodeInn.Views
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
+        private StatusBarProgressIndicator progressbar;
         
         ObservableCollection<Examples> DB_ExampleList = new ObservableCollection<Examples>();
         public ExampleViewer()
@@ -54,7 +56,7 @@ namespace CodeInn.Views
         private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Examples clickedExample = (Examples)(sender as ListBox).SelectedItem;
-            var navCont = new CodeEditorContext(clickedExample, "Problems");
+            var navCont = new CodeEditorContext(clickedExample, "Examples");
             Frame.Navigate(typeof(CodeEditor), navCont);
         }
 
@@ -80,6 +82,7 @@ namespace CodeInn.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            progressbar = StatusBar.GetForCurrentView().ProgressIndicator;
             this.navigationHelper.OnNavigatedTo(e);
         }
 
@@ -93,6 +96,9 @@ namespace CodeInn.Views
 
         async private void GetDataFromWeb()
         {
+            progressbar.Text = "Fetching new data";
+            progressbar.ShowAsync();
+
             var client = new HttpClient();
             Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
 
@@ -129,10 +135,12 @@ namespace CodeInn.Views
                 }
 
                 localSettings.Containers["userInfo"].Values["lastcheckexamples"] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                progressbar.Text = "New items";
             }
             catch
             {
                 Debug.WriteLine("No new items");
+                progressbar.Text = "No New items";
             }
             finally
             {
@@ -140,6 +148,7 @@ namespace CodeInn.Views
                 DB_ExampleList = dbproblems.GetAllExamples();
                 listBox.ItemsSource = DB_ExampleList.OrderByDescending(i => i.Id).ToList();
             }
+            progressbar.HideAsync();
         }
 
         private void Refresh_Examples(object sender, RoutedEventArgs e)

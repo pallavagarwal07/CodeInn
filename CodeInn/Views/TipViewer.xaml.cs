@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Popups;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -35,6 +36,7 @@ namespace CodeInn.Views
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
+        private StatusBarProgressIndicator progressbar;
         
         ObservableCollection<Tips> DB_TipList = new ObservableCollection<Tips>();
         public TipViewer()
@@ -79,6 +81,7 @@ namespace CodeInn.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            progressbar = StatusBar.GetForCurrentView().ProgressIndicator;
             this.navigationHelper.OnNavigatedTo(e);
         }
 
@@ -92,6 +95,9 @@ namespace CodeInn.Views
 
         async private void GetDataFromWeb()
         {
+            progressbar.Text = "Fetching new data";
+            progressbar.ShowAsync();
+
             var client = new HttpClient();
             Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
 
@@ -127,10 +133,12 @@ namespace CodeInn.Views
                     }
                 }
                 localSettings.Containers["userInfo"].Values["lastchecktips"] = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ");
+                progressbar.Text = "New items";
             }
             catch
             {
                 Debug.WriteLine("No new items");
+                progressbar.Text = "No New items";
             }
             finally
             {
@@ -138,6 +146,7 @@ namespace CodeInn.Views
                 DB_TipList = dbtips.GetAllTips();
                 listBox.ItemsSource = DB_TipList.OrderByDescending(i => i.Id).ToList();
             }
+            progressbar.HideAsync();
         }
 
         private void Refresh_Tips(object sender, RoutedEventArgs e)

@@ -142,6 +142,9 @@ namespace CodeInn.Views
 
         private async void Login(object sender, RoutedEventArgs e)
         {
+            LoadingBar.IsEnabled = true;
+            LoadingBar.Visibility = Visibility.Visible;
+
             if (username.Text == "" & email.Text == "")
             {
                 MessageDialog messageDialog = new MessageDialog("Please fill atleast one of email/username fields");
@@ -180,6 +183,8 @@ namespace CodeInn.Views
                 Debug.WriteLine("Rejected " + response.StatusCode);
                 MessageDialog messageDialog = new MessageDialog(result);
                 await messageDialog.ShowAsync();
+                LoadingBar.IsEnabled = false;
+                LoadingBar.Visibility = Visibility.Collapsed;
                 return;
             }
 
@@ -199,10 +204,16 @@ namespace CodeInn.Views
                 localSettings.Containers["userInfo"].Values["lastchecklessons"] = "2014-01-01T01:01:01Z";
                 localSettings.Containers["userInfo"].Values["lastchecktips"] = "2014-01-01T01:01:01Z";
             }
+
+            LoadingBar.IsEnabled = false;
+            LoadingBar.Visibility = Visibility.Collapsed;
         }
 
         private async void Signup(object sender, RoutedEventArgs e)
         {
+            LoadingBar.IsEnabled = true;
+            LoadingBar.Visibility = Visibility.Visible;
+
             if (username.Text == "" || email.Text == "")
             {
                 MessageDialog messageDialog = new MessageDialog("Please fill email and username.");
@@ -245,6 +256,8 @@ namespace CodeInn.Views
 				Debug.WriteLine("Rejected " + response.StatusCode);
                 MessageDialog messageDialog = new MessageDialog(result);
                 await messageDialog.ShowAsync();
+                LoadingBar.IsEnabled = false;
+                LoadingBar.Visibility = Visibility.Collapsed;
                 return;
 			}
 
@@ -263,6 +276,9 @@ namespace CodeInn.Views
                 localSettings.Containers["userInfo"].Values["lastchecklessons"] = "2014-01-01T01:01:01Z";
                 localSettings.Containers["userInfo"].Values["lastchecktips"] = "2014-01-01T01:01:01Z";
             }
+
+            LoadingBar.IsEnabled = false;
+            LoadingBar.Visibility = Visibility.Collapsed;
         }
     }
 }
