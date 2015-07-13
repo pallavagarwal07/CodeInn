@@ -118,6 +118,9 @@
     <Compile Include="Views\Credits.xaml.cs">
       <DependentUpon>Credits.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\DailyChallenge.xaml.cs">
+      <DependentUpon>DailyChallenge.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ExampleViewer.xaml.cs">
       <DependentUpon>ExampleViewer.xaml</DependentUpon>
     </Compile>
@@ -210,6 +213,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Credits.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DailyChallenge.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
