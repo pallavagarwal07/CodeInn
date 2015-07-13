@@ -18,19 +18,34 @@
             <TextBlock Text="CodeInn" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0"/>
             <TextBlock Text="Daily Challenge" Margin="0,-6.5,0,26.5" Style="{ThemeResource HeaderTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
         </StackPanel>
-        <ListBox Background="Transparent" Height="auto" Grid.Row="1" x:Name="listBox" SelectionChanged="listBox_SelectionChanged">
-            <ListBox.ItemTemplate>
+        <TextBlock TextWrapping="Wrap" FontSize="16" Margin="19,105,10,162.167" Name="TimeRemaining">Minues to Submission:</TextBlock>
+
+        <Hub Name="CodeHub" x:Uid="CodeHub" Margin="0,143,0,302" Grid.RowSpan="2">
+
+            <HubSection Name="HubQuestion" x:Uid="HubQuestion" Header="TASK" Height="183" >
                 <DataTemplate>
-                    <Grid>
-                        <StackPanel Margin="14,0,0,0">
-                            <TextBlock Grid.Row="0" x:Name="NameTxt" TextWrapping="Wrap" Text="{Binding Name}" Foreground="White" Style="{ThemeResource ListViewItemTextBlockStyle}"/>
-                            <TextBlock Grid.Row="1" x:Name="DescTxt"  TextWrapping="Wrap" Text="{Binding Description}" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}"/>
-                        </StackPanel>
+                    <Grid Grid.Row="1" x:Name="ContentRoot" Margin="1,9.5,1,0">
                     </Grid>
                 </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+            </HubSection>
 
+            <HubSection Name="HubAttempts" x:Uid="HubAttempts" Header="ATTEMPTS" Height="498" Width="396">
+                <DataTemplate>
+                    <ListBox Background="Transparent" Height="auto" Grid.Row="1" x:Name="listBox" SelectionChanged="listBox_SelectionChanged" Margin="0,-17,16.667,-0.167">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <StackPanel Margin="14,0,0,0">
+                                        <TextBlock Grid.Row="0" x:Name="NameTxt" TextWrapping="Wrap" Text="{Binding Name}" Foreground="White" Style="{ThemeResource ListViewItemTextBlockStyle}"/>
+                                        <TextBlock Grid.Row="1" x:Name="DescTxt"  TextWrapping="Wrap" Text="{Binding Description}" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DataTemplate>
+            </HubSection>
+        </Hub>
     </Grid>
 
     <Page.BottomAppBar>

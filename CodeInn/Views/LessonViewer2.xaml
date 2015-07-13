@@ -16,7 +16,7 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Margin="19,0,0,0">
             <TextBlock Text="CodeInn" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0"/>
-            <TextBlock Text="Lesson content" Margin="0,-6.5,0,26.5" Style="{ThemeResource HeaderTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
+            <TextBlock Text="Lesson" Margin="0,-6.5,0,26.5" Style="{ThemeResource HeaderTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
         </StackPanel>
         <WebView x:Name="webView3" HorizontalAlignment="Left" Height="511" Margin="0,129,0,0" VerticalAlignment="Top" Width="400" NavigationCompleted="webView3_NavigationCompleted" ScriptNotify="webView3_ScriptNotify" />
     </Grid>
