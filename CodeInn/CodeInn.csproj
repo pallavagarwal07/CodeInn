@@ -112,6 +112,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />
+    <Compile Include="Views\CodeDisplay.xaml.cs">
+      <DependentUpon>CodeDisplay.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Contribute.xaml.cs">
       <DependentUpon>Contribute.xaml</DependentUpon>
     </Compile>
@@ -184,6 +187,7 @@
     <Content Include="html\ace\src-min-noconflict\mode-c_cpp.js" />
     <Content Include="html\ace\src-min-noconflict\theme-tomorrow_night.js" />
     <Content Include="html\arta.css" />
+    <Content Include="html\codeView.html" />
     <Content Include="html\highlight.pack.js" />
     <Content Include="html\lesson.html" />
     <Content Include="html\marked.min.js" />
@@ -207,6 +211,10 @@
     <Page Include="HubPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CodeDisplay.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Contribute.xaml">
       <SubType>Designer</SubType>
