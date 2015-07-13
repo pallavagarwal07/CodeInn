@@ -46,6 +46,7 @@ namespace CodeInn
         private TextBox inpbox;
         private TextBlock outbox;
         private StatusBarProgressIndicator progressbar;
+        private Windows.Storage.ApplicationDataContainer localSettings;
 
         private DependencyObject FindChildControl<T>(DependencyObject control, string ctrlName)
         {
@@ -153,6 +154,8 @@ namespace CodeInn
             tableName = (e.Parameter as CodeEditorContext).tableName;
             populateContent();
 
+            localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+
             if (tableName == "Scratchpad" || tableName == "Examples" || tableName == "LessonExample")
             {
                 CommandBar bottomCommandBar = this.BottomAppBar as CommandBar;
@@ -254,10 +257,20 @@ namespace CodeInn
             var cts = new CancellationTokenSource();
             var client = new HttpClient();
 
+            if (!localSettings.Containers.ContainsKey("userInfo"))
+            {
+                MessageDialog msgbox = new MessageDialog("Please log-in first. Go to settings from the main menu.");
+                await msgbox.ShowAsync();
+                return;
+            }
+
+            var username_basic = localSettings.Containers["userInfo"].Values["userName"].ToString();
+            var username = System.Uri.EscapeUriString(username_basic).Replace("+", "%2B").Replace("=", "%3D");
+
             try
             {
                 cts.CancelAfter(7500);
-                var uri = new Uri("http://codeinn-acecoders.rhcloud.com:8000/api/verify?Content=" + base64 + "&Id=" + displayedObject.Id + "&Table=" + tableName);
+                var uri = new Uri("http://codeinn-acecoders.rhcloud.com:8000/api/verify?Content=" + base64 + "&Id=" + displayedObject.Id + "&Table=" + tableName + "&username=" + username);
                 var response = await client.GetAsync(uri);
                 var result = await response.Content.ReadAsStringAsync();
                 outbox.Text = result;
