@@ -69,7 +69,7 @@
             <AppBarButton Label="Compile" Icon="Setting" Click="Compile"/>
             <AppBarButton Label="Run" Icon="Play" Click="Run"/>
             <AppBarButton Name="verifybtn" Label="Verify" Icon="Accept" Click="Verify"/>
-            <AppBarButton Label="Input" Icon="Import"/>
+            <AppBarButton Label="View" Icon="View" Click="viewcode"/>
         </CommandBar>
     </Page.BottomAppBar>
 

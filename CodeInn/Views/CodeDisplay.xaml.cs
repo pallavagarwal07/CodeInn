@@ -32,7 +32,7 @@ namespace CodeInn.Views
     /// </summary>
     public sealed partial class CodeDisplay : Page
     {
-        Lessons navParam;
+        ParentClass navParam;
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
 
@@ -88,7 +88,7 @@ namespace CodeInn.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            navParam = e.Parameter as Lessons;
+            navParam = e.Parameter as ParentClass;
             createHtmlFileInLocalState();
             this.navigationHelper.OnNavigatedTo(e);
         }
