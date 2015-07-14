@@ -25,6 +25,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using System.Globalization;
 
 namespace CodeInn.Views
 {
@@ -35,19 +36,43 @@ namespace CodeInn.Views
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
-        private StatusBarProgressIndicator progressbar;
         private bool isTimeRunning = false;
-        ObservableCollection<Examples> DB_ExampleList = new ObservableCollection<Examples>();
+        private bool toRefresh = false;
+        private Problems displayedObject;
+        private Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+
         public DailyChallenge()
         {
             this.InitializeComponent();
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
-            if (!isTimeRunning)
+        }
+
+        private DependencyObject FindChildControl<T>(DependencyObject control, string ctrlName)
+        {
+            int childNumber = VisualTreeHelper.GetChildrenCount(control);
+            for (int i = 0; i < childNumber; i++)
             {
-                this.WriteTime();
+                DependencyObject child = VisualTreeHelper.GetChild(control, i);
+                FrameworkElement fe = child as FrameworkElement;
+                // Not a framework element or is null
+                if (fe == null) return null;
+
+                if (child is T && fe.Name == ctrlName)
+                {
+                    // Found the control so return
+                    return child;
+                }
+                else
+                {
+                    // Not found it - search children
+                    DependencyObject nextLevel = FindChildControl<T>(child, ctrlName);
+                    if (nextLevel != null)
+                        return nextLevel;
+                }
             }
+            return null;
         }
 
         public NavigationHelper NavigationHelper
@@ -72,7 +97,7 @@ namespace CodeInn.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            progressbar = StatusBar.GetForCurrentView().ProgressIndicator;
+            this.WriteTime();
             this.navigationHelper.OnNavigatedTo(e);
         }
 
@@ -83,16 +108,83 @@ namespace CodeInn.Views
 
 #endregion
 
-
-        async private void GetDataFromWeb()
+        async private void prepareData()
         {
+            if (!localSettings.Containers.ContainsKey("userInfo"))
+            {
+                MessageDialog msgbox = new MessageDialog("Please log-in first. Go to settings from the main menu.");
+                await msgbox.ShowAsync();
+                Frame.Navigate(typeof(Settings));
+                return;
+            }
+
+            if (!localSettings.Containers.ContainsKey("dailyChallenge"))
+            {
+                Debug.WriteLine("needed to create");
+                localSettings.CreateContainer("dailyChallenge", Windows.Storage.ApplicationDataCreateDisposition.Always);
+                localSettings.Containers["dailyChallenge"].Values["Date"] = "2004-01-01T01:01:01.000Z";
+                toRefresh = true;
+            }
+            else
+            {
+                string lastDate = localSettings.Containers["dailyChallenge"].Values["Date"].ToString();
+
+                string format = "yyyy-MM-ddTHH:mm:ss.fffZ";
+                DateTime lastchallengedate = DateTime.ParseExact(lastDate, format, CultureInfo.InvariantCulture);
+
+                if (lastchallengedate.Date < DateTime.Now.Date)
+                {
+                    toRefresh = true;
+                }
+            }
+
+            Debug.WriteLine("To refresh = " + toRefresh);
+
+            if (toRefresh)
+            {
+                var client = new HttpClient();
+                var response = await client.GetAsync(new Uri("http://codeinn-acecoders.rhcloud.com:8000/query/daily"));
+                var result = await response.Content.ReadAsStringAsync();
+                Debug.WriteLine(result);
+
+                try
+                {
+                    // The server sends a single challenge so the list would be singly-occupied.
+                    List<Problems> dailychall = JsonConvert.DeserializeObject<List<Problems>>(result);
+                    foreach (Problems prob in dailychall)
+                    {
+                        localSettings.Containers["dailyChallenge"].Values["Date"] = prob.CreationDate;
+                        localSettings.Containers["dailyChallenge"].Values["Content"] = prob.Content;
+                        localSettings.Containers["dailyChallenge"].Values["Name"] = prob.Name;
+                        localSettings.Containers["dailyChallenge"].Values["Description"] = prob.Description;
+                        localSettings.Containers["dailyChallenge"].Values["Id"] = prob.Id;
+                        displayedObject = prob;
+                    }
+                }
+                catch
+                {
+                    Debug.WriteLine("Internal error.");
+                }
+            }
+            else
+            {
+                string name = localSettings.Containers["dailyChallenge"].Values["Name"].ToString();
+                string content = localSettings.Containers["dailyChallenge"].Values["Content"].ToString();
+                string description = localSettings.Containers["dailyChallenge"].Values["Description"].ToString();
+                displayedObject = new Problems(0, name, description, content, "Admin");
+                //await Task.Delay(1000);
+            }
+
+            populateContent();
         }
 
-        private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void populateContent()
         {
-            DailyChallenge clickedExample = (DailyChallenge)(sender as ListBox).SelectedItem;
-            //var navCont = new CodeEditorContext(clickedExample, "Examples");
-            //Frame.Navigate(typeof(CodeEditor), navCont);
+            TextBlock tn = FindChildControl<TextBlock>(HubQuestion, "name") as TextBlock;
+            TextBlock td = FindChildControl<TextBlock>(HubQuestion, "desc") as TextBlock;
+
+            tn.Text = displayedObject.Name;
+            td.Text = displayedObject.Description;
         }
 
         async private void WriteTime()
@@ -107,14 +199,18 @@ namespace CodeInn.Views
                 currentDate = DateTime.Now;
                 totalTime = (tomorrow.Ticks - currentDate.Ticks) / 10000000.0 / 60;
                 TimeRemaining.Text = "Minutes to submission: " + String.Format("{0:0.000}", totalTime);
-                await Task.Delay(50);
+                await Task.Delay(100);
             }
-            //AutoSubmit();
         }
 
-        private void Refresh_Challenge(object sender, RoutedEventArgs e)
+        private void AppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            GetDataFromWeb();
+            Frame.Navigate(typeof(CodeEditor), new CodeEditorContext(displayedObject, "DailyChallenge"));
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.prepareData();
         }
 
     }
