@@ -7,11 +7,14 @@ html, body {
     -ms-content-zooming: none;
     width: 100%;
     height: 100%;
-    overflow: hidden;
     margin: 0;
 }
     #editor {
         position: relative;
+     /* top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;*/
         height: 100%;
         width: 100%;
     }
@@ -33,7 +36,10 @@ function getContent()
         <script src="./jquery.js"></script>
     </head>
     <body>
-        <div id="editor">Hello, World</div>
+        <div id="container">
+            <div id="editor">Hello, World</div>
+        </div>
+
         <script src="ace/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
         <script>
 
@@ -43,22 +49,22 @@ editor.getSession().setMode("ace/mode/c_cpp");
 editor.setFontSize(40);
 editor.getSession().setUseWrapMode(true);
 
-var touch_start_x = 0;
-var touch_start_y = 0;
-
-$('.ace_scroller').on('touchstart', function (event) {
-        touch_start_x = event.originalEvent.touches[0].pageX;
-        touch_start_y = event.originalEvent.touches[0].pageY;
-    });
-
-$('.ace_scroller').on('touchmove', function(e) {
-        var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
-        var x = touch.pageX - touch_start_x;
-        var y = touch.pageY - touch_start_y;
-        editor.renderer.scrollBy(x,y);
-    });
+$('#container').on('touchmove', function(e) {
+    e.preventDefault();
+    var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0],
+    elm = $(this).offset(),
+    x = touch.pageX - elm.left,
+    y = touch.pageY - elm.top;
+    if (x < $(this).width() && x > 0 && y < $(this).height() && y > 0) {
+        var editor = ace.edit('editor'),
+            xDiff = x - window.SyntaxEditor_scrollStart_X,
+            yDiff = y - window.SyntaxEditor_scrollStart_Y;
+        editor.renderer.scrollBy(-xDiff, -yDiff);
+        window.SyntaxEditor_scrollStart_X = x;
+        window.SyntaxEditor_scrollStart_Y = y;
+    }
+});
 editor.resize();
-
         </script>
     </body>
 </html>

@@ -107,5 +107,9 @@ namespace CodeInn.Views
             var returnstatus = await webView4.InvokeScriptAsync("setText", lis);
             Debug.WriteLine(returnstatus);
         }
+
+        void webView4_ScriptNotify(object sender, NotifyEventArgs e)
+        {
+        }
     }
 }
