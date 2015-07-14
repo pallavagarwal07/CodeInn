@@ -1,20 +1,20 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-<head>
-<title>ACE in Action</title>
-<style type="text/css" media="screen">
+    <head>
+        <title>ACE in Action</title>
+        <style type="text/css" media="screen">
 html, body {
     -ms-content-zooming: none;
 }
-    #editor { 
+    #editor {
         position: absolute;
         top: 0;
         right: 0;
         bottom: 0;
         left: 0;
     }
-</style>
-<script>
+        </style>
+        <script>
 function hello(vars)
 {
     editor.setValue(vars);
@@ -24,18 +24,37 @@ function getContent()
 {
     return editor.getValue();
 }
-</script>
-</head>
-<body>
-<div id="editor">Hello, World</div>
+        </script>
+        <script src="./jquery.js"></script>
+    </head>
+    <body>
+        <div id="container">
+            <div id="editor">Hello, World</div>
+        </div>
 
-<script src="ace/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
-<script>
-    var editor = ace.edit("editor");
-    editor.setTheme("ace/theme/tomorrow_night");
-    editor.getSession().setMode("ace/mode/c_cpp");
-    editor.setFontSize(40);
-    editor.getSession().setUseWrapMode(true);
-</script>
-</body>
+        <script src="ace/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+        <script>
+var editor = ace.edit("editor");
+editor.setTheme("ace/theme/tomorrow_night");
+editor.getSession().setMode("ace/mode/c_cpp");
+editor.setFontSize(40);
+editor.getSession().setUseWrapMode(true);
+
+$('#container').on('touchmove', function(e) {
+    e.preventDefault();
+    var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0],
+    elm = $(this).offset(),
+    x = touch.pageX - elm.left,
+    y = touch.pageY - elm.top;
+    if (x < $(this).width() && x > 0 && y < $(this).height() && y > 0) {
+        var editor = ace.edit('editor'),
+            xDiff = x - window.SyntaxEditor_scrollStart_X,
+            yDiff = y - window.SyntaxEditor_scrollStart_Y;
+        editor.renderer.scrollBy(-xDiff, -yDiff);
+        window.SyntaxEditor_scrollStart_X = x;
+        window.SyntaxEditor_scrollStart_Y = y;
+    }
+});
+        </script>
+    </body>
 </html>

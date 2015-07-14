@@ -189,6 +189,7 @@
     <Content Include="html\arta.css" />
     <Content Include="html\codeView.html" />
     <Content Include="html\highlight.pack.js" />
+    <Content Include="html\jquery.js" />
     <Content Include="html\lesson.html" />
     <Content Include="html\marked.min.js" />
     <Content Include="html\test.html" />

@@ -92,9 +92,11 @@ namespace CodeInn
             navC = navContext;
             StorageFolder stateFolder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("NavigateToState", CreationCollisionOption.OpenIfExists);
             StorageFile htmlFile = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync("html\\test.html");
+            StorageFile jQuery = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync("html\\jquery.js");
             StorageFolder htmlFolder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync("html\\ace");
 
             await htmlFile.CopyAsync(stateFolder, "test.html", NameCollisionOption.ReplaceExisting);
+            await jQuery.CopyAsync(stateFolder, "jquery.js", NameCollisionOption.ReplaceExisting);
             await CopyFolderAsync(htmlFolder, stateFolder, "ace");
             string url = "ms-appx-web:///html/test.html";
             var codesection = HubEditor;
