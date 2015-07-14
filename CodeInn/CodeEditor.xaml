@@ -36,12 +36,16 @@
             <HubSection Name="HubQuestion" x:Uid="HubQuestion" Header="TASK"
                         HeaderTemplate="{ThemeResource HubSectionHeaderTemplate}">
                 <DataTemplate>
-                    <StackPanel>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
                         <TextBlock VerticalAlignment="Top" x:Name="probname" Margin="5,30,0,0" Text="Scratchpad" FontFamily="Calibri" FontSize="35" TextWrapping="WrapWholeWords"/>
-                        <ScrollViewer>
+                        <ScrollViewer Grid.Row="1">
                             <TextBlock VerticalAlignment="Top" x:Name="probdesc" Margin="5,30,0,0" Text="Hurray, nothing to do !" FontFamily="Calibri" FontSize="25" TextWrapping="WrapWholeWords" ScrollViewer.VerticalScrollMode="Auto"/>
                         </ScrollViewer>
-                    </StackPanel>
+                    </Grid>
                 </DataTemplate>
             </HubSection>
             
