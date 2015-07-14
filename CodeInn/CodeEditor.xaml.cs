@@ -283,5 +283,10 @@ namespace CodeInn
             CodeHub.ScrollToSection(HubInOut);
         }
 
+        private void viewcode(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Views.CodeDisplay), displayedObject);
+        }
+
     }
 }
