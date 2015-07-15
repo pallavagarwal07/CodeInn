@@ -141,6 +141,10 @@ namespace CodeInn
             {
                 throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
             }
+            else if (itemId == "Standings" && !Frame.Navigate(typeof(Leaderboard), itemId))
+            {
+                throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
+            }
         }
 
         #region NavigationHelper registration
