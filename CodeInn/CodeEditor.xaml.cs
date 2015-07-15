@@ -47,6 +47,7 @@ namespace CodeInn
         private TextBlock outbox;
         private StatusBarProgressIndicator progressbar;
         private Windows.Storage.ApplicationDataContainer localSettings;
+        private int timeSpent;
 
         private DependencyObject FindChildControl<T>(DependencyObject control, string ctrlName)
         {
@@ -81,6 +82,7 @@ namespace CodeInn
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+            localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
         }
 
         // Copies the file "html\html_example2.html" from this package's installed location to 
@@ -88,6 +90,7 @@ namespace CodeInn
         // done, enables the 'Load HTML' button. 
         async void populateContent()
         {
+            startTimeCalculation();
             string navContext = Base64Decode(displayedObject.Content) + '\n' + '\n' + '\n' + '\n' + '\n' + '\n';
             navC = navContext;
             StorageFolder stateFolder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("NavigateToState", CreationCollisionOption.OpenIfExists);
@@ -188,6 +191,32 @@ namespace CodeInn
         {
             string[] _params = new string[] {navC};
             await sender.InvokeScriptAsync("hello", _params);
+        }
+
+        async void startTimeCalculation()
+        {
+            while(true)
+            {
+                timeSpent += 5;
+                if(timeSpent > 60)
+                {
+                    if (!localSettings.Containers.ContainsKey("timeSpent"))
+                    {
+                        Debug.WriteLine("Time Spent in Code made");
+                        localSettings.CreateContainer("timeSpent", Windows.Storage.ApplicationDataCreateDisposition.Always);
+                        localSettings.Containers["timeSpent"].Values["minutes"] = ((double)timeSpent)/60;
+                    }
+                    else
+                    {
+                        localSettings.CreateContainer("timeSpent", Windows.Storage.ApplicationDataCreateDisposition.Always);
+                        double oldVal = (double) localSettings.Containers["timeSpent"].Values["minutes"];
+                        localSettings.Containers["timeSpent"].Values["minutes"] = ((double)timeSpent)/60 + oldVal;
+                        Debug.WriteLine("Time Spent in Code updated to " + ((double)timeSpent)/60 + oldVal);
+                    }
+                    timeSpent = 0;
+                }
+                await Task.Delay(5000);
+            }
         }
 
         private async void Compile(object sender, RoutedEventArgs e)
