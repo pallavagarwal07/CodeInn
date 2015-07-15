@@ -100,6 +100,7 @@ namespace CodeInn.Views
             {
                 MessageDialog msgbox = new MessageDialog("Please log-in first. Go to settings from the main menu.");
                 await msgbox.ShowAsync();
+                progressbar.HideAsync();
                 Frame.Navigate(typeof(Settings));
                 return;
             }

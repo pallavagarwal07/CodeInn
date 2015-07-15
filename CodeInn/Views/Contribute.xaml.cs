@@ -1,6 +1,4 @@
 ﻿using CodeInn.Common;
-using CodeInn.Model;
-using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,7 +8,8 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Graphics.Display;
-using Windows.Storage;
+using Windows.Storage.Streams;
+using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -19,18 +18,20 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.Web.Http;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
 namespace CodeInn.Views
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// Page to send contributions online
     /// </summary>
     public sealed partial class Contribute : Page
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
+        private StatusBarProgressIndicator progressbar;
 
         public Contribute()
         {
@@ -102,6 +103,7 @@ namespace CodeInn.Views
         /// handlers that cannot cancel the navigation request.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            progressbar = StatusBar.GetForCurrentView().ProgressIndicator;
             this.navigationHelper.OnNavigatedTo(e);
         }
 
@@ -112,82 +114,41 @@ namespace CodeInn.Views
 
         #endregion
 
-        public static string DB_PATH = Path.Combine(Path.Combine(ApplicationData.Current.LocalFolder.Path, "CodeInnDatabase.sqlite"));
-        
-        private void Add(object sender, RoutedEventArgs e)
+        private async void send(object sender, RoutedEventArgs e)
         {
-            SQLiteConnection dbConn;
+            progressbar.Text = "Sending contribution";
+            progressbar.ShowAsync();
 
-            if(table.Text == "Examples")
-            {
-                using (dbConn = new SQLiteConnection(DB_PATH))
-                {
-                    dbConn.CreateTable<Examples>();
-                }
-                Debug.WriteLine("Created " + table.Text);
-            }
-            else if(table.Text == "Lessons")
-            {
-                using (dbConn = new SQLiteConnection(DB_PATH))
-                {
-                    dbConn.CreateTable<Lessons>();
-                }
-                Debug.WriteLine("Created " + table.Text);
-            }
-            else if (table.Text == "Problems")
-            {
-                using (dbConn = new SQLiteConnection(DB_PATH))
-                {
-                    dbConn.CreateTable<Problems>();
-                }
-                Debug.WriteLine("Created " + table.Text);
-            }
-            else if (table.Text == "Tips")
-            {
-                using (dbConn = new SQLiteConnection(DB_PATH))
-                {
-                    dbConn.CreateTable<Tips>();
-                }
-                Debug.WriteLine("Created " + table.Text);
-            }
-        }
+            var client = new Windows.Web.Http.HttpClient();
+            Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
 
-        private void Delete(object sender, RoutedEventArgs e)
-        {
-            SQLiteConnection dbConn;
+            if (!localSettings.Containers.ContainsKey("userInfo"))
+            {
+                MessageDialog msgbox = new MessageDialog("Please log-in first. Go to settings from the main menu.");
+                await msgbox.ShowAsync();
+                progressbar.HideAsync();
+                Frame.Navigate(typeof(Settings));
+                return;
+            }
 
-            if (table.Text == "Examples")
-            {
-                using (dbConn = new SQLiteConnection(DB_PATH))
-                {
-                    dbConn.DropTable<Examples>();
-                }
-                Debug.WriteLine("Deleted " + table.Text);
-            }
-            else if (table.Text == "Lessons")
-            {
-                using (dbConn = new SQLiteConnection(DB_PATH))
-                {
-                    dbConn.DropTable<Lessons>();
-                }
-                Debug.WriteLine("Deleted " + table.Text);
-            }
-            else if (table.Text == "Problems")
-            {
-                using (dbConn = new SQLiteConnection(DB_PATH))
-                {
-                    dbConn.DropTable<Problems>();
-                }
-                Debug.WriteLine("Deleted " + table.Text);
-            }
-            else if (table.Text == "Tips")
-            {
-                using (dbConn = new SQLiteConnection(DB_PATH))
-                {
-                    dbConn.DropTable<Tips>();
-                }
-                Debug.WriteLine("Deleted " + table.Text);
-            }
+            var username = localSettings.Containers["userInfo"].Values["userName"].ToString();
+
+            HttpStringContent content = new HttpStringContent(
+                    "{ \"Username\": \"" + username + "\", \"Category\": \"" + category_box.Text + "\", \"Title\": \"" + title_box.Text + "\", \"Content\": \"" + content_box.Text + "\", \"AdditionalContent\": \"" + add_box.Text + "\" }",
+                    UnicodeEncoding.Utf8,
+                    "application/json");
+
+            Debug.WriteLine(content);
+
+            var uri = new Uri("http://codeinn-acecoders.rhcloud.com:8000/contribute");
+
+            var response = await client.PostAsync(uri, content);
+
+            var result = await response.Content.ReadAsStringAsync();
+
+            MessageDialog msgbox1 = new MessageDialog(result + " Thanks a lot!");
+            await msgbox1.ShowAsync();
+            progressbar.HideAsync();
         }
     }
 }

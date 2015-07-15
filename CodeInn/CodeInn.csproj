@@ -116,9 +116,6 @@
     <Compile Include="Views\CodeDisplay.xaml.cs">
       <DependentUpon>CodeDisplay.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Contribute.xaml.cs">
-      <DependentUpon>Contribute.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Credits.xaml.cs">
       <DependentUpon>Credits.xaml</DependentUpon>
     </Compile>
@@ -133,6 +130,9 @@
     </Compile>
     <Compile Include="Views\Leaderboard.xaml.cs">
       <DependentUpon>Leaderboard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Contribute.xaml.cs">
+      <DependentUpon>Contribute.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TipViewer.xaml.cs">
       <DependentUpon>TipViewer.xaml</DependentUpon>
@@ -221,10 +221,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Contribute.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\Credits.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -242,6 +238,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Leaderboard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Contribute.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

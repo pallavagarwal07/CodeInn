@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid x:Name="LayoutRoot">
+    <Grid x:Name="LayoutRoot" Background="{ThemeResource HubBackgroundImageBrush}">
 
         <Grid.ChildrenTransitions>
             <TransitionCollection>
@@ -18,25 +18,27 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="5*"/>
-            <RowDefinition Height="5*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <!-- Title Panel -->
         <StackPanel Grid.Row="0" Margin="19,0,0,0">
-            <TextBlock Text="MY APPLICATION" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0"/>
-            <TextBlock Text="page title" Margin="0,-6.5,0,26.5" Style="{ThemeResource HeaderTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
+            <TextBlock Text="CodeInn" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0"/>
+            <TextBlock Text="Contribute" Margin="0,-6.5,0,26.5" Style="{ThemeResource HeaderTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
         </StackPanel>
 
         <!--TODO: Content should be placed within the following grid-->
         <Grid Grid.Row="1" x:Name="ContentRoot" Margin="19,9.5,19,0">
-            <TextBox Name="table" PlaceholderText="Enter" VerticalAlignment="Center"/>
-        </Grid>
-        <Grid Grid.Row="2">
-            <StackPanel>
-                <Button Name="b1" Content="Add" Click="Add" HorizontalAlignment="Center"/>
-                <Button Name="b2" Content="Delete" Click="Delete" HorizontalAlignment="Center"/>
-            </StackPanel>
+            <ScrollViewer>
+                <StackPanel>
+                    <TextBox Name="category_box" PlaceholderText="Category" AcceptsReturn="True" TextWrapping="Wrap"/>
+                    <TextBox Name="title_box" PlaceholderText="Title" AcceptsReturn="True" TextWrapping="Wrap"/>
+                    <TextBox Name="content_box" PlaceholderText="Content" AcceptsReturn="True" TextWrapping="Wrap"/>
+                    <TextBox Name="add_box" PlaceholderText="Additional Content" AcceptsReturn="True" TextWrapping="Wrap"/>
+                    <Button Name="Send" Content="Contribute" Click="send" HorizontalAlignment="Center"/>
+                    <TextBlock Text="You will get points according to the quality and content of your contribution." TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center" FontSize="20" Margin="0,15,0,0"/>
+                </StackPanel>
+            </ScrollViewer>
         </Grid>
     </Grid>
 </Page>
