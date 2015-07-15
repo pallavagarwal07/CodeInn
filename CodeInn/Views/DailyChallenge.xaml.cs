@@ -40,6 +40,7 @@ namespace CodeInn.Views
         private bool toRefresh = false;
         private Problems displayedObject;
         private Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+        private StatusBarProgressIndicator progressbar;
 
         public DailyChallenge()
         {
@@ -98,6 +99,7 @@ namespace CodeInn.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             this.WriteTime();
+            progressbar = StatusBar.GetForCurrentView().ProgressIndicator;
             this.navigationHelper.OnNavigatedTo(e);
         }
 
@@ -142,6 +144,9 @@ namespace CodeInn.Views
 
             if (toRefresh)
             {
+                progressbar.Text = "Fetching new data";
+                progressbar.ShowAsync();
+
                 var client = new HttpClient();
                 var response = await client.GetAsync(new Uri("http://codeinn-acecoders.rhcloud.com:8000/query/daily"));
                 var result = await response.Content.ReadAsStringAsync();
@@ -164,7 +169,9 @@ namespace CodeInn.Views
                 catch
                 {
                     Debug.WriteLine("Internal error.");
+                    progressbar.Text = "Error";
                 }
+                progressbar.HideAsync();
             }
             else
             {
