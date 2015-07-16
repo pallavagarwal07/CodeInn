@@ -37,7 +37,8 @@ namespace CodeInn.Views
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         private StatusBarProgressIndicator progressbar;
-        
+        Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+
         ObservableCollection<Problems> DB_ProblemList = new ObservableCollection<Problems>();
         public ProblemViewer()
         {
@@ -49,11 +50,16 @@ namespace CodeInn.Views
             this.Loaded += ReadProblems_Loaded;
         }
 
-        private void ReadProblems_Loaded(object sender, RoutedEventArgs e)
+        private async void ReadProblems_Loaded(object sender, RoutedEventArgs e)
         {
-            ReadProblems dbproblems = new ReadProblems();
-            DB_ProblemList = dbproblems.GetAllProblems();
-            listBox.ItemsSource = DB_ProblemList.OrderBy(i => i.Id).ToList();
+            if (!localSettings.Containers.ContainsKey("userInfo"))
+            {
+                MessageDialog msgbox = new MessageDialog("Please log-in first. Go to settings from the main menu.");
+                await msgbox.ShowAsync();
+                Frame.Navigate(typeof(Settings));
+                return;
+            }
+            assignToListBox();
         }
         private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -102,12 +108,12 @@ namespace CodeInn.Views
             progressbar.ShowAsync();
 
             var client = new HttpClient();
-            Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
 
             if (!localSettings.Containers.ContainsKey("userInfo"))
             {
                 MessageDialog msgbox = new MessageDialog("Please log-in first. Go to settings from the main menu.");
                 await msgbox.ShowAsync();
+                Frame.Navigate(typeof(Settings));
                 return;
             }
 
@@ -145,11 +151,29 @@ namespace CodeInn.Views
             }
             finally
             {
-                ReadProblems dbproblems = new ReadProblems();
-                DB_ProblemList = dbproblems.GetAllProblems();
-                listBox.ItemsSource = DB_ProblemList.OrderByDescending(i => i.Id).ToList();
+                assignToListBox();
             }
             progressbar.HideAsync();
+        }
+
+        private void assignToListBox()
+        {
+            ReadProblems dbproblems = new ReadProblems();
+            DB_ProblemList = dbproblems.GetAllProblems();
+            var listofitems = DB_ProblemList.OrderByDescending(i => i.Id).ToList();
+
+            var serialized = localSettings.Containers["userInfo"].Values["PPsolved"].ToString();
+            var listofsolved = JsonConvert.DeserializeObject<List<int>>(serialized);
+
+            var requiredList = new List<ListItem>();
+            foreach (var items in listofitems)
+            {
+                if (listofsolved.Contains(items.Id))
+                    requiredList.Add(new ListItem(items.Name, items.Description, true));
+                else
+                    requiredList.Add(new ListItem(items.Name, items.Description, false));
+            }
+            listBox.ItemsSource = requiredList;
         }
 
         private void Refresh_Problems(object sender, RoutedEventArgs e)

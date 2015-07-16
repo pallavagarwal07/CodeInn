@@ -200,17 +200,18 @@ namespace CodeInn
                 timeSpent += 5;
                 if(timeSpent > 60)
                 {
-                    if (!localSettings.Containers.ContainsKey("timeSpent"))
+                    if (!localSettings.Containers.ContainsKey("userInfo"))
                     {
-                        Debug.WriteLine("Time Spent in Code made");
-                        localSettings.CreateContainer("timeSpent", Windows.Storage.ApplicationDataCreateDisposition.Always);
-                        localSettings.Containers["timeSpent"].Values["minutes"] = ((double)timeSpent)/60;
+                        MessageDialog msgbox = new MessageDialog("Please log-in first. Go to settings from the main menu.");
+                        await msgbox.ShowAsync();
+                        Frame.Navigate(typeof(Views.Settings));
+                        return;
                     }
                     else
                     {
-                        localSettings.CreateContainer("timeSpent", Windows.Storage.ApplicationDataCreateDisposition.Always);
-                        double oldVal = (double) localSettings.Containers["timeSpent"].Values["minutes"];
-                        localSettings.Containers["timeSpent"].Values["minutes"] = ((double)timeSpent)/60 + oldVal;
+                        localSettings.CreateContainer("userInfo", Windows.Storage.ApplicationDataCreateDisposition.Always);
+                        double oldVal = (double)localSettings.Containers["userInfo"].Values["timeSpent"];
+                        localSettings.Containers["userInfo"].Values["timeSpent"] = ((double)timeSpent) / 60 + oldVal;
                         Debug.WriteLine("Time Spent in Code updated to " + ((double)timeSpent)/60 + oldVal);
                     }
                     timeSpent = 0;
