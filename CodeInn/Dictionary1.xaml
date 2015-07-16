@@ -1,0 +1,7 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CodeInn">
+    <SolidColorBrush x:Key="TransparentBlue" Color="#00b0f0" Opacity="0.5" />
+    <SolidColorBrush x:Key="Transparenty" Color="#00b0f0" Opacity="0.0" />
+</ResourceDictionary>

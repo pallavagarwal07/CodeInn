@@ -23,6 +23,8 @@ using Windows.Storage;
 using System.Diagnostics;
 using Windows.Web.Http;
 using Windows.Storage.Streams;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -139,6 +141,42 @@ namespace CodeInn.Views
 			Debug.WriteLine("Created " + typeof(T).Name);
         }
 
+        private class gotdata
+        {
+            public string PPsolved { get; set; }
+            public int Points { get; set; }
+        }
+
+        private async Task populateSolvedData()
+        {
+            var client = new HttpClient();
+            var response = await client.GetAsync(new Uri("http://codeinn-acecoders.rhcloud.com:8000/users/getuserdata?Username=" + System.Uri.EscapeUriString(username.Text)));
+            var result = await response.Content.ReadAsStringAsync();
+
+            try
+            {
+                List<gotdata> udata = JsonConvert.DeserializeObject<List<gotdata>>(result);
+                List<int> values = new List<int>();
+
+                foreach (string value in udata[0].PPsolved.Split(','))
+                {
+                    if(value != "")
+                    {
+                        values.Add(Convert.ToInt32(value));
+                        Debug.WriteLine("Adding " + value + " to list");
+                    }
+                }
+                string serialized = JsonConvert.SerializeObject(values);
+                localSettings.Containers["userInfo"].Values["PPsolved"] = serialized;
+                localSettings.Containers["userInfo"].Values["Points"] = udata[0].Points;
+
+                Debug.WriteLine("Points: " + (int)localSettings.Containers["userInfo"].Values["Points"]);
+            }
+            catch
+            {
+                Debug.WriteLine("error");
+            }
+        }
 
         private async void Login(object sender, RoutedEventArgs e)
         {
@@ -194,6 +232,9 @@ namespace CodeInn.Views
             recreateTables<Tips>();
             recreateTables<Lessons>();
 
+            Windows.Storage.ApplicationDataContainer container =
+                localSettings.CreateContainer("userInfo", Windows.Storage.ApplicationDataCreateDisposition.Always);
+
             if (localSettings.Containers.ContainsKey("userInfo"))
             {
                 localSettings.Containers["userInfo"].Values["userName"] = username.Text;
@@ -203,7 +244,11 @@ namespace CodeInn.Views
                 localSettings.Containers["userInfo"].Values["lastcheckproblems"] = "2014-01-01T01:01:01Z";
                 localSettings.Containers["userInfo"].Values["lastchecklessons"] = "2014-01-01T01:01:01Z";
                 localSettings.Containers["userInfo"].Values["lastchecktips"] = "2014-01-01T01:01:01Z";
+                double timeSpent = 0;
+                localSettings.Containers["userInfo"].Values["timeSpent"] = ((double)timeSpent) / 60;
             }
+
+            await populateSolvedData();
 
             LoadingBar.IsEnabled = false;
             LoadingBar.Visibility = Visibility.Collapsed;
@@ -275,7 +320,11 @@ namespace CodeInn.Views
                 localSettings.Containers["userInfo"].Values["lastcheckproblems"] = "2014-01-01T01:01:01Z";
                 localSettings.Containers["userInfo"].Values["lastchecklessons"] = "2014-01-01T01:01:01Z";
                 localSettings.Containers["userInfo"].Values["lastchecktips"] = "2014-01-01T01:01:01Z";
+                double timeSpent = 0;
+                localSettings.Containers["userInfo"].Values["timeSpent"] = ((double)timeSpent) / 60;
             }
+
+            await populateSolvedData();
 
             LoadingBar.IsEnabled = false;
             LoadingBar.Visibility = Visibility.Collapsed;
