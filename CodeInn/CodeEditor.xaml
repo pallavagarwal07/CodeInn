@@ -27,9 +27,11 @@
             <HubSection Name="HubEditor" x:Uid="HubEditor" Header="CODE" 
                          HeaderTemplate="{ThemeResource HubSectionHeaderTemplate}">
                 <DataTemplate>
-                    <Grid Grid.Row="1" x:Name="ContentRoot" Margin="1,9.5,1,0">
-                        <WebView x:Name="webView1" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled"  HorizontalAlignment="Left" Height="491" VerticalAlignment="Top" Width="362" NavigationCompleted="webView1_NavigationCompleted"/>
-                    </Grid>
+                    <ScrollViewer>
+                        <Grid Grid.Row="1" x:Name="ContentRoot" Margin="1,9.5,1,0">
+                            <WebView x:Name="webView1" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled"  HorizontalAlignment="Left" Height="491" VerticalAlignment="Top" Width="362" NavigationCompleted="webView1_NavigationCompleted" GotFocus="webView1_GotFocus" LostFocus="webView1_LostFocus"/>
+                        </Grid>
+                    </ScrollViewer>
                 </DataTemplate>
             </HubSection>
             

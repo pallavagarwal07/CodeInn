@@ -83,6 +83,7 @@ namespace CodeInn
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
             localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+          
         }
 
         // Copies the file "html\html_example2.html" from this package's installed location to 
@@ -208,7 +209,6 @@ namespace CodeInn
                     }
                     else
                     {
-                        localSettings.CreateContainer("timeSpent", Windows.Storage.ApplicationDataCreateDisposition.Always);
                         double oldVal = (double) localSettings.Containers["timeSpent"].Values["minutes"];
                         localSettings.Containers["timeSpent"].Values["minutes"] = ((double)timeSpent)/60 + oldVal;
                         Debug.WriteLine("Time Spent in Code updated to " + ((double)timeSpent)/60 + oldVal);
@@ -317,6 +317,18 @@ namespace CodeInn
         private void viewcode(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(Views.CodeDisplay), displayedObject);
+        }
+
+        private void webView1_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine("Got Focus!!!");
+            webv.Height = (490 / 2);
+        }
+
+        private void webView1_LostFocus(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine("Lost Focus!!");
+            webv.Height = 491;
         }
 
     }
