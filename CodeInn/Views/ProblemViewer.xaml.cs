@@ -38,6 +38,7 @@ namespace CodeInn.Views
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         private StatusBarProgressIndicator progressbar;
         Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+        List<Problems> listofitems;
 
         ObservableCollection<Problems> DB_ProblemList = new ObservableCollection<Problems>();
         public ProblemViewer()
@@ -63,7 +64,8 @@ namespace CodeInn.Views
         }
         private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Problems clickedProblem = (Problems)(sender as ListBox).SelectedItem;
+            var selectedId = (sender as ListBox).SelectedIndex;
+            Problems clickedProblem = (Problems)listofitems[selectedId];
             var navCont = new CodeEditorContext(clickedProblem, "Problems");
             Frame.Navigate(typeof(CodeEditor), navCont);
         }
@@ -160,7 +162,7 @@ namespace CodeInn.Views
         {
             ReadProblems dbproblems = new ReadProblems();
             DB_ProblemList = dbproblems.GetAllProblems();
-            var listofitems = DB_ProblemList.OrderByDescending(i => i.Id).ToList();
+            listofitems = DB_ProblemList.OrderByDescending(i => i.Id).ToList();
 
             var serialized = localSettings.Containers["userInfo"].Values["PPsolved"].ToString();
             var listofsolved = JsonConvert.DeserializeObject<List<int>>(serialized);
@@ -169,9 +171,9 @@ namespace CodeInn.Views
             foreach (var items in listofitems)
             {
                 if (listofsolved.Contains(items.Id))
-                    requiredList.Add(new ListItem(items.Name, items.Description, true));
+                    requiredList.Add(new ListItem(items.Id, items.Name, items.Description, true));
                 else
-                    requiredList.Add(new ListItem(items.Name, items.Description, false));
+                    requiredList.Add(new ListItem(items.Id, items.Name, items.Description, false));
             }
             listBox.ItemsSource = requiredList;
         }
