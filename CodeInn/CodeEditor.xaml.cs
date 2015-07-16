@@ -83,7 +83,20 @@ namespace CodeInn
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
             localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-          
+            Windows.UI.ViewManagement.InputPane.GetForCurrentView().Hiding += CodeEditor_Hiding;
+            Windows.UI.ViewManagement.InputPane.GetForCurrentView().Showing += CodeEditor_Showing;
+        }
+
+        void CodeEditor_Showing(InputPane sender, InputPaneVisibilityEventArgs args)
+        {
+            Debug.WriteLine("Got Focus!!!");
+            webv.Height = (490 / 2);
+        }
+
+        void CodeEditor_Hiding(InputPane sender, InputPaneVisibilityEventArgs args)
+        {
+            Debug.WriteLine("Lost Focus!!");
+            webv.Height = 491;
         }
 
         // Copies the file "html\html_example2.html" from this package's installed location to 
@@ -321,17 +334,6 @@ namespace CodeInn
             Frame.Navigate(typeof(Views.CodeDisplay), displayedObject);
         }
 
-        private void webView1_GotFocus(object sender, RoutedEventArgs e)
-        {
-            Debug.WriteLine("Got Focus!!!");
-            webv.Height = (490 / 2);
-        }
-
-        private void webView1_LostFocus(object sender, RoutedEventArgs e)
-        {
-            Debug.WriteLine("Lost Focus!!");
-            webv.Height = 491;
-        }
 
     }
 }
