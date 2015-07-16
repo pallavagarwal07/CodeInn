@@ -1,25 +1,37 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Code Editor</title>
-        <style type="text/css" media="screen">
+<head>
+<title>Code Editor</title>
+<style type="text/css" media="screen">
 html, body {
     -ms-content-zooming: none;
     width: 100%;
     height: 100%;
-    overflow: hidden;
+ /* overflow: hidden;*/
     margin: 0;
 }
-    #editor {
-        position: relative;
-        height: 100%;
-        width: 100%;
-    }
-    #container {
-        height: 100%;
-    }
-        </style>
-        <script>
+#editor {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+#container {
+    height: 100%;
+}
+#up-btn {
+    position: absolute;
+    z-index: 100;
+    left: 0;
+    top: 15px;
+}
+#down-btn {
+    position: absolute;
+    z-index: 100;
+    left: 0;
+    top: 45px;
+}
+</style>
+<script>
 function hello(vars)
 {
     editor.setValue(vars);
@@ -29,13 +41,13 @@ function getContent()
 {
     return editor.getValue();
 }
-        </script>
-        <script src="./jquery.js"></script>
-    </head>
-    <body>
-        <div id="editor">Hello, World</div>
-        <script src="ace/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
-        <script>
+</script>
+<script src="./jquery.js"></script>
+</head>
+<body>
+<div id="editor">Hello, World</div>
+<script src="ace/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+<script>
 
 var editor = ace.edit("editor");
 editor.setTheme("ace/theme/tomorrow_night");
@@ -49,16 +61,18 @@ var touch_start_y = 0;
 $('.ace_scroller').on('touchstart', function (event) {
         touch_start_x = event.originalEvent.touches[0].pageX;
         touch_start_y = event.originalEvent.touches[0].pageY;
-    });
+        });
 
 $('.ace_scroller').on('touchmove', function(e) {
         var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
         var x = touch.pageX - touch_start_x;
         var y = touch.pageY - touch_start_y;
         editor.renderer.scrollBy(x,y);
-    });
+});
+editor.setOptions({ maxLines: Infinity });
 editor.resize();
+window.setInterval(editor.resize, 500);
 
-        </script>
-    </body>
+</script>
+</body>
 </html>
