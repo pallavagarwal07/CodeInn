@@ -1,0 +1,58 @@
+﻿<Page
+    x:Class="CodeInn.Views.HelpPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CodeInn.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid x:Name="LayoutRoot" Background="ThemeResource A">
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Title Panel -->
+        <StackPanel Grid.Row="0" Margin="19,0,0,0">
+            <TextBlock Text="CodeInn" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0"/>
+            <TextBlock Text="Help" Margin="0,-6.5,0,26.5" Style="{ThemeResource HeaderTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="19,9.5,19,0">
+            <ScrollViewer>
+                <StackPanel VerticalAlignment="Stretch">
+                    <TextBlock Text="Lessons" FontSize="30"/>
+                    <TextBlock TextWrapping="Wrap" Text="Contains lessons to teach you programming" FontSize="15" />
+                    <TextBlock Text="Examples" Margin="0,10,0,0" FontSize="30"/>
+                    <TextBlock TextWrapping="Wrap" Text="Contains examples of questions followed by solutions. You can also edit the solutions and try" FontSize="15" />
+                    <TextBlock Text="Tips" Margin="0,10,0,0" FontSize="30"/>
+                    <TextBlock TextWrapping="Wrap" Text="Contains small tips which tell you about important points to remember" FontSize="15" />
+                    <TextBlock Text="Scratchpad" Margin="0,10,0,0" FontSize="30"/>
+                    <TextBlock TextWrapping="Wrap" Text="This is the scratchpad in which you can write code and test it giving inputs" FontSize="15" />
+                    <TextBlock Text="Practice problems" Margin="0,10,0,0" FontSize="30"/>
+                    <TextBlock TextWrapping="Wrap" Text="Contains problems which you can solve for practice" FontSize="15" />
+                    <TextBlock Text="Progress tracker" Margin="0,10,0,0" FontSize="30"/>
+                    <TextBlock TextWrapping="Wrap" Text="Fill" FontSize="15" />
+                    <TextBlock Text="Calendar" Margin="0,10,0,0" FontSize="30"/>
+                    <TextBlock TextWrapping="Wrap" Text="Contains a new challenge daily in order to give you good practice" FontSize="15" />
+                    <TextBlock Text="Versus" Margin="0,10,0,0" FontSize="30"/>
+                    <TextBlock TextWrapping="Wrap" Text="" FontSize="15" />
+                    <TextBlock Text="Standings" Margin="0,10,0,0" FontSize="30"/>
+                    <TextBlock TextWrapping="Wrap" Text="This shows you where you are placed in comparison to others" FontSize="15" />
+
+                </StackPanel>
+            </ScrollViewer>
+
+        </Grid>
+    </Grid>
+</Page>

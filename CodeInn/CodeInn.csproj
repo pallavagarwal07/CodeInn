@@ -127,6 +127,9 @@
     <Compile Include="Views\ExampleViewer.xaml.cs">
       <DependentUpon>ExampleViewer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\HelpPage.xaml.cs">
+      <DependentUpon>HelpPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\LessonViewer2.xaml.cs">
       <DependentUpon>LessonViewer2.xaml</DependentUpon>
     </Compile>
@@ -239,6 +242,10 @@
     <Page Include="Views\ExampleViewer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\HelpPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LessonViewer2.xaml">
       <Generator>MSBuild:Compile</Generator>
