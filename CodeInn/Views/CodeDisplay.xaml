@@ -20,5 +20,10 @@
         </StackPanel>
         <WebView x:Name="webView4" HorizontalAlignment="Left" Height="511" Margin="0,129,0,0" VerticalAlignment="Top" Width="400" NavigationCompleted="webView4_NavigationCompleted" />
     </Grid>
+    <Page.BottomAppBar>
+        <CommandBar ClosedDisplayMode="Compact">
+            <AppBarButton Label="Solution" Icon="View" Click="viewsolution"/>
+        </CommandBar>
+    </Page.BottomAppBar>
 
 </Page>

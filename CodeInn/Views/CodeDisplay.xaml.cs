@@ -111,5 +111,58 @@ namespace CodeInn.Views
         void webView4_ScriptNotify(object sender, NotifyEventArgs e)
         {
         }
+
+        private class SolutionClass
+        {
+            string solution { get; set; }
+        }
+
+        private async void viewsolution(object sender, RoutedEventArgs e)
+        {
+            var lis = new List<string>();
+
+            var messageDialog = new MessageDialog("Remember that you would lose 8 points if you view this solution (unless the question has already been solved correctly by you).");
+
+            // Add commands and set their callbacks; both buttons use the same callback function instead of inline event handlers
+            messageDialog.Commands.Add(new UICommand(
+                "Continue",
+                new UICommandInvokedHandler(this.CommandInvokedHandler_none)));
+            messageDialog.Commands.Add(new UICommand(
+                "Close"));
+
+            messageDialog.DefaultCommandIndex = 0;
+            messageDialog.CancelCommandIndex = 1;
+
+            await messageDialog.ShowAsync();
+        }
+
+        private void CommandInvokedHandler_none(IUICommand command)
+        {
+            displaySolution();
+        }
+
+        private async void displaySolution()
+        {
+            Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            var username = localSettings.Containers["userInfo"].Values["userName"].ToString();
+            var client = new HttpClient();
+            var response = await client.GetAsync(new Uri("http://codeinn-acecoders.rhcloud.com:8000/query/solution?username=" + System.Uri.EscapeUriString(username) + "&Id=" + navParam.Id));
+            var result = await response.Content.ReadAsStringAsync();
+            Debug.WriteLine(result);
+
+            try
+            {
+                List<SolutionClass> udata = JsonConvert.DeserializeObject<List<SolutionClass>>(result);
+            }
+            catch
+            {
+                Debug.WriteLine("error");
+            }
+
+            List<string> lis;
+            lis.Add(navParam.Content);
+            var returnstatus = await webView4.InvokeScriptAsync("setText", lis);
+            Debug.WriteLine(returnstatus);
+        }
     }
 }
