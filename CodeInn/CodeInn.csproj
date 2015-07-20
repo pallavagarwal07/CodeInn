@@ -139,6 +139,9 @@
     <Compile Include="Views\Contribute.xaml.cs">
       <DependentUpon>Contribute.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ProgressTracker.xaml.cs">
+      <DependentUpon>ProgressTracker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TipViewer.xaml.cs">
       <DependentUpon>TipViewer.xaml</DependentUpon>
     </Compile>
@@ -258,6 +261,10 @@
     <Page Include="Views\Contribute.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ProgressTracker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TipViewer.xaml">
       <Generator>MSBuild:Compile</Generator>
