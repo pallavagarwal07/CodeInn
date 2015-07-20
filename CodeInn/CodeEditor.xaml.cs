@@ -90,13 +90,13 @@ namespace CodeInn
         void CodeEditor_Showing(InputPane sender, InputPaneVisibilityEventArgs args)
         {
             Debug.WriteLine("Got Focus!!!");
-            webv.Height = (490 / 2);
+          //webv.Height = (490 / 2);
         }
 
         void CodeEditor_Hiding(InputPane sender, InputPaneVisibilityEventArgs args)
         {
             Debug.WriteLine("Lost Focus!!");
-            webv.Height = 491;
+        //  webv.Height = 491;
         }
 
         // Copies the file "html\html_example2.html" from this package's installed location to 
@@ -105,7 +105,7 @@ namespace CodeInn
         async void populateContent()
         {
             startTimeCalculation();
-            string navContext = Base64Decode(displayedObject.Content) + '\n' + '\n' + '\n' + '\n' + '\n' + '\n';
+            string navContext = Base64Decode(displayedObject.Content) + "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
             navC = navContext;
             StorageFolder stateFolder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("NavigateToState", CreationCollisionOption.OpenIfExists);
             StorageFile htmlFile = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync("html\\test.html");

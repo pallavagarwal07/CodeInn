@@ -123,8 +123,8 @@ namespace CodeInn.Views
                 return;
             }
             username = localSettings.Containers["userInfo"].Values["userName"].ToString();
-            float t = (float)localSettings.Containers["userInfo"].Values["timeSpent"];
-            time = t.ToString("G1");
+            double t = (double)localSettings.Containers["userInfo"].Values["timeSpent"];
+            time = String.Format("{0:0}", t);
             await populateSolvedData();
         }
 

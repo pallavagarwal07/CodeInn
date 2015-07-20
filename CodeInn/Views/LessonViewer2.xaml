@@ -18,7 +18,9 @@
             <TextBlock Text="CodeInn" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0"/>
             <TextBlock Text="Lesson" Margin="0,-6.5,0,26.5" Style="{ThemeResource HeaderTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
         </StackPanel>
-        <WebView x:Name="webView3" HorizontalAlignment="Left" Height="511" Margin="0,129,0,0" VerticalAlignment="Top" Width="400" NavigationCompleted="webView3_NavigationCompleted" ScriptNotify="webView3_ScriptNotify" />
+        <Grid Grid.Row="1">
+            <WebView x:Name="webView3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0" NavigationCompleted="webView3_NavigationCompleted" ScriptNotify="webView3_ScriptNotify" />
+        </Grid>
     </Grid>
 
 </Page>

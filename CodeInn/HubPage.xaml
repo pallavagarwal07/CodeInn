@@ -17,7 +17,7 @@
 
         <DataTemplate x:Key="CustomStackedTemplate">
             <Grid Margin="0,0,35,15" Background="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}">
-                <Image Source="{Binding ImagePath}" Stretch="None" AutomationProperties.Name="{Binding Title}" Height="138.5" HorizontalAlignment="Right" Margin="0,0,0,-1"/>
+                <Image Source="{Binding ImagePath}" Stretch="Uniform" AutomationProperties.Name="{Binding Title}" HorizontalAlignment="Right" Margin="0,0,0,-1"/>
                 <TextBlock Text="{Binding Title}" VerticalAlignment="Bottom" Margin="9.5,0,0,6.5" Style="{ThemeResource BaseTextBlockStyle}" IsHoldingEnabled="False" IsDoubleTapEnabled="False" IsRightTapEnabled="False"/>
             </Grid>
         </DataTemplate>

@@ -7,6 +7,27 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <FontFamily x:Key="PhoneFontFamilySemiLight">Segoe WP SemiLight</FontFamily>
+        <x:Double x:Key="TextStyleMediumFontSize">16</x:Double>
+        <Style x:Key="DataShown" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="{ThemeResource PhoneFontFamilySemiLight}"/>
+            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="TextLineBounds" Value="Full"/>
+            <Setter Property="TextWrapping" Value="NoWrap"/>
+            <Setter Property="LineHeight" Value="20"/>
+            <Setter Property="Foreground" Value="{ThemeResource PhoneMidBrush}"/>
+        </Style>
+        <Style x:Key="TitleShown" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="{ThemeResource PhoneFontFamilyNormal}"/>
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="FontStyle" Value="Normal"/>
+            <Setter Property="TextLineBounds" Value="Full"/>
+            <Setter Property="TextWrapping" Value="NoWrap"/>
+            <Setter Property="LineHeight" Value="20"/>
+            <Setter Property="Foreground" Value="{ThemeResource MediaTextThemeBrush}"/>
+        </Style>
+    </Page.Resources>
 
     <Grid x:Name="LayoutRoot" Background="{ThemeResource HubBackgroundImageBrush}">
 
@@ -27,12 +48,12 @@
             <TextBlock Text="User Progress" Margin="0,-6.5,0,26.5" Style="{ThemeResource HeaderTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="1">
-            <TextBlock Name="username_box" Text="acv" Grid.Row="1" HorizontalAlignment="Center" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}"/>
-            <TextBlock Name="points_box" Text="asdas" Grid.Row="1" HorizontalAlignment="Center" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}"/>
+        <StackPanel Margin="31,129,0,0" Grid.RowSpan="2">
+            <TextBlock Name="username_box" Text="username" Grid.Row="1" HorizontalAlignment="Left" Style="{StaticResource TitleShown}"/>
+            <TextBlock Name="points_box" Text="asdas" Grid.Row="1" HorizontalAlignment="Left" Style="{StaticResource DataShown}"/>
 
-            <TextBlock Name="pp_box" Text="asd" Grid.Row="1" HorizontalAlignment="Center" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}" Margin="0,30,0,0"/>
-            <TextBlock Name="time_box" Text="dsfas" Grid.Row="1" HorizontalAlignment="Center" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}"/>
+            <TextBlock Name="pp_box" Text="asd" Margin="0,35,0,0" Grid.Row="1" HorizontalAlignment="Center" Style="{StaticResource DataShown}"/>
+            <TextBlock Name="time_box" Text="dsfas" Grid.Row="1" HorizontalAlignment="Center" Style="{StaticResource DataShown}"/>
         </StackPanel>
     </Grid>
 </Page>

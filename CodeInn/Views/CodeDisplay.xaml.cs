@@ -159,7 +159,7 @@ namespace CodeInn.Views
                 Debug.WriteLine("error");
             }
 
-            List<string> lis;
+            List<string> lis = new List<string>();
             lis.Add(navParam.Content);
             var returnstatus = await webView4.InvokeScriptAsync("setText", lis);
             Debug.WriteLine(returnstatus);

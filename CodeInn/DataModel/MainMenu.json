@@ -82,17 +82,9 @@
                     "Content": "Curabitur class"
                 },
                 {
-                    "UniqueId": "Versus",
-                    "Title": "Versus Mode",
-                    "Subtitle": "Item Subtitle: 2",
-                    "ImagePath": "Assets/MainMenu/Versus.jpg",
-                    "Description": "Item Description: Pellentesque porta",
-                    "Content": "Curabitur class"
-                },
-                {
                     "UniqueId": "Standings",
                     "Title": "Standings",
-                    "Subtitle": "Item Subtitle: 3",
+                    "Subtitle": "Item Subtitle: 2",
                     "ImagePath": "Assets/MainMenu/Standings.jpg",
                     "Description": "Item Description: Pellentesque porta",
                     "Content": "Curabitur class"
