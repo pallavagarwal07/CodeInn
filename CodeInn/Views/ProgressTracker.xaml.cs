@@ -33,6 +33,7 @@ namespace CodeInn.Views
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         private Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+        private StatusBarProgressIndicator progressbar;
         private string username = "";
         private string time = "";
 
@@ -101,6 +102,7 @@ namespace CodeInn.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             this.navigationHelper.OnNavigatedTo(e);
+            progressbar = StatusBar.GetForCurrentView().ProgressIndicator;
             doTasks();
         }
 
@@ -134,6 +136,9 @@ namespace CodeInn.Views
 
         private async Task populateSolvedData()
         {
+            progressbar.Text = "Fetching data";
+            progressbar.ShowAsync();
+
             var client = new HttpClient();
             var response = await client.GetAsync(new Uri("http://codeinn-acecoders.rhcloud.com:8000/users/getuserdata?Username=" + System.Uri.EscapeUriString(username)));
             var result = await response.Content.ReadAsStringAsync();
@@ -168,18 +173,18 @@ namespace CodeInn.Views
                 Debug.WriteLine("t");
                 ubox.Text = username;
                 Debug.WriteLine("xu");
-                pbox.Text = udata[0].Points.ToString();
+                pbox.Text = "Points: " + udata[0].Points.ToString();
                 Debug.WriteLine("xp");
-                tbox.Text = time;
+                tbox.Text = "Time spent coding: " + time;
                 Debug.WriteLine("xt");
-                sbox.Text = count.ToString();
+                sbox.Text = "Practice problems solved: " + count.ToString();
                 Debug.WriteLine("xs");
             }
             catch
             {
                 Debug.WriteLine("error");
             }
-
+            progressbar.HideAsync();
         }
 
     }

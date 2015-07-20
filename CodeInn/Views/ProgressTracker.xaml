@@ -28,10 +28,11 @@
         </StackPanel>
 
         <StackPanel Grid.Row="1">
-            <TextBlock Name="username_box" Grid.Row="1"/>
-            <TextBlock Name="points_box" Grid.Row="1"/>
-            <TextBlock Name="pp_box" Grid.Row="1"/>
-            <TextBlock Name="time_box" Grid.Row="1"/>
+            <TextBlock Name="username_box" Text="acv" Grid.Row="1" HorizontalAlignment="Center" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}"/>
+            <TextBlock Name="points_box" Text="asdas" Grid.Row="1" HorizontalAlignment="Center" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}"/>
+
+            <TextBlock Name="pp_box" Text="asd" Grid.Row="1" HorizontalAlignment="Center" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}" Margin="0,30,0,0"/>
+            <TextBlock Name="time_box" Text="dsfas" Grid.Row="1" HorizontalAlignment="Center" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}"/>
         </StackPanel>
     </Grid>
 </Page>
