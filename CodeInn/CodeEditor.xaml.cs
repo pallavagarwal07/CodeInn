@@ -212,7 +212,7 @@ namespace CodeInn
             while(true)
             {
                 timeSpent += 5;
-                if(timeSpent > 60)
+                if(timeSpent > 2)
                 {
                     if (!localSettings.Containers.ContainsKey("userInfo"))
                     {
