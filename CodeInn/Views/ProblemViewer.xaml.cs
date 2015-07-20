@@ -41,6 +41,7 @@ namespace CodeInn.Views
         List<Problems> listofitems;
 
         ObservableCollection<Problems> DB_ProblemList = new ObservableCollection<Problems>();
+        ObservableCollection<ListItem> shownCollection = new ObservableCollection<ListItem>();
         public ProblemViewer()
         {
             this.InitializeComponent();
@@ -176,11 +177,17 @@ namespace CodeInn.Views
                     requiredList.Add(new ListItem(items.Id, items.Name, items.Description, false));
             }
             listBox.ItemsSource = requiredList;
+            shownCollection = new ObservableCollection<ListItem>(requiredList);
         }
 
         private void Refresh_Problems(object sender, RoutedEventArgs e)
         {
             GetDataFromWeb();
+        }
+
+        private void filterList(object sender, TextChangedEventArgs e)
+        {
+            listBox.ItemsSource = shownCollection.Where(w => w.Description.ToUpper().Contains(searchBox.Text.ToUpper()));
         }
 
     }
