@@ -331,7 +331,7 @@ namespace CodeInn
 
         private void viewcode(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(Views.CodeDisplay), displayedObject);
+            Frame.Navigate(typeof(Views.CodeDisplay), new CodeEditorContext(displayedObject, tableName));
         }
 
 

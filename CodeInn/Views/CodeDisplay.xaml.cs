@@ -32,11 +32,9 @@ namespace CodeInn.Views
     /// </summary>
     public sealed partial class CodeDisplay : Page
     {
-        ParentClass navParam;
+        CodeEditorContext navParam;
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
-
-        ObservableCollection<Lessons> DB_LessonList = new ObservableCollection<Lessons>();
 
         async void createHtmlFileInLocalState()
         {
@@ -88,7 +86,16 @@ namespace CodeInn.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            navParam = e.Parameter as ParentClass;
+            navParam = e.Parameter as CodeEditorContext;
+
+            if (navParam.tableName != "Problems")
+            {
+                CommandBar bottomCommandBar = this.BottomAppBar as CommandBar;
+                AppBarButton b = bottomCommandBar.PrimaryCommands[0] as AppBarButton;
+                //b.Click -= Solution;
+                bottomCommandBar.PrimaryCommands.RemoveAt(0);
+            }
+
             createHtmlFileInLocalState();
             this.navigationHelper.OnNavigatedTo(e);
         }
@@ -103,7 +110,7 @@ namespace CodeInn.Views
         private async void webView4_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
         {
             var lis = new List<string>();
-            lis.Add(navParam.Content);
+            lis.Add(navParam.displayedObject.Content);
             var returnstatus = await webView4.InvokeScriptAsync("setText", lis);
             Debug.WriteLine(returnstatus);
         }
@@ -146,7 +153,7 @@ namespace CodeInn.Views
             Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
             var username = localSettings.Containers["userInfo"].Values["userName"].ToString();
             var client = new HttpClient();
-            var response = await client.GetAsync(new Uri("http://codeinn-acecoders.rhcloud.com:8000/query/solution?username=" + System.Uri.EscapeUriString(username) + "&Id=" + navParam.Id));
+            var response = await client.GetAsync(new Uri("http://codeinn-acecoders.rhcloud.com:8000/query/solution?username=" + System.Uri.EscapeUriString(username) + "&Id=" + navParam.displayedObject.Id));
             var result = await response.Content.ReadAsStringAsync();
             Debug.WriteLine(result);
 
@@ -160,7 +167,7 @@ namespace CodeInn.Views
             }
 
             List<string> lis = new List<string>();
-            lis.Add(navParam.Content);
+            lis.Add(navParam.displayedObject.Content);
             var returnstatus = await webView4.InvokeScriptAsync("setText", lis);
             Debug.WriteLine(returnstatus);
         }
