@@ -35,6 +35,7 @@ namespace CodeInn.Views
     public sealed partial class TipViewer : Page
     {
         private NavigationHelper navigationHelper;
+        Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         private StatusBarProgressIndicator progressbar;
         
@@ -79,8 +80,16 @@ namespace CodeInn.Views
 
         #region NavigationHelper registration
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
+            if (!localSettings.Containers.ContainsKey("userInfo"))
+            {
+                MessageDialog msgbox = new MessageDialog("Please log-in first. Go to settings from the main menu.");
+                await msgbox.ShowAsync();
+                Frame.Navigate(typeof(Views.Settings));
+                return;
+            }
+
             progressbar = StatusBar.GetForCurrentView().ProgressIndicator;
             this.navigationHelper.OnNavigatedTo(e);
         }
