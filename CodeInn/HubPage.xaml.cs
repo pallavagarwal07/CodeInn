@@ -201,5 +201,13 @@ namespace CodeInn
                 throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
             }
         }
+
+        private void GoTo_BugReport(object sender, RoutedEventArgs e)
+        {
+            if (!Frame.Navigate(typeof(BugReport)))
+            {
+                throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
+            }
+        }
     }
 }

@@ -164,7 +164,7 @@ namespace CodeInn.Views
                 return;
             }
 
-            Debug.WriteLine(result);
+            Debug.WriteLine("***result:\n" + result);
             try
             {
                 List<gotdata> udata = JsonConvert.DeserializeObject<List<gotdata>>(result);
