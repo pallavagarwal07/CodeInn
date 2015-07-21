@@ -24,6 +24,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using Windows.UI.Popups;
+using Newtonsoft.Json;
 
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
@@ -313,6 +314,7 @@ namespace CodeInn
             var username_basic = localSettings.Containers["userInfo"].Values["userName"].ToString();
             var username = System.Uri.EscapeUriString(username_basic).Replace("+", "%2B").Replace("=", "%3D");
 
+            var ifSolved = false;
             try
             {
                 cts.CancelAfter(7500);
@@ -320,11 +322,23 @@ namespace CodeInn
                 var response = await client.GetAsync(uri);
                 var result = await response.Content.ReadAsStringAsync();
                 outbox.Text = result;
+                if (response.StatusCode == HttpStatusCode.OK)
+                    ifSolved = true;
             }
             catch
             {
                 outbox.Text = "Timeout. Try again later.";
             }
+
+            if(ifSolved)
+            {
+                var serialized = localSettings.Containers["userInfo"].Values["PPsolved"].ToString();
+                var listofsolved = JsonConvert.DeserializeObject<List<int>>(serialized);
+                listofsolved.Add(displayedObject.Id);
+                string serialized_new = JsonConvert.SerializeObject(listofsolved);
+                localSettings.Containers["userInfo"].Values["PPsolved"] = serialized_new;
+            }
+
             progressbar.HideAsync();
             CodeHub.ScrollToSection(HubInOut);
         }
