@@ -150,8 +150,19 @@ namespace CodeInn.Views
         private async Task populateSolvedData()
         {
             var client = new HttpClient();
-            var response = await client.GetAsync(new Uri("http://codeinn-acecoders.rhcloud.com:8000/users/getuserdata?Username=" + System.Uri.EscapeUriString(username.Text)));
-            var result = await response.Content.ReadAsStringAsync();
+            string result;
+            try
+            {
+                var response = await client.GetAsync(new Uri("http://codeinn-acecoders.rhcloud.com:8000/users/getuserdata?Username=" + System.Uri.EscapeUriString(username.Text)));
+                result = await response.Content.ReadAsStringAsync();
+            }
+            catch
+            {
+                localSettings.DeleteContainer("userInfo");
+                MessageDialog messageDialog = new MessageDialog("Unable to get response from server. Please login again.");
+                messageDialog.ShowAsync();
+                return;
+            }
 
             Debug.WriteLine(result);
             try
@@ -176,7 +187,7 @@ namespace CodeInn.Views
             catch
             {
                 localSettings.DeleteContainer("userInfo");
-                MessageDialog messageDialog = new MessageDialog("Unable to get response from server. Please Try Again.");
+                MessageDialog messageDialog = new MessageDialog("There was an error parsing user data. Please login again.");
                 messageDialog.ShowAsync();
             }
         }
