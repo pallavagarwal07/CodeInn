@@ -32,7 +32,7 @@ namespace CodeInn.Views
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         private StatusBarProgressIndicator progressbar;
-        private Windows.Storage.ApplicationDataContainer localSettings;
+        private Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
 
         public Contribute()
         {
@@ -102,17 +102,18 @@ namespace CodeInn.Views
         /// </summary>
         /// <param name="e">Provides data for navigation methods and event
         /// handlers that cannot cancel the navigation request.</param>
-        async protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             if (!localSettings.Containers.ContainsKey("userInfo"))
             {
                 MessageDialog msgbox = new MessageDialog("Please log-in first. Go to settings from the main menu.");
-                await msgbox.ShowAsync();
-                Frame.Navigate(typeof(Views.Settings));
+                msgbox.ShowAsync();
+                Frame.Navigate(typeof(Settings));
                 return;
             }
             progressbar = StatusBar.GetForCurrentView().ProgressIndicator;
             this.navigationHelper.OnNavigatedTo(e);
+
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)

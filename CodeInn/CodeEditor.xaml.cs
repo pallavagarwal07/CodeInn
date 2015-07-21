@@ -195,8 +195,10 @@ namespace CodeInn
             return System.Text.Encoding.UTF8.GetString(base64EncodedBytes, 0, base64EncodedBytes.Length);
         }
 
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        protected async override void OnNavigatedFrom(NavigationEventArgs e)
         {
+            var edContent = await webv.InvokeScriptAsync("getContent", new List<string>());
+            displayedObject.Content = Base64Encode(edContent);
             this.navigationHelper.OnNavigatedFrom(e);
         }
 
@@ -343,8 +345,16 @@ namespace CodeInn
             CodeHub.ScrollToSection(HubInOut);
         }
 
-        private void viewcode(object sender, RoutedEventArgs e)
+        public static string Base64Encode(string plainText)
         {
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+            return System.Convert.ToBase64String(plainTextBytes);
+        }
+
+        private async void viewcode(object sender, RoutedEventArgs e)
+        {
+            var edContent = await webv.InvokeScriptAsync("getContent", new List<string>());
+            displayedObject.Content = Base64Encode(edContent);
             Frame.Navigate(typeof(Views.CodeDisplay), new CodeEditorContext(displayedObject, tableName));
         }
 
