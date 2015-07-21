@@ -153,6 +153,7 @@ namespace CodeInn.Views
             var response = await client.GetAsync(new Uri("http://codeinn-acecoders.rhcloud.com:8000/users/getuserdata?Username=" + System.Uri.EscapeUriString(username.Text)));
             var result = await response.Content.ReadAsStringAsync();
 
+            Debug.WriteLine(result);
             try
             {
                 List<gotdata> udata = JsonConvert.DeserializeObject<List<gotdata>>(result);
@@ -174,7 +175,8 @@ namespace CodeInn.Views
             }
             catch
             {
-                Debug.WriteLine("error");
+                MessageDialog messageDialog = new MessageDialog("Unable to get response from server. Please Try Again.");
+                messageDialog.ShowAsync();
             }
         }
 

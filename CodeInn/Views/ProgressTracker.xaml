@@ -20,7 +20,7 @@
         </Style>
         <Style x:Key="TitleShown" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="{ThemeResource PhoneFontFamilyNormal}"/>
-            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="FontSize" Value="35"/>
             <Setter Property="FontStyle" Value="Normal"/>
             <Setter Property="TextLineBounds" Value="Full"/>
             <Setter Property="TextWrapping" Value="NoWrap"/>
@@ -52,7 +52,7 @@
             <TextBlock Name="username_box" Text="username" Grid.Row="1" HorizontalAlignment="Left" Style="{StaticResource TitleShown}"/>
             <TextBlock Name="points_box" Text="asdas" Grid.Row="1" HorizontalAlignment="Left" Style="{StaticResource DataShown}"/>
 
-            <TextBlock Name="pp_box" Text="asd" Margin="0,35,0,0" Grid.Row="1" HorizontalAlignment="Center" Style="{StaticResource DataShown}"/>
+            <TextBlock Name="pp_box" Text="asd" Margin="0,65,0,0" Grid.Row="1" HorizontalAlignment="Center" Style="{StaticResource DataShown}"/>
             <TextBlock Name="time_box" Text="dsfas" Grid.Row="1" HorizontalAlignment="Center" Style="{StaticResource DataShown}"/>
         </StackPanel>
     </Grid>
