@@ -123,6 +123,12 @@ namespace CodeInn.Views
 
         #endregion
 
+        public static string Base64Encode(string plainText)
+        {
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+            return System.Convert.ToBase64String(plainTextBytes);
+        }
+
         private async void send(object sender, RoutedEventArgs e)
         {
             progressbar.Text = "Sending contribution";
@@ -143,7 +149,7 @@ namespace CodeInn.Views
             var username = localSettings.Containers["userInfo"].Values["userName"].ToString();
 
             HttpStringContent content = new HttpStringContent(
-                    "{ \"Username\": \"" + username + "\", \"Category\": \"" + category_box.Text + "\", \"Title\": \"" + title_box.Text + "\", \"Content\": \"" + content_box.Text + "\", \"AdditionalContent\": \"" + add_box.Text + "\" }",
+                    "{ \"Username\": \"" + username + "\", \"Category\": \"" + Base64Encode(category_box.Text) + "\", \"Title\": \"" + Base64Encode(title_box.Text) + "\", \"Content\": \"" + Base64Encode(content_box.Text) + "\", \"AdditionalContent\": \"" + Base64Encode(add_box.Text) + "\" }",
                     UnicodeEncoding.Utf8,
                     "application/json");
 

@@ -115,6 +115,12 @@ namespace CodeInn.Views
 
         #endregion
 
+        public static string Base64Encode(string plainText)
+        {
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+            return System.Convert.ToBase64String(plainTextBytes);
+        }
+
         private async void send(object sender, RoutedEventArgs e)
         {
             progressbar.Text = "Sending Bug Report";
@@ -135,7 +141,7 @@ namespace CodeInn.Views
             var username = localSettings.Containers["userInfo"].Values["userName"].ToString();
 
             HttpStringContent content = new HttpStringContent(
-                    "{ \"Content\": \"" + content_box.Text + "\" }",
+                    "{ \"Content\": \"" + Base64Encode(content_box.Text) + "\" }",
                     UnicodeEncoding.Utf8,
                     "application/json");
 
