@@ -175,6 +175,7 @@ namespace CodeInn.Views
             }
             catch
             {
+                localSettings.DeleteContainer("userInfo");
                 MessageDialog messageDialog = new MessageDialog("Unable to get response from server. Please Try Again.");
                 messageDialog.ShowAsync();
             }
