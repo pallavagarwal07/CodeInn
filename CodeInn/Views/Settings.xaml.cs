@@ -159,12 +159,13 @@ namespace CodeInn.Views
             catch
             {
                 localSettings.DeleteContainer("userInfo");
-                MessageDialog messageDialog = new MessageDialog("Unable to get response from server. Please login again.");
+                MessageDialog messageDialog = new MessageDialog("Unable to get response from server. Please login again, making sure that you are not behind a proxy.");
                 messageDialog.ShowAsync();
                 return;
             }
 
             Debug.WriteLine("***result:\n" + result);
+
             try
             {
                 List<gotdata> udata = JsonConvert.DeserializeObject<List<gotdata>>(result);
@@ -187,7 +188,7 @@ namespace CodeInn.Views
             catch
             {
                 localSettings.DeleteContainer("userInfo");
-                MessageDialog messageDialog = new MessageDialog("There was an error parsing user data. Please login again.");
+                MessageDialog messageDialog = new MessageDialog("There was an error parsing user data. Please login again, making sure you are not behind a proxy.");
                 messageDialog.ShowAsync();
             }
         }

@@ -52,15 +52,8 @@ namespace CodeInn.Views
             this.Loaded += ReadProblems_Loaded;
         }
 
-        private async void ReadProblems_Loaded(object sender, RoutedEventArgs e)
+        private void ReadProblems_Loaded(object sender, RoutedEventArgs e)
         {
-            if (!localSettings.Containers.ContainsKey("userInfo"))
-            {
-                MessageDialog msgbox = new MessageDialog("Please log-in first. Go to settings from the main menu.");
-                await msgbox.ShowAsync();
-                Frame.Navigate(typeof(Settings));
-                return;
-            }
             assignToListBox();
         }
         private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -91,16 +84,8 @@ namespace CodeInn.Views
 
         #region NavigationHelper registration
 
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (!localSettings.Containers.ContainsKey("userInfo"))
-            {
-                MessageDialog msgbox = new MessageDialog("Please log-in first. Go to settings from the main menu.");
-                await msgbox.ShowAsync();
-                Frame.Navigate(typeof(Views.Settings));
-                return;
-            }
-
             progressbar = StatusBar.GetForCurrentView().ProgressIndicator;
             this.navigationHelper.OnNavigatedTo(e);
         }
@@ -169,6 +154,14 @@ namespace CodeInn.Views
 
         private void assignToListBox()
         {
+            if (!localSettings.Containers.ContainsKey("userInfo"))
+            {
+                MessageDialog msgbox = new MessageDialog("Please log-in first. Go to settings from the main menu.");
+                msgbox.ShowAsync();
+                Frame.Navigate(typeof(Views.Settings));
+                return;
+            }
+
             ReadProblems dbproblems = new ReadProblems();
             DB_ProblemList = dbproblems.GetAllProblems();
             listofitems = DB_ProblemList.OrderByDescending(i => i.Id).ToList();

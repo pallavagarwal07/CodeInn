@@ -50,9 +50,17 @@ namespace CodeInn.Views
 
         private void ReadLessons_Loaded(object sender, RoutedEventArgs e)
         {
+            if (!localSettings.Containers.ContainsKey("userInfo"))
+            {
+                MessageDialog msgbox = new MessageDialog("Please log-in first. Go to settings from the main menu.");
+                msgbox.ShowAsync();
+                Frame.Navigate(typeof(Views.Settings));
+                return;
+            }
+
             ReadLessons dblessons = new ReadLessons();
-            DB_LessonList = dblessons.GetAllLessons();//Get all DB contacts 
-            listBox.ItemsSource = DB_LessonList.OrderBy(i => i.Id).ToList();//Binding DB data to LISTBOX and Latest contact ID can Display first. 
+            DB_LessonList = dblessons.GetAllLessons(); //Get all DB contacts 
+            listBox.ItemsSource = DB_LessonList.OrderBy(i => i.Id).ToList(); //Binding DB data to LISTBOX and Latest contact ID can Display first. 
         }
 
         public NavigationHelper NavigationHelper
@@ -83,14 +91,6 @@ namespace CodeInn.Views
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (!localSettings.Containers.ContainsKey("userInfo"))
-            {
-                MessageDialog msgbox = new MessageDialog("Please log-in first. Go to settings from the main menu.");
-                await msgbox.ShowAsync();
-                Frame.Navigate(typeof(Views.Settings));
-                return;
-            }
-
             progressbar = StatusBar.GetForCurrentView().ProgressIndicator;
             this.navigationHelper.OnNavigatedTo(e);
         }

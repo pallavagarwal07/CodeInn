@@ -50,6 +50,14 @@ namespace CodeInn.Views
 
         private void ReadExamples_Loaded(object sender, RoutedEventArgs e)
         {
+            if (!localSettings.Containers.ContainsKey("userInfo"))
+            {
+                MessageDialog msgbox = new MessageDialog("Please log-in first. Go to settings from the main menu.");
+                msgbox.ShowAsync();
+                Frame.Navigate(typeof(Views.Settings));
+                return;
+            }
+
             ReadExamples dbproblems = new ReadExamples();
             DB_ExampleList = dbproblems.GetAllExamples();
             listBox.ItemsSource = DB_ExampleList.OrderBy(i => i.Id).ToList();
@@ -83,14 +91,6 @@ namespace CodeInn.Views
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (!localSettings.Containers.ContainsKey("userInfo"))
-            {
-                MessageDialog msgbox = new MessageDialog("Please log-in first. Go to settings from the main menu.");
-                await msgbox.ShowAsync();
-                Frame.Navigate(typeof(Views.Settings));
-                return;
-            }
-
             progressbar = StatusBar.GetForCurrentView().ProgressIndicator;
             this.navigationHelper.OnNavigatedTo(e);
         }

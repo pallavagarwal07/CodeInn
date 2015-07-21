@@ -52,6 +52,14 @@ namespace CodeInn.Views
 
         private void ReadTips_Loaded(object sender, RoutedEventArgs e)
         {
+            if (!localSettings.Containers.ContainsKey("userInfo"))
+            {
+                MessageDialog msgbox = new MessageDialog("Please log-in first. Go to settings from the main menu.");
+                msgbox.ShowAsync();
+                Frame.Navigate(typeof(Views.Settings));
+                return;
+            }
+
             ReadTips dbtips = new ReadTips();
             DB_TipList = dbtips.GetAllTips();
             listBox.ItemsSource = DB_TipList.OrderByDescending(i => i.Id).ToList();
@@ -82,14 +90,6 @@ namespace CodeInn.Views
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (!localSettings.Containers.ContainsKey("userInfo"))
-            {
-                MessageDialog msgbox = new MessageDialog("Please log-in first. Go to settings from the main menu.");
-                await msgbox.ShowAsync();
-                Frame.Navigate(typeof(Views.Settings));
-                return;
-            }
-
             progressbar = StatusBar.GetForCurrentView().ProgressIndicator;
             this.navigationHelper.OnNavigatedTo(e);
         }
