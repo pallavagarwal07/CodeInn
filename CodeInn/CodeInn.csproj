@@ -174,6 +174,7 @@
     <Content Include="Assets\logo_44.png" />
     <Content Include="Assets\logo_50.png" />
     <Content Include="Assets\logo_71.png" />
+    <Content Include="Assets\MainMenu\Contribute.jpg" />
     <Content Include="Assets\MainMenu\Daily.jpg" />
     <Content Include="Assets\MainMenu\Practice.jpg" />
     <Content Include="Assets\MainMenu\Standings.jpg" />

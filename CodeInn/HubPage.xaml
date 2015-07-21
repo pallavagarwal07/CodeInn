@@ -100,7 +100,6 @@
             <AppBarButton Label="Settings" Icon="Setting" Click="GoTo_Settings"/>
             <AppBarButton Label="Help" Icon="Help" Click="GoTo_Help"/>
             <AppBarButton Label="Credits" Icon="More" Click="GoTo_Credits"/>
-            <AppBarButton Label="Contribute" Icon="MailForward" Click="Contribute"/>
         </CommandBar>
     </Page.BottomAppBar>
 

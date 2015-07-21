@@ -88,6 +88,14 @@
                     "ImagePath": "Assets/MainMenu/Standings.jpg",
                     "Description": "Item Description: Pellentesque porta",
                     "Content": "Curabitur class"
+                },
+                {
+                    "UniqueId": "Contribute",
+                    "Title": "Contribute",
+                    "Subtitle": "Item Subtitle: 3",
+                    "ImagePath": "Assets/MainMenu/Contribute.jpg",
+                    "Description": "Item Description: Pellentesque porta",
+                    "Content": "Curabitur class"
                 }
             ]
         }

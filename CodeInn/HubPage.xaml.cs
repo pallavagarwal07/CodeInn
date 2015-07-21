@@ -149,6 +149,10 @@ namespace CodeInn
             {
                 throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
             }
+            else if (itemId == "Contribute" && !Frame.Navigate(typeof(Contribute), itemId))
+            {
+                throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
+            }
         }
 
         #region NavigationHelper registration
@@ -193,14 +197,6 @@ namespace CodeInn
         private void GoTo_Credits(object sender, RoutedEventArgs e)
         {
             if (!Frame.Navigate(typeof(Credits)))
-            {
-                throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
-            }
-        }
-
-        private void Contribute(object sender, RoutedEventArgs e)
-        {
-            if (!Frame.Navigate(typeof(Contribute), "Main"))
             {
                 throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
             }
