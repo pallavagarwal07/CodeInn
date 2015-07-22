@@ -198,9 +198,9 @@ namespace CodeInn.Views
             LoadingBar.IsEnabled = true;
             LoadingBar.Visibility = Visibility.Visible;
 
-            if (username.Text == "" & email.Text == "")
+            if (username.Text == "")
             {
-                MessageDialog messageDialog = new MessageDialog("Please fill atleast one of email/username fields");
+                MessageDialog messageDialog = new MessageDialog("Please fill the username field.");
                 await messageDialog.ShowAsync();
                 return;
             }
