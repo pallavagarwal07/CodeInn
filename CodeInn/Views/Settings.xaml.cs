@@ -193,6 +193,24 @@ namespace CodeInn.Views
             }
         }
 
+        private void emptyData()
+        {
+            List<gotdata> udata = JsonConvert.DeserializeObject<List<gotdata>>("[{\"PPsolved\":\"\",\"Points\":0}]");
+            List<int> values = new List<int>();
+
+            foreach (string value in udata[0].PPsolved.Split(','))
+            {
+                if (value != "")
+                {
+                    values.Add(Convert.ToInt32(value));
+                    Debug.WriteLine("Adding " + value + " to list");
+                }
+            }
+            string serialized = JsonConvert.SerializeObject(values);
+            localSettings.Containers["userInfo"].Values["PPsolved"] = serialized;
+            localSettings.Containers["userInfo"].Values["Points"] = udata[0].Points;
+        }
+
         private async void Login(object sender, RoutedEventArgs e)
         {
             LoadingBar.IsEnabled = true;
@@ -343,7 +361,7 @@ namespace CodeInn.Views
 
             await Task.Delay(4000);
 
-            await populateSolvedData();
+            emptyData();
 
             LoadingBar.IsEnabled = false;
             LoadingBar.Visibility = Visibility.Collapsed;

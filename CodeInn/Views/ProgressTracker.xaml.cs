@@ -147,7 +147,7 @@ namespace CodeInn.Views
             {
                 List<gotdata> udata = JsonConvert.DeserializeObject<List<gotdata>>(result);
                 List<int> values = new List<int>();
-                int count = 0;
+                int count = -1;
                 foreach (string value in udata[0].PPsolved.Split(','))
                 {
                     count = count + 1;
@@ -164,21 +164,13 @@ namespace CodeInn.Views
                 Debug.WriteLine("Points: " + (int)localSettings.Containers["userInfo"].Values["Points"]);
 
                 var ubox = FindChildControl<TextBlock>(LayoutRoot, "username_box") as TextBlock;
-                Debug.WriteLine("u");
                 var pbox = FindChildControl<TextBlock>(LayoutRoot, "points_box") as TextBlock;
-                Debug.WriteLine("p");
                 var sbox = FindChildControl<TextBlock>(LayoutRoot, "pp_box") as TextBlock;
-                Debug.WriteLine("s");
                 var tbox = FindChildControl<TextBlock>(LayoutRoot, "time_box") as TextBlock;
-                Debug.WriteLine("t");
                 ubox.Text = username;
-                Debug.WriteLine("xu");
                 pbox.Text = "Points: " + udata[0].Points.ToString();
-                Debug.WriteLine("xp");
                 tbox.Text = "Time spent coding: " + time;
-                Debug.WriteLine("xt");
                 sbox.Text = "Practice problems solved: " + count.ToString();
-                Debug.WriteLine("xs");
             }
             catch
             {
