@@ -121,7 +121,7 @@ namespace CodeInn.Views
 
         private class SolutionClass
         {
-            string solution { get; set; }
+            public string Solutions { get; set; }
         }
 
         private async void viewsolution(object sender, RoutedEventArgs e)
@@ -156,10 +156,10 @@ namespace CodeInn.Views
             var response = await client.GetAsync(new Uri("http://codeinn-acecoders.rhcloud.com:8000/query/solution?username=" + System.Uri.EscapeUriString(username) + "&Id=" + navParam.displayedObject.Id));
             var result = await response.Content.ReadAsStringAsync();
             Debug.WriteLine(result);
-
+            List<SolutionClass> udata = null;
             try
             {
-                List<SolutionClass> udata = JsonConvert.DeserializeObject<List<SolutionClass>>(result);
+                udata = JsonConvert.DeserializeObject<List<SolutionClass>>(result);
             }
             catch
             {
@@ -167,7 +167,8 @@ namespace CodeInn.Views
             }
 
             List<string> lis = new List<string>();
-            lis.Add(navParam.displayedObject.Content);
+            lis.Add(udata[0].Solutions);
+            //Debug.WriteLine(udata[0].Solutions);
             var returnstatus = await webView4.InvokeScriptAsync("setText", lis);
             Debug.WriteLine(returnstatus);
         }
