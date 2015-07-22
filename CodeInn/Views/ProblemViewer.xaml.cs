@@ -58,8 +58,9 @@ namespace CodeInn.Views
         }
         private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var selectedId = (sender as ListBox).SelectedIndex;
-            Problems clickedProblem = (Problems)listofitems[selectedId];
+            var selectedProblem = (ListItem)((sender as ListBox).SelectedItem);
+            DatabaseProblem Db_Helper = new DatabaseProblem();
+            var clickedProblem = Db_Helper.ReadProblem(selectedProblem.Id);
             var navCont = new CodeEditorContext(clickedProblem, "Problems");
             Frame.Navigate(typeof(CodeEditor), navCont);
         }

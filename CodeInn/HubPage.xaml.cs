@@ -191,7 +191,10 @@ namespace CodeInn
 
         private void GoTo_Help(object sender, RoutedEventArgs e)
         {
-
+            if (!Frame.Navigate(typeof(HelpPage)))
+            {
+                throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
+            }
         }
 
         private void GoTo_Credits(object sender, RoutedEventArgs e)

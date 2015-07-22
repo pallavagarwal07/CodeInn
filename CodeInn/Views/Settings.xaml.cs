@@ -263,6 +263,8 @@ namespace CodeInn.Views
                 localSettings.Containers["userInfo"].Values["timeSpent"] = ((double)timeSpent) / 60;
             }
 
+            await Task.Delay(4000);
+
             await populateSolvedData();
 
             LoadingBar.IsEnabled = false;
@@ -338,6 +340,8 @@ namespace CodeInn.Views
                 double timeSpent = 0;
                 localSettings.Containers["userInfo"].Values["timeSpent"] = ((double)timeSpent) / 60;
             }
+
+            await Task.Delay(4000);
 
             await populateSolvedData();
 
